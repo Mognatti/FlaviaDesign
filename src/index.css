@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;400&display=swap");
 
 ul,
 ol {
@@ -8,8 +8,4 @@ ol {
 * {
   margin: 0;
   font-family: "Raleway", sans-serif;
-}
-
-body {
-  background-color: rgb(195, 204, 191);
 }

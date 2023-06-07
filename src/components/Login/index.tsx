@@ -1,6 +1,19 @@
 import { client } from "../../supabaseClient";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+import { styled as styledMui } from "@mui/material";
+import { Button } from "@mui/material";
+
+const StyedButton = styledMui(Button)`
+justify-self:center;
+margin-top:15px;
+background-color: rgb(69, 80, 61);
+:hover{
+  background-color: rgb(180, 190, 170);
+  transition: 350ms;
+}
+`;
 
 export default function Login() {
   const [session, setSession] = useState<any>(null);
@@ -37,7 +50,11 @@ export default function Login() {
   }, []);
 
   if (!session) {
-    return <button onClick={() => googleSignIn()}>Login com google</button>;
+    return (
+      <StyedButton variant="contained" onClick={() => googleSignIn()}>
+        Login com google
+      </StyedButton>
+    );
   } else {
     return (
       <div>
