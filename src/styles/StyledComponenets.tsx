@@ -96,6 +96,8 @@ export const CardTitleDiv = styled.div`
 `;
 export const Info = styled.li`
   padding: 18px;
+  font-size: 15px;
+  width: 100%;
   border-bottom: 1px solid rgba(195, 204, 191, 0.5);
   width: 300px;
 `;
@@ -137,6 +139,7 @@ export const CalendarForm = styled.form`
 export const CalendarContainer = styled.div`
   width: 100%;
   padding: 32px 0px;
+  padding-bottom: 63px;
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-around;

@@ -23,7 +23,7 @@ export default function Calendar() {
   const [end, setEnd] = useState<any>(null);
   const [cliente, setCliente] = useState<string | null>(null);
   const [tel, setTel] = useState("");
-  const [descricao, setDescricao] = useState<string | null>(null);
+  const [procedimento, setProcedimento] = useState<string | null>(null);
   const [clientList, setClientList] = useState<any[]>();
   const [procedimentos, setProcedimentos] = useState<any[]>();
   const [loading, setLoading] = useState(false);
@@ -53,19 +53,28 @@ export default function Calendar() {
     existentClient ? setTel(existentClient.cel_number) : setTel(tel);
   }, [cliente, clientList]);
 
-  function setDate(newValue: any) {
-    setStart(newValue);
-    const startDay = start.$D;
-    const startMonth = start.$M;
-    const startYear = start.$y;
-    setEnd(
-      dayjs(
-        `${
-          startMonth == startMonth + 1 > 11 ? 0 : startMonth + 1
-        }/${startDay}/${startYear}`
-      )
-    );
-  }
+  //use 'procedimento' and 'start' values to change 'end' value
+  useEffect(() => {
+    if (start && procedimento) {
+      const startDay = start.$D;
+      const startMonth = start.$M;
+      const startYear = start.$y;
+      const procedimentoAtualHoras = procedimentos?.find(
+        (item) => item.name == procedimento
+      ).hours;
+      const procedimentoAtualMinutos = procedimentos?.find(
+        (item) => item.name == procedimento
+      ).minutes;
+
+      setEnd(
+        dayjs(
+          `${startMonth + 1 > 11 ? 0 : startMonth + 1}/${startDay}/${startYear}`
+        )
+          .hour(start.$H + procedimentoAtualHoras)
+          .minute(start.$m + procedimentoAtualMinutos)
+      );
+    }
+  }, [start, procedimento, procedimentos]);
 
   return (
     <section>
@@ -101,7 +110,7 @@ export default function Calendar() {
                       <TextField
                         {...params}
                         label="Procedimento"
-                        onBlur={(e: any) => setDescricao(e.target.value)}
+                        onBlur={(e: any) => setProcedimento(e.target.value)}
                         required
                       />
                     )}
@@ -110,8 +119,8 @@ export default function Calendar() {
                         (procedimento) => procedimento.name
                       ) || ["Carregando procedimentos..."]
                     }
-                    value={descricao}
-                    onChange={(_event, newValue) => setDescricao(newValue)}
+                    value={procedimento}
+                    onChange={(_event, newValue) => setProcedimento(newValue)}
                     freeSolo
                   />
                   <TextField
@@ -126,8 +135,7 @@ export default function Calendar() {
                   <div>
                     <DateTimePicker
                       value={start}
-                      showDaysOutsideCurrentMonth
-                      onChange={(newValue) => setDate(newValue)}
+                      onChange={(newValue) => setStart(newValue)}
                     />
                   </div>
                   <p>Fim do atendimento:</p>
@@ -145,14 +153,14 @@ export default function Calendar() {
                         session,
                         cliente,
                         clientList,
-                        descricao,
+                        procedimento,
                         tel,
                         start,
                         end
                       )
                     }
                     disabled={
-                      descricao === null ||
+                      procedimento === null ||
                       cliente === null ||
                       cliente === "" ||
                       tel === "" ||

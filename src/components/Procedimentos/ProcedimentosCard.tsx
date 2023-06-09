@@ -28,8 +28,13 @@ export default function ProcedimentosCard({ procedimento }: any) {
         </CardTitleDiv>
         <Info>Nome: {procedimento.name}</Info>
         <Info>
-          Tempo para realização: {procedimento.hours} horas e{" "}
-          {procedimento.minutes} minutos
+          Tempo para realização:{" "}
+          {procedimento.hours > 0
+            ? `${procedimento.hours} hora ${
+                procedimento.hours == 1 ? "" : "s"
+              } e`
+            : ""}{" "}
+          {procedimento.minutes > 0 ? `${procedimento.minutes} minutos` : ""}
         </Info>
         <Info>Preço: R$ {procedimento.price},00</Info>{" "}
       </CardInfoList>

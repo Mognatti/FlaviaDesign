@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import Login, { logout } from "../../components/Login";
 import { useSession } from "@supabase/auth-helpers-react";
 import Procedimentos from "../../components/Procedimentos";
-import { Title, Section } from "../../styles/StyledComponenets";
+import { Title, Section, SessionTitle } from "../../styles/StyledComponenets";
 
 const LogoutButton = styledMui(Button)`
 justify-self:center;
@@ -22,6 +22,8 @@ export default function Home() {
 
   return session ? (
     <Section>
+      <br />
+      <SessionTitle>Bem vinda!</SessionTitle>
       <Title>Login Realizado com Sucesso</Title>
       <LogoutButton onClick={() => logout()}> Finalizar Sessão </LogoutButton>
       <Procedimentos></Procedimentos>

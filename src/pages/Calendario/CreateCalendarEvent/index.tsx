@@ -6,7 +6,7 @@ export async function createCalendarEvent(
   session: any,
   cliente: string | null,
   clientList: any[] | undefined,
-  descricao: string | null,
+  procedimento: string | null,
   tel: string,
   start: any,
   end: any
@@ -17,7 +17,7 @@ export async function createCalendarEvent(
     summary: `${cliente} - ${tel}`,
     description: `
 Cliente: ${cliente} 
-Prodecimento: ${descricao}
+Prodecimento: ${procedimento}
 Telefone: ${tel}
 Mensagem de confirmação:
 Oii, boa tarde, ${cliente}! 
@@ -49,7 +49,7 @@ Agradeço a compreensão 😘
       const { data, error } = await client.from("Clientes").insert({
         name: cliente,
         cel_number: tel,
-        last_service: descricao,
+        last_service: procedimento,
         last_visit: start.toISOString(),
       });
       if (error) throw error;

@@ -19,7 +19,6 @@ export default function Procedimentos() {
   const [creating, setCreating] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
     getProcedimentos(setProcedimentos);
     setLoading(false);
   }, []);
@@ -36,7 +35,9 @@ export default function Procedimentos() {
           </Item>
         ))}
         {creating ? (
-          <CreatingProcedimentoCard setCreating={setCreating} />
+          <Item>
+            <CreatingProcedimentoCard setCreating={setCreating} />
+          </Item>
         ) : (
           <Item>
             <CreateButtonContainer>

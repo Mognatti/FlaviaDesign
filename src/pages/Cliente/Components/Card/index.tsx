@@ -37,7 +37,7 @@ export default function Card({ client }: any) {
         <Info>Nome: {client.name}</Info>
         <Info>Telefone: {client.cel_number}</Info>
         <Info>
-          Data do último procedimento:{" "}
+          Atendimento mais recente:{" "}
           {client.last_visit !== null
             ? dayjs(client.last_visit).format("DD/MM/YY")
             : "Não registrado"}
