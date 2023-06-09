@@ -1,42 +1,52 @@
-export const procedimentos = [
-  {
-    nome: "Design Simples",
-    horas: 0,
-    minutos: 30,
-    preço: 50,
-  },
-  {
-    nome: "Design com Rena",
-    horas: 0,
-    minutos: 40,
-    preço: 55,
-  },
-  {
-    nome: "Micropigmentação Shadow",
-    horas: 1,
-    minutos: 30,
-    preço: 350,
-  },
-  {
-    nome: "Micropigmentação Fio a Fio",
-    horas: 2,
-    minutos: 0,
-    preço: 350,
-  },
-  {
-    nome: "Lash Lift",
-    horas: 1,
-    minutos: 0,
-    preço: 100,
-  },
-  {
-    nome: "Cílios fio a fio",
-    horas: 3,
-    minutos: 0,
-    preço: 150,
-  },
-];
+import {
+  SessionTitle,
+  Item,
+  List,
+  ListContainer,
+  Loading,
+  CreateButtonContainer,
+} from "../../styles/StyledComponenets";
+import ProcedimentosCard from "./ProcedimentosCard";
+import { useState, useEffect } from "react";
+import { getProcedimentos } from "./listaProcedimentos";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import IconButton from "@mui/material/IconButton";
+import CreatingProcedimentoCard from "./CreatingProcedimentoCard";
 
-export const procedimentosNome = procedimentos.map(
-  (procedimento) => procedimento.nome
-);
+export default function Procedimentos() {
+  const [procedimentos, setProcedimentos] = useState<any[]>();
+  const [loading, setLoading] = useState(true);
+  const [creating, setCreating] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    getProcedimentos(setProcedimentos);
+    setLoading(false);
+  }, []);
+
+  return loading ? (
+    <Loading> Carregando Procedimentos...</Loading>
+  ) : (
+    <ListContainer>
+      <SessionTitle>Procedimentos</SessionTitle>
+      <List>
+        {procedimentos?.map((procedimento: any) => (
+          <Item key={procedimento.name}>
+            <ProcedimentosCard procedimento={procedimento} />
+          </Item>
+        ))}
+        {creating ? (
+          <CreatingProcedimentoCard setCreating={setCreating} />
+        ) : (
+          <Item>
+            <CreateButtonContainer>
+              <IconButton size="large" onClick={() => setCreating(true)}>
+                <AddBoxIcon />
+              </IconButton>
+            </CreateButtonContainer>
+          </Item>
+        )}
+      </List>
+    </ListContainer>
+  );
+}

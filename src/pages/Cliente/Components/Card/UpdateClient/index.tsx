@@ -1,4 +1,4 @@
-import { client as supabase } from "../../../supabaseClient";
+import { client as supabase } from "../../../../../supabaseClient";
 
 export default async function updateClient(
   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,

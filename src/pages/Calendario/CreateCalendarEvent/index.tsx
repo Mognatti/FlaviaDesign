@@ -22,7 +22,9 @@ Telefone: ${tel}
 Mensagem de confirmação:
 Oii, boa tarde, ${cliente}! 
 Tudo bem? 💚
-Posso confirmar seu horário de amanhã às ${start.$H}h? ☺️
+Posso confirmar seu horário de amanhã às ${start.$H}:${
+      start.$m > 9 ? start.$m : "00"
+    }? ☺️
     
 Regas do atendimento: ✨
 1- O limite estabelecido de atraso é de 10 minutos, com obrigação de aviso. 

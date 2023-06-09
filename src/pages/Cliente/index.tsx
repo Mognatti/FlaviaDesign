@@ -1,43 +1,25 @@
-import Card from "../../components/Card";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import Card from "./Components/Card";
 import { useEffect, useState } from "react";
 import { client } from "../../supabaseClient";
-import styled from "styled-components";
 import { useSession } from "@supabase/auth-helpers-react";
 import { Link } from "react-router-dom";
-import NewClient from "./NewClient";
-
-const Title = styled.h3`
-  padding: 8px;
-  border-bottom: 2px solid rgba(69, 80, 61, 0.4);
-`;
-
-const ListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 16px;
-`;
-
-const List = styled.ul`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding-top: 8px;
-  padding-left: 0;
-`;
-
-const Item = styled.li`
-  padding: 24px;
-`;
-
-const NotLogin = styled.p`
-  text-align: center;
-  margin-top: 15px;
-`;
+import NewClient from "./Components/NewClient";
+import {
+  SessionTitle,
+  Loading,
+  Div,
+  Input,
+  SearchIcon,
+  ListContainer,
+  List,
+  Item,
+  NotLoggedin,
+} from "../../styles/StyledComponenets";
 
 export default function Clients() {
   const [clients, setClients] = useState<any[]>();
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const session = useSession();
 
@@ -56,16 +38,30 @@ export default function Clients() {
     getClients();
   }, []);
 
-  if (session) {
-    return (
+  const filtredClients = clients?.filter((cliente) =>
+    cliente.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return session ? (
+    loading ? (
+      <Loading>Carregando clientes...</Loading>
+    ) : (
       <section>
         <NewClient />
         <br />
         <ListContainer>
-          <Title>Clientes Cadastados</Title>
-          {loading && <p>Carregando clientes...</p>}
+          <SessionTitle>Clientes Cadastados</SessionTitle>
+          <Div>
+            <SearchIcon size="25" />
+            <Input
+              type="text"
+              placeholder="Buscar por nome..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            ></Input>
+          </Div>
           <List>
-            {clients?.map((client) => (
+            {filtredClients?.map((client) => (
               <Item key={client.id}>
                 <Card client={client} />
               </Item>
@@ -73,13 +69,11 @@ export default function Clients() {
           </List>
         </ListContainer>
       </section>
-    );
-  } else {
-    return (
-      <NotLogin>
-        Para criar acessar o conteúdo da página, faça login na{" "}
-        <Link to="/">home</Link>
-      </NotLogin>
-    );
-  }
+    )
+  ) : (
+    <NotLoggedin>
+      Para criar acessar o conteúdo da página, faça login na{" "}
+      <Link to="/">home</Link>
+    </NotLoggedin>
+  );
 }

@@ -6,28 +6,16 @@ import { Autocomplete, Button, Stack } from "@mui/material";
 import TextField from "@mui/material/TextField/TextField";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
-import { procedimentosNome } from "../../components/Procedimentos";
-import { Form, Container } from "../../components/StyledComponents";
-import styled from "styled-components";
-import { styled as styledMui } from "@mui/material";
+import {
+  CalendarForm,
+  CalendarContainer,
+  Loading,
+  Title,
+  StyledButton,
+} from "../../styles/StyledComponenets";
 import { createCalendarEvent } from "./CreateCalendarEvent";
+import { getProcedimentos } from "../../components/Procedimentos/listaProcedimentos";
 import { client } from "../../supabaseClient";
-
-const Title = styled.h3`
-  padding: 8px;
-  padding-bottom: 16px;
-  font-weight: 400;
-`;
-
-const Loading = styled.p`
-  text-align: center;
-  margin-top: 15px;
-`;
-const P = styled.p``;
-
-const StyledButton = styledMui(Button)`
-  background-color: gray;
-`;
 
 export default function Calendar() {
   const session = useSession(); // session data overall, mainly tokens and user info (session ?  user = true : user = false)
@@ -37,9 +25,10 @@ export default function Calendar() {
   const [tel, setTel] = useState("");
   const [descricao, setDescricao] = useState<string | null>(null);
   const [clientList, setClientList] = useState<any[]>();
+  const [procedimentos, setProcedimentos] = useState<any[]>();
   const [loading, setLoading] = useState(false);
 
-  async function getClientsName() {
+  async function getClientsData() {
     try {
       setLoading(true);
       const { data, error } = await client
@@ -54,12 +43,14 @@ export default function Calendar() {
   }
 
   useEffect(() => {
-    getClientsName();
+    getClientsData();
+    getProcedimentos(setProcedimentos);
   }, []);
 
+  //use client name to change tel value
   useEffect(() => {
     const existentClient = clientList?.find((item) => item.name === cliente);
-    existentClient ? setTel(existentClient.cel_number) : setTel("");
+    existentClient ? setTel(existentClient.cel_number) : setTel(tel);
   }, [cliente, clientList]);
 
   function setDate(newValue: any) {
@@ -75,7 +66,7 @@ export default function Calendar() {
       )
     );
   }
-  console.log(descricao);
+
   return (
     <section>
       <div>
@@ -83,8 +74,8 @@ export default function Calendar() {
           loading ? (
             <Loading>Carregando Clientes...</Loading>
           ) : (
-            <Container>
-              <Form>
+            <CalendarContainer>
+              <CalendarForm>
                 <Title>Novo Agendamento</Title>
                 <Stack spacing={2}>
                   <Autocomplete
@@ -114,7 +105,11 @@ export default function Calendar() {
                         required
                       />
                     )}
-                    options={procedimentosNome}
+                    options={
+                      procedimentos?.map(
+                        (procedimento) => procedimento.name
+                      ) || ["Carregando procedimentos..."]
+                    }
                     value={descricao}
                     onChange={(_event, newValue) => setDescricao(newValue)}
                     freeSolo
@@ -127,7 +122,7 @@ export default function Calendar() {
                     onChange={(e) => setTel(e.target.value)}
                     required
                   ></TextField>
-                  <P>Início do atedimento:</P>
+                  <p>Início do atedimento:</p>
                   <div>
                     <DateTimePicker
                       value={start}
@@ -135,7 +130,7 @@ export default function Calendar() {
                       onChange={(newValue) => setDate(newValue)}
                     />
                   </div>
-                  <P>Fim do atendimento:</P>
+                  <p>Fim do atendimento:</p>
                   <DateTimePicker
                     value={end}
                     onChange={(newValue) => setEnd(newValue)}
@@ -168,7 +163,7 @@ export default function Calendar() {
                     Salvar no Calendário
                   </StyledButton>
                 </Stack>
-              </Form>
+              </CalendarForm>
               <iframe
                 src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23b5ca9a&ctz=America%2FSao_Paulo&showTitle=0&showDate=1&showPrint=0&showTabs=0&showCalendars=0&showNav=1&src=Y2Fpb2NzbTk3QGdtYWlsLmNvbQ&src=ZmFtaWx5MDg1MTM5MTA3NjgzMTkwODc5NTdAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=cHQuYnJhemlsaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%234285F4&color=%23009688&color=%237986CB"
                 style={{
@@ -179,7 +174,7 @@ export default function Calendar() {
                   borderRadius: "5px",
                 }}
               ></iframe>
-            </Container>
+            </CalendarContainer>
           )
         ) : (
           <Loading>
