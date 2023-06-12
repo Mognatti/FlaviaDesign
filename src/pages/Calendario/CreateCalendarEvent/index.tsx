@@ -46,7 +46,7 @@ Agradeço a compreensão 😘
 
   if (clientList?.find((client) => client.name === cliente) == undefined) {
     try {
-      const { data, error } = await client.from("Clientes").insert({
+      const { error } = await client.from("Clientes").insert({
         name: cliente,
         cel_number: tel,
         last_service: procedimento,

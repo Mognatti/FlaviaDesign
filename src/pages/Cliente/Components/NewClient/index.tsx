@@ -16,7 +16,7 @@ export default function NewClient() {
   async function createClient() {
     setLoading(true);
     try {
-      const { data, error } = await client.from("Clientes").insert({
+      const { error } = await client.from("Clientes").insert({
         name: name,
         cel_number: tel,
       });

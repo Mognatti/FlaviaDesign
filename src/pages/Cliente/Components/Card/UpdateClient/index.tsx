@@ -10,7 +10,7 @@ export default async function updateClient(
   e.preventDefault();
   document.getElementById("submit")!.innerText = "Salvando...";
   try {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("Clientes")
       .update({
         name: name,

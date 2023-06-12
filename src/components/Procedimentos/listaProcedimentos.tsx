@@ -25,7 +25,7 @@ export async function updateProcedimento(
   e.preventDefault();
   document.getElementById("change-procedimento")!.innerText = "salvando...";
   try {
-    const { data, error } = await client
+    const { error } = await client
       .from("Procedimentos")
       .update({
         name: name,
@@ -51,7 +51,7 @@ export async function createProcedimento(
   e.preventDefault();
 
   try {
-    const { data, error } = await client.from("Procedimentos").insert({
+    const { error } = await client.from("Procedimentos").insert({
       name: name,
       price: preco,
       hours: horas,

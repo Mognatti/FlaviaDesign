@@ -2,7 +2,7 @@
 import { useSession } from "@supabase/auth-helpers-react";
 import { useState, useEffect } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers/";
-import { Autocomplete, Button, Stack } from "@mui/material";
+import { Autocomplete, Stack } from "@mui/material";
 import TextField from "@mui/material/TextField/TextField";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
@@ -42,7 +42,7 @@ export default function Calendar() {
   useEffect(() => {
     const existentClient = clientList?.find((item) => item.name === cliente);
     existentClient ? setTel(existentClient.cel_number) : setTel(tel);
-  }, [cliente, clientList]);
+  }, [cliente, clientList, tel]);
 
   //use 'procedimento' and 'start' values to change 'end' value
   useEffect(() => {
