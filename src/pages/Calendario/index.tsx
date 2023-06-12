@@ -31,7 +31,6 @@ export default function Calendar() {
   const [loading, setLoading] = useState(false);
   const [emailLink, setEmailLink] = useState("");
 
-  console.log(session);
   //get data from supabase
   useEffect(() => {
     getClientsNameAndCell(setLoading, setClientList);
