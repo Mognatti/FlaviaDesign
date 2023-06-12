@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Card from "./Components/Card";
 import { useEffect, useState } from "react";
-import { client } from "../../supabaseClient";
 import { useSession } from "@supabase/auth-helpers-react";
 import { Link } from "react-router-dom";
 import NewClient from "./Components/NewClient";
 import {
   SessionTitle,
   Loading,
-  Div,
+  SearchDiv,
   Input,
   SearchIcon,
   ListContainer,
@@ -16,6 +15,7 @@ import {
   Item,
   NotLoggedin,
 } from "../../styles/StyledComponenets";
+import { getClientsFullData } from "../../components/FetchClients";
 
 export default function Clients() {
   const [clients, setClients] = useState<any[]>();
@@ -23,19 +23,8 @@ export default function Clients() {
   const [loading, setLoading] = useState(true);
   const session = useSession();
 
-  async function getClients() {
-    try {
-      const { data, error } = await client.from("Clientes").select("*");
-      if (error) throw error;
-      if (data != null) setClients(data);
-      setLoading(false);
-    } catch (error: any) {
-      alert(error.message);
-    }
-  }
-
   useEffect(() => {
-    getClients();
+    getClientsFullData(setClients, setLoading);
   }, []);
 
   const filtredClients = clients?.filter((cliente) =>
@@ -51,15 +40,16 @@ export default function Clients() {
         <br />
         <ListContainer>
           <SessionTitle>Clientes Cadastados</SessionTitle>
-          <Div>
-            <SearchIcon size="25" />
+          <SearchDiv>
+            <SearchIcon />
             <Input
               type="text"
               placeholder="Buscar por nome..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             ></Input>
-          </Div>
+          </SearchDiv>
+
           <List>
             {filtredClients?.map((client) => (
               <Item key={client.id}>
