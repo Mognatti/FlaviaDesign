@@ -73,7 +73,9 @@ Agradeço a compreensão 😘
     })
     .then((data) => {
       if (data.status !== "confirmed") {
-        alert("Ocorreu algum erro ao criar o evento." + "\n" + data.error);
+        alert(
+          "Ocorreu algum erro ao criar o evento." + "\n" + data.error.message
+        );
       } else {
         alert("Evento criado com Sucesso!");
         window.location.reload();
