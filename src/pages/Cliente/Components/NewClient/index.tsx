@@ -6,7 +6,7 @@ import {
   SessionTitle,
   Submit,
   ClientConetainer,
-} from "../../../../styles/StyledComponenets";
+} from "../../../../styles/GlobalStyles";
 
 export default function NewClient() {
   const [name, setName] = useState("");

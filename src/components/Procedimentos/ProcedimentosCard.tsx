@@ -10,7 +10,7 @@ import {
   ButtonContainer,
   Form,
   Info,
-} from "../../styles/StyledComponenets";
+} from "../../styles/GlobalStyles";
 import { updateProcedimento } from "./listaProcedimentos";
 
 export default function ProcedimentosCard({ procedimento }: any) {

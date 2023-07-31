@@ -10,7 +10,7 @@ export async function getProcedimentos(
       setProcedimentos(data);
     }
   } catch (error: any) {
-    alert(error.message);
+    console.log(error.message);
   }
 }
 
@@ -37,7 +37,7 @@ export async function updateProcedimento(
     if (error) throw error;
     window.location.reload();
   } catch (error: any) {
-    alert(error.message);
+    console.log(error.message);
   }
 }
 
@@ -60,6 +60,6 @@ export async function createProcedimento(
     if (error) throw error;
     window.location.reload();
   } catch (error: any) {
-    alert(error.message);
+    console.log(error.message);
   }
 }

@@ -1,23 +1,17 @@
 import { navOpt } from "./navOpt";
-import {
-  HeaderItem,
-  HeaderList,
-  HeaderStyledLink,
-  StyledHeader,
-} from "../../styles/StyledComponenets";
-
+import * as S from "./styles";
 export default function Header() {
   return (
-    <StyledHeader>
+    <S.StyledHeader>
       <nav>
-        <HeaderList>
+        <S.HeaderList>
           {navOpt.map((link) => (
-            <HeaderItem key={link.id}>
-              <HeaderStyledLink to={link.to}>{link.nome}</HeaderStyledLink>
-            </HeaderItem>
+            <S.HeaderItem key={link.id}>
+              <S.HeaderStyledLink to={link.to}>{link.nome}</S.HeaderStyledLink>
+            </S.HeaderItem>
           ))}
-        </HeaderList>
+        </S.HeaderList>
       </nav>
-    </StyledHeader>
+    </S.StyledHeader>
   );
 }

@@ -1,53 +1,40 @@
-import {
-  SessionTitle,
-  Item,
-  List,
-  ListContainer,
-  Loading,
-  CreateButtonContainer,
-} from "../../styles/StyledComponenets";
+import * as GS from "../../styles/GlobalStyles";
 import ProcedimentosCard from "./ProcedimentosCard";
-import { useState, useEffect } from "react";
-import { getProcedimentos } from "./listaProcedimentos";
+import { useState } from "react";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import IconButton from "@mui/material/IconButton";
 import CreatingProcedimentoCard from "./CreatingProcedimentoCard";
+import useProcedimentos from "../../pages/Calendario/CreateCalendarEvent/useProcedimentos";
 
 export default function Procedimentos() {
-  const [procedimentos, setProcedimentos] = useState<any[]>();
-  const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
+  const [{ procedimentosList, isLoading }] = useProcedimentos();
 
-  useEffect(() => {
-    getProcedimentos(setProcedimentos);
-    setLoading(false);
-  }, []);
+  if (isLoading) return <GS.Loading> Carregando Procedimentos...</GS.Loading>;
 
-  return loading ? (
-    <Loading> Carregando Procedimentos...</Loading>
-  ) : (
-    <ListContainer>
-      <SessionTitle>Procedimentos</SessionTitle>
-      <List>
-        {procedimentos?.map((procedimento: any) => (
-          <Item key={procedimento.name}>
+  return (
+    <GS.ListContainer>
+      <GS.SessionTitle>Procedimentos</GS.SessionTitle>
+      <GS.List>
+        {procedimentosList?.map((procedimento: any) => (
+          <GS.Item key={procedimento.name}>
             <ProcedimentosCard procedimento={procedimento} />
-          </Item>
+          </GS.Item>
         ))}
         {creating ? (
-          <Item>
+          <GS.Item>
             <CreatingProcedimentoCard setCreating={setCreating} />
-          </Item>
+          </GS.Item>
         ) : (
-          <Item>
-            <CreateButtonContainer>
+          <GS.Item>
+            <GS.CreateButtonContainer>
               <IconButton size="large" onClick={() => setCreating(true)}>
                 <AddBoxIcon />
               </IconButton>
-            </CreateButtonContainer>
-          </Item>
+            </GS.CreateButtonContainer>
+          </GS.Item>
         )}
-      </List>
-    </ListContainer>
+      </GS.List>
+    </GS.ListContainer>
   );
 }

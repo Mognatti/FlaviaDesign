@@ -13,7 +13,7 @@ export async function getClientsNameAndCell(
     if (data != null) setClientList(data);
     setLoading(false);
   } catch (error: any) {
-    alert(error.message);
+    console.log(error.message);
   }
 }
 
@@ -27,6 +27,6 @@ export async function getClientsFullData(
     if (data != null) setClients(data);
     setLoading(false);
   } catch (error: any) {
-    alert(error.message);
+    console.log(error.message);
   }
 }

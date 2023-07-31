@@ -1,7 +1,7 @@
 import { client } from "../../supabaseClient";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
-import { LoginButton } from "../../styles/StyledComponenets";
+import { LoginButton } from "../../styles/GlobalStyles";
 
 export async function logout() {
   await client.auth.signOut();

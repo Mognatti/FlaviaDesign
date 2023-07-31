@@ -6,7 +6,7 @@ import {
   Section,
   SessionTitle,
   LogoutButton,
-} from "../../styles/StyledComponenets";
+} from "../../styles/GlobalStyles";
 
 export default function Home() {
   const session = useSession();

@@ -1,4 +1,4 @@
-import { Form, Submit, Title } from "../../styles/StyledComponenets";
+import { Form, Submit, Title } from "../../styles/GlobalStyles";
 import { createProcedimento } from "./listaProcedimentos";
 import { useState } from "react";
 import { TextField } from "@mui/material";

@@ -12,9 +12,9 @@ import {
   ButtonContainer,
   Info,
   AutoComplete,
-} from "../../../../styles/StyledComponenets";
+} from "../../../../styles/GlobalStyles";
 import dayjs from "dayjs";
-import { Submit } from "../../../../styles/StyledComponenets";
+import { Submit } from "../../../../styles/GlobalStyles";
 import { getProcedimentos } from "../../../../components/Procedimentos/listaProcedimentos";
 
 export default function Card({ client }: any) {

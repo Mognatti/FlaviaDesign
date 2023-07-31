@@ -81,5 +81,7 @@ Agradeço a compreensão 😘
         window.location.reload();
       }
     })
-    .catch((error) => alert(`Falha na criação do evento!\n Motivo: ${error}`));
+    .catch((error) =>
+      alert(`Falha na criação do evento!\n Motivo: ${error.message}`)
+    );
 }
