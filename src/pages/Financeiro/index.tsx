@@ -1,7 +1,3 @@
-import { DataGrid } from "@mui/x-data-grid";
-
-const rows = [];
-
 export default function Financeiro() {
   return (
     <div>
