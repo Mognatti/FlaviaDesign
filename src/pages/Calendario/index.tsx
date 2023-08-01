@@ -88,6 +88,11 @@ export default function Calendar() {
       setEmailLink(import.meta.env.VITE_DEV_CALENDAR);
     }
   }, [session]);
+  console.log(`nome`, cliente);
+  console.log(`tel`, tel);
+  console.log(`start`, start);
+  console.log(`end`, end);
+  console.log(`proced`, procedimento);
 
   if (loading) return <Loading>Carregando calendário...</Loading>;
   return (
@@ -102,7 +107,7 @@ export default function Calendar() {
                   <TextField
                     {...params}
                     label="Nome"
-                    onBlur={(e: any) => setCliente(e.target.value)}
+                    onChange={(e: any) => setCliente(e.target.value)}
                     required
                   />
                 )}
@@ -117,7 +122,12 @@ export default function Calendar() {
               />
               <Autocomplete
                 renderInput={(params) => (
-                  <TextField {...params} label="Telefone" required />
+                  <TextField
+                    {...params}
+                    label="Telefone"
+                    onChange={(e: any) => setTel(e.target.value)}
+                    required
+                  />
                 )}
                 value={tel}
                 onChange={(_event, newValue) => setTel(newValue)}

@@ -12,9 +12,9 @@ import {
   ButtonContainer,
   Info,
   AutoComplete,
+  Submit,
 } from "../../../../styles/GlobalStyles";
 import dayjs from "dayjs";
-import { Submit } from "../../../../styles/GlobalStyles";
 import { getProcedimentos } from "../../../../components/Procedimentos/listaProcedimentos";
 
 export default function Card({ client }: any) {

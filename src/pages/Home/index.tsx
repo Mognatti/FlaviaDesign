@@ -14,8 +14,8 @@ export default function Home() {
   return session ? (
     <Section>
       <br />
-      <SessionTitle>Bem vinda!</SessionTitle>
-      <Title>Login Realizado com Sucesso</Title>
+      <SessionTitle>Bem vinda</SessionTitle>
+      <Title>Caso queira sair, clique no botão abaixo</Title>
       <LogoutButton onClick={() => logout()}> Finalizar Sessão </LogoutButton>
       <Procedimentos></Procedimentos>
     </Section>
