@@ -18,6 +18,8 @@ export default function Financeiro() {
       if (!current.find((item) => item.id === client.id)) current.push(client);
     }
   });
+  const clientServices = current.map((client) => client.services);
+
   const thisMonthSales: number[] = [];
 
   function sumArr(array: number[]) {
@@ -47,9 +49,13 @@ export default function Financeiro() {
             {current.map((client) => (
               <tr key={client.id}>
                 <td>{client.name}</td>
-                <td>{client.last_service}</td>
+                <td>
+                  {client.services?.map((service) => (
+                    <li key={client.cel_number}>{service}</li>
+                  ))}
+                </td>
                 {procedimentosList?.map((procedimento) => {
-                  if (procedimento.name === client.last_service) {
+                  if (client.services?.includes(procedimento.name)) {
                     thisMonthSales.push(procedimento.price);
                     return (
                       <td key={procedimento.id}>R$ {procedimento.price},00</td>

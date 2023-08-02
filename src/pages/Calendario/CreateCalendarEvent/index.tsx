@@ -8,6 +8,7 @@ export async function createCalendarEvent(
   cliente: string | null,
   clientList: Client[] | undefined,
   procedimento: string | null,
+  segundoProcedimento: string | null,
   tel: string | null,
   start: any,
   end: any
@@ -18,7 +19,11 @@ export async function createCalendarEvent(
     summary: `${cliente} - ${tel}`,
     description: `
 Cliente: ${cliente} 
-Prodecimento: ${procedimento}
+Prodecimento: ${
+      segundoProcedimento
+        ? `${segundoProcedimento}e ${procedimento}`
+        : `${procedimento}`
+    } 
 Telefone: ${tel}
 Mensagem de confirmação:
 Oii, boa tarde, ${cliente}! 
@@ -51,6 +56,9 @@ Agradeço a compreensão 😘
         name: cliente,
         cel_number: tel,
         last_service: procedimento,
+        services: segundoProcedimento
+          ? [procedimento, segundoProcedimento]
+          : [procedimento],
         last_visit: start.toISOString(),
       });
       if (error) throw error;
@@ -67,6 +75,9 @@ Agradeço a compreensão 😘
         .from("Clientes")
         .update({
           last_service: procedimento,
+          services: segundoProcedimento
+            ? [procedimento, segundoProcedimento]
+            : [procedimento],
           last_visit: start.toISOString(),
         })
         .eq("id", clienteId);

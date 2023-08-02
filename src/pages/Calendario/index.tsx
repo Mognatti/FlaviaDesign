@@ -26,6 +26,9 @@ export default function Calendar() {
   const [cliente, setCliente] = useState<string | null>(null);
   const [tel, setTel] = useState<string | null>("");
   const [procedimento, setProcedimento] = useState<string | null>(null);
+  const [segundoProcedimento, setSegundoProcedimento] = useState<string | null>(
+    null
+  );
   const [clientList, setClientList] = useState<Client[]>();
   const [loading, setLoading] = useState(false);
   const [emailLink, setEmailLink] = useState<string>("");
@@ -62,20 +65,35 @@ export default function Calendar() {
         (item) => item.name === procedimento
       );
 
-      const procedimentoAtualHoras = procedimentoItem?.hours;
-      const procedimentoAtualMinutos = procedimentoItem?.minutes;
-
-      const formattedDate = `${
-        startMonth + 1 > 11 ? 0 : startMonth + 1
-      }/${startDay}/${startYear}`;
-
-      setEnd(
-        dayjs(formattedDate)
-          .hour(startHour + procedimentoAtualHoras!)
-          .minute(startMinutes + procedimentoAtualMinutos!)
+      const segundoProcedimentoItem = procedimentosList.find(
+        (item) => item.name === segundoProcedimento
       );
+
+      const procedimentoHoras = procedimentoItem?.hours || 0;
+      const procedimentoMinutos = procedimentoItem?.minutes || 0;
+
+      let endDateTime = dayjs(
+        `${startMonth + 1 > 11 ? 0 : startMonth + 1}/${startDay}/${startYear}`
+      );
+
+      if (segundoProcedimento && segundoProcedimentoItem) {
+        const segundoProcedimentoHoras = segundoProcedimentoItem.hours || 0;
+        const segundoProcedimentoMinutos = segundoProcedimentoItem.minutes || 0;
+
+        endDateTime = endDateTime
+          .add(startHour + procedimentoHoras, "hour")
+          .add(startMinutes + procedimentoMinutos, "minute")
+          .add(segundoProcedimentoHoras, "hour")
+          .add(segundoProcedimentoMinutos, "minute");
+      } else {
+        endDateTime = endDateTime
+          .add(startHour + procedimentoHoras, "hour")
+          .add(startMinutes + procedimentoMinutos, "minute");
+      }
+
+      setEnd(endDateTime);
     }
-  }, [start, procedimento, procedimentosList]);
+  }, [start, procedimento, segundoProcedimento, procedimentosList]);
 
   useEffect(() => {
     if (session?.user.email === import.meta.env.VITE_ADMIN_EMAIL) {
@@ -155,6 +173,24 @@ export default function Calendar() {
             id="procedimento-input"
             freeSolo
           />
+          <Autocomplete
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Procedimento adicional"
+                onBlur={(e: any) => setSegundoProcedimento(e.target.value)}
+              />
+            )}
+            options={
+              procedimentosList?.map((procedimento) => procedimento.name) || [
+                "Carregando procedimentos...",
+              ]
+            }
+            value={segundoProcedimento}
+            onChange={(_event, newValue) => setSegundoProcedimento(newValue)}
+            id="procedimento2-input"
+            freeSolo
+          />
           <p>Início do atedimento:</p>
           <div>
             <DateTimePicker
@@ -178,6 +214,7 @@ export default function Calendar() {
                 cliente,
                 clientList,
                 procedimento,
+                segundoProcedimento,
                 tel,
                 start,
                 end

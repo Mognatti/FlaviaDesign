@@ -12,6 +12,7 @@ export interface Client {
   cel_number: string;
   last_visit?: Date;
   last_service?: string;
+  services?: string[];
 }
 
 export interface DateLib {
