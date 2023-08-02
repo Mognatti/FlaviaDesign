@@ -93,6 +93,7 @@ export default function Calendar() {
       </Loading>
     );
   }
+
   if (loading) return <Loading>Carregando calendário...</Loading>;
   return (
     <CalendarContainer>

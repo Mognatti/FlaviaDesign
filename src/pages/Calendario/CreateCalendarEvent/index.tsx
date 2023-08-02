@@ -55,7 +55,24 @@ Agradeço a compreensão 😘
       });
       if (error) throw error;
     } catch (error: any) {
-      alert(error.message);
+      alert("Falha na atualização do banco de dados:" + " " + error.message);
+    }
+  } else {
+    try {
+      const clienteAtual = clientList?.find(
+        (client) => client.name === cliente
+      );
+      const clienteId = clienteAtual?.id;
+      const { error } = await client
+        .from("Clientes")
+        .update({
+          last_service: procedimento,
+          last_visit: start.toISOString(),
+        })
+        .eq("id", clienteId);
+      if (error) throw error;
+    } catch (error: any) {
+      alert("Falha na atualização do banco de dados:" + " " + error.message);
     }
   }
 

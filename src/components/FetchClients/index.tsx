@@ -9,7 +9,7 @@ export async function getClientsNameAndCell(
     setLoading(true);
     const { data, error } = await client
       .from("Clientes")
-      .select("name, cel_number");
+      .select("id, name, cel_number");
     if (error) throw error;
     if (data != null) setClientList(data);
     setLoading(false);

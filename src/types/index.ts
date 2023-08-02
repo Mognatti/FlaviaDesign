@@ -12,7 +12,6 @@ export interface Client {
   cel_number: string;
   last_visit?: Date;
   last_service?: string;
-  all_services?: JSON;
 }
 
 export interface DateLib {
