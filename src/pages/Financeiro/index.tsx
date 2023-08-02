@@ -7,7 +7,7 @@ import useProcedimentos from "../Calendario/CreateCalendarEvent/useProcedimentos
 export default function Financeiro() {
   const [clients, setClients] = useState<Client[]>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [current, setCurrent] = useState<Client[]>([]);
+  const [current] = useState<Client[]>([]);
   const [{ procedimentosList, isLoading }] = useProcedimentos();
   useEffect(() => {
     getClientsFullData(setClients, setLoading);
