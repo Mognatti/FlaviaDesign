@@ -18,7 +18,6 @@ export default function Financeiro() {
       if (!current.find((item) => item.id === client.id)) current.push(client);
     }
   });
-  const clientServices = current.map((client) => client.services);
 
   const thisMonthSales: number[] = [];
 
