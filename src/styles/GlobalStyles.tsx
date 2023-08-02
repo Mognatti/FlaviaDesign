@@ -87,16 +87,18 @@ export const Loading = styled.p`
   margin-top: 15px;
 `;
 export const Submit = styledMui(Button)`
-color: black;
-border-color: white;
+  color: black;
+  border-color: white;
   margin-bottom:12px;
   margin-top:12px;
 `;
+
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
 `;
+
 export const CreateButtonContainer = styled.div``;
 
 //Calendar Component

@@ -1,13 +1,14 @@
 import { client } from "../../../supabaseClient";
+import { Client } from "../../../types";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function createCalendarEvent(
   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   session: any,
   cliente: string | null,
-  clientList: any[] | undefined,
+  clientList: Client[] | undefined,
   procedimento: string | null,
-  tel: string,
+  tel: string | null,
   start: any,
   end: any
 ) {

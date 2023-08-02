@@ -1,8 +1,9 @@
 import { client } from "../../supabaseClient";
+import { Client } from "../../types";
 
 export async function getClientsNameAndCell(
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  setClientList: React.Dispatch<React.SetStateAction<any[] | undefined>>
+  setClientList: React.Dispatch<React.SetStateAction<Client[] | undefined>>
 ) {
   try {
     setLoading(true);

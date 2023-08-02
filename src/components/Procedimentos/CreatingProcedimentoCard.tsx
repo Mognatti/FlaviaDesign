@@ -3,12 +3,11 @@ import { createProcedimento } from "./listaProcedimentos";
 import { useState } from "react";
 import { TextField } from "@mui/material";
 import { TimePicker } from "@mui/x-date-pickers";
+import { CreatingProcedimentoCardProps } from "../../types";
 
-interface Props {
-  setCreating: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export default function CreatingProcedimentoCard({ setCreating }: Props) {
+export default function CreatingProcedimentoCard({
+  setCreating,
+}: CreatingProcedimentoCardProps) {
   const [name, setName] = useState("");
   const [preco, setPreco] = useState<number>(0);
   const [horas, setHoras] = useState<number>(0);

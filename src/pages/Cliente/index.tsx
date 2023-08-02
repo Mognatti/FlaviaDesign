@@ -7,9 +7,10 @@ import NewClient from "./Components/NewClient";
 import * as S from "./styles";
 import * as GS from "../../styles/GlobalStyles";
 import { getClientsFullData } from "../../components/FetchClients";
+import { Client } from "../../types";
 
 export default function Clients() {
-  const [clients, setClients] = useState<any[]>();
+  const [clients, setClients] = useState<Client[]>();
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const session = useSession();

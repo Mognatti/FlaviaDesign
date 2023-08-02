@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { client } from "../../../supabaseClient";
+import { Procedimento } from "../../../types";
 
 export default function useProcedimentos() {
-  const [procedimentosList, setProcedimentosList] = useState<any[]>();
+  const [procedimentosList, setProcedimentosList] = useState<Procedimento[]>(
+    []
+  );
   const [procedimento, setProcedimento] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>();
 
@@ -13,7 +16,7 @@ export default function useProcedimentos() {
         const { data, error } = await client.from("Procedimentos").select("*");
         if (error) throw error;
         if (data !== null) {
-          setProcedimentosList(data);
+          setProcedimentosList(data as Procedimento[]);
           setIsLoading(false);
         }
         if (data === null) {
