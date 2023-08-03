@@ -3,7 +3,6 @@ import { Client } from "../../../types";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function createCalendarEvent(
-  e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   session: any,
   cliente: string | null,
   clientList: Client[] | undefined,
@@ -13,8 +12,6 @@ export async function createCalendarEvent(
   start: any,
   end: any
 ) {
-  e.preventDefault();
-
   const event = {
     summary: `${cliente} - ${tel}`,
     description: `
@@ -31,14 +28,14 @@ Tudo bem? 💚
 Posso confirmar seu horário de amanhã às ${start.$H}:${
       start.$m > 9 ? start.$m : "00"
     }? ☺️
+  
+    Regas do atendimento: ✨
+    1- O limite estabelecido de atraso é de 10 minutos, com obrigação de aviso. 
+    2- os dias de atendimento são de terça a sexta dás 09h às 18h e no sábado dás 09h às 16h
+    3- Não trabalho com fiado, aceito cartão de crédito/débito, pix e dinheiro. 
+    4- Em caso de falta sem  aviso com antecedência, será necessário um sinal de 50% do valor do procedimento para o próximo agendamento.
     
-Regas do atendimento: ✨
-1- O limite estabelecido de atraso é de 10 minutos, com obrigação de aviso. 
-2- Os dias de atendimento são de terça à sexta, com sábado até as 15h 
-3- Não trabalho com fiado, aceito cartão de crédito/débito, pix e dinheiro. 
-4- Em caso de falta sem  aviso com antecedência, será necessário um sinal de 50% do valor do procedimento para o próximo agendamento.
-
-Agradeço a compreensão 😘
+    Agradeço a compreensão 😘
     `,
     start: {
       dateTime: start?.toISOString(),

@@ -6,13 +6,8 @@ import { Autocomplete, Stack } from "@mui/material";
 import TextField from "@mui/material/TextField/TextField";
 import { Link } from "react-router-dom";
 import dayjs, { Dayjs } from "dayjs";
-import {
-  CalendarForm,
-  CalendarContainer,
-  Loading,
-  Title,
-  StyledButton,
-} from "../../styles/GlobalStyles";
+import * as GS from "../../styles/GlobalStyles";
+import * as S from "./styles";
 import { createCalendarEvent } from "./CreateCalendarEvent";
 import { getClientsNameAndCell } from "../../components/FetchClients";
 import useProcedimentos from "./CreateCalendarEvent/useProcedimentos";
@@ -32,6 +27,7 @@ export default function Calendar() {
   const [clientList, setClientList] = useState<Client[]>();
   const [loading, setLoading] = useState(false);
   const [emailLink, setEmailLink] = useState<string>("");
+
   const [{ procedimentosList }] = useProcedimentos();
 
   useEffect(() => {
@@ -103,20 +99,34 @@ export default function Calendar() {
     }
   }, [session]);
 
-  if (!session) {
-    return (
-      <Loading>
-        Para criar eventos no calendário, faça login na{" "}
-        <Link to="/">página inicial</Link>
-      </Loading>
+  function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
+    createCalendarEvent(
+      session,
+      cliente,
+      clientList,
+      procedimento,
+      segundoProcedimento,
+      tel,
+      start,
+      end
     );
   }
 
-  if (loading) return <Loading>Carregando calendário...</Loading>;
+  if (!session) {
+    return (
+      <GS.Loading>
+        Para criar eventos no calendário, faça login na{" "}
+        <Link to="/">página inicial</Link>
+      </GS.Loading>
+    );
+  }
+
+  if (loading) return <GS.Loading>Carregando calendário...</GS.Loading>;
   return (
-    <CalendarContainer>
-      <CalendarForm>
-        <Title>Novo Agendamento</Title>
+    <S.CalendarContainer>
+      <S.CalendarForm>
+        <GS.Title>Novo Agendamento</GS.Title>
         <Stack spacing={2}>
           <Autocomplete
             renderInput={(params) => (
@@ -191,6 +201,7 @@ export default function Calendar() {
             id="procedimento2-input"
             freeSolo
           />
+
           <p>Início do atedimento:</p>
           <div>
             <DateTimePicker
@@ -204,29 +215,17 @@ export default function Calendar() {
             onChange={(newValue) => setEnd(newValue)}
           />
 
-          <StyledButton
+          <S.StyledButton
             className="botao"
             variant="contained"
-            onClick={(e) =>
-              createCalendarEvent(
-                e,
-                session,
-                cliente,
-                clientList,
-                procedimento,
-                segundoProcedimento,
-                tel,
-                start,
-                end
-              )
-            }
+            onClick={(e) => handleClick(e)}
             disabled={!procedimento || !cliente || !tel || !start || !end}
           >
             Salvar no Calendário
-          </StyledButton>
+          </S.StyledButton>
         </Stack>
-      </CalendarForm>
+      </S.CalendarForm>
       <CalendarPreview emailLink={emailLink} />
-    </CalendarContainer>
+    </S.CalendarContainer>
   );
 }
