@@ -10,7 +10,7 @@ import * as GS from "../../styles/GlobalStyles";
 import * as S from "./styles";
 import { createCalendarEvent } from "./CreateCalendarEvent";
 import { getClientsNameAndCell } from "../../components/FetchClients";
-import useProcedimentos from "./CreateCalendarEvent/useProcedimentos";
+import useProcedimentos from "../../hooks/useProcedimentos";
 import CalendarPreview from "./CalendarPreview";
 import { Client, DateLib } from "../../types";
 import { PuffLoader } from "react-spinners";

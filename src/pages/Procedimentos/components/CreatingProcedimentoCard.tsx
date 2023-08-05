@@ -1,9 +1,9 @@
-import { Form, Submit, Title } from "../../styles/GlobalStyles";
+import { Form, Submit, Title } from "../../../styles/GlobalStyles";
 import { createProcedimento } from "./listaProcedimentos";
 import { useState } from "react";
 import { TextField } from "@mui/material";
 import { TimePicker } from "@mui/x-date-pickers";
-import { CreatingProcedimentoCardProps } from "../../types";
+import { CreatingProcedimentoCardProps, DateLib } from "../../../types";
 
 export default function CreatingProcedimentoCard({
   setCreating,
@@ -12,11 +12,13 @@ export default function CreatingProcedimentoCard({
   const [preco, setPreco] = useState<number>(0);
   const [horas, setHoras] = useState<number>(0);
   const [minutos, setMinutos] = useState<number>(0);
-  const [tempo, setTempo] = useState<any>(null);
+  const [tempo, setTempo] = useState<DateLib | null>(null);
 
   const handleTempo = () => {
-    setHoras(tempo.$H);
-    setMinutos(tempo.$m);
+    if (tempo) {
+      setHoras(tempo.$H);
+      setMinutos(tempo.$m);
+    }
   };
 
   return (

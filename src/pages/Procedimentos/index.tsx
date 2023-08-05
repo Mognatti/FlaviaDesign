@@ -1,10 +1,10 @@
 import * as GS from "../../styles/GlobalStyles";
-import ProcedimentosCard from "./ProcedimentosCard";
+import ProcedimentosCard from "./components/ProcedimentosCard";
 import { useState } from "react";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import IconButton from "@mui/material/IconButton";
-import CreatingProcedimentoCard from "./CreatingProcedimentoCard";
-import useProcedimentos from "../../pages/Calendario/CreateCalendarEvent/useProcedimentos";
+import CreatingProcedimentoCard from "./components/CreatingProcedimentoCard";
+import useProcedimentos from "../../hooks/useProcedimentos";
 import { Procedimento } from "../../types";
 
 export default function Procedimentos() {

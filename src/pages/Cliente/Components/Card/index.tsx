@@ -15,7 +15,7 @@ import {
   Submit,
 } from "../../../../styles/GlobalStyles";
 import dayjs from "dayjs";
-import { getProcedimentos } from "../../../../components/Procedimentos/listaProcedimentos";
+import { getProcedimentos } from "../../../Procedimentos/components/listaProcedimentos";
 
 export default function Card({ client }: any) {
   const [editing, setEditing] = useState(false);

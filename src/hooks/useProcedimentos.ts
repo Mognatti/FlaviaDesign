@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { client } from "../../../supabaseClient";
-import { Procedimento } from "../../../types";
+import { client } from "../supabaseClient";
+import { Procedimento } from "../types";
 
 export default function useProcedimentos() {
   const [procedimentosList, setProcedimentosList] = useState<Procedimento[]>(
     []
   );
-  const [procedimento, setProcedimento] = useState<any>();
+  const [procedimento, setProcedimento] = useState<Procedimento>();
   const [isLoading, setIsLoading] = useState<boolean>();
 
   useEffect(() => {

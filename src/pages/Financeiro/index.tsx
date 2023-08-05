@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getClientsFullData } from "../../components/FetchClients";
 import { Client } from "../../types";
 import dayjs from "dayjs";
-import useProcedimentos from "../Calendario/CreateCalendarEvent/useProcedimentos";
+import useProcedimentos from "../../hooks/useProcedimentos";
 
 export default function Financeiro() {
   const [clients, setClients] = useState<Client[]>();
