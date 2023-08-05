@@ -1,16 +1,7 @@
 import { useState } from "react";
 import { TextField, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import {
-  Submit,
-  Title,
-  CardContainer,
-  CardInfoList,
-  CardTitleDiv,
-  ButtonContainer,
-  Form,
-  Info,
-} from "../../styles/GlobalStyles";
+import * as GS from "../../styles/GlobalStyles";
 import { updateProcedimento } from "./listaProcedimentos";
 
 export default function ProcedimentosCard({ procedimento }: any) {
@@ -21,37 +12,41 @@ export default function ProcedimentosCard({ procedimento }: any) {
   const [preco, setPreco] = useState(procedimento.price);
 
   return !editing ? (
-    <CardContainer>
-      <CardInfoList>
-        <CardTitleDiv>
-          <Title>Dados do Procedimento</Title>
-        </CardTitleDiv>
-        <Info>Nome: {procedimento.name}</Info>
-        <Info>
-          Tempo para realização:{" "}
+    <GS.CardContainer>
+      <GS.CardInfoList>
+        <GS.CardTitleDiv>
+          <GS.Title>Dados do Procedimento</GS.Title>
+        </GS.CardTitleDiv>
+        <GS.Info>Nome: {procedimento.name}</GS.Info>
+        <GS.Info>
+          Duração:{" "}
           {procedimento.hours > 0
-            ? `${procedimento.hours} hora${procedimento.hours == 1 ? "" : "s"}`
+            ? `${procedimento.hours} hora${procedimento.hours == 1 ? " " : "s"}`
             : ""}
-          {procedimento.minutes > 0 ? ` e ${procedimento.minutes} minutos` : ""}
-        </Info>
-        <Info>Preço: R$ {procedimento.price},00</Info>{" "}
-      </CardInfoList>
-      <ButtonContainer>
+          {procedimento.minutes > 0 && procedimento.hours > 0
+            ? ` e ${procedimento.minutes} minutos`
+            : procedimento.minutes > 0
+            ? `${procedimento.minutes} minutos`
+            : ""}
+        </GS.Info>
+        <GS.Info>Preço: R$ {procedimento.price},00</GS.Info>{" "}
+      </GS.CardInfoList>
+      <GS.ButtonContainer>
         <IconButton onClick={() => setEditing(true)}>
           <EditIcon />
         </IconButton>
-      </ButtonContainer>
-    </CardContainer>
+      </GS.ButtonContainer>
+    </GS.CardContainer>
   ) : (
-    <Form>
-      <Title>Editando procedimento...</Title>
-      <Submit
+    <GS.Form>
+      <GS.Title>Editando procedimento...</GS.Title>
+      <GS.Submit
         color="error"
         variant="outlined"
         onClick={() => setEditing(false)}
       >
         cancelar
-      </Submit>
+      </GS.Submit>
       <TextField
         label="Nome"
         type="text"
@@ -80,7 +75,7 @@ export default function ProcedimentosCard({ procedimento }: any) {
         value={preco}
         onChange={(e) => setPreco(e.target.value)}
       />
-      <Submit
+      <GS.Submit
         id="change-procedimento"
         color="success"
         variant="outlined"
@@ -89,7 +84,7 @@ export default function ProcedimentosCard({ procedimento }: any) {
         }
       >
         Salvar Alterações
-      </Submit>
-    </Form>
+      </GS.Submit>
+    </GS.Form>
   );
 }

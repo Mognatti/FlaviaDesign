@@ -13,6 +13,7 @@ import { getClientsNameAndCell } from "../../components/FetchClients";
 import useProcedimentos from "./CreateCalendarEvent/useProcedimentos";
 import CalendarPreview from "./CalendarPreview";
 import { Client, DateLib } from "../../types";
+import { PuffLoader } from "react-spinners";
 
 export default function Calendar() {
   const session = useSession();
@@ -26,8 +27,8 @@ export default function Calendar() {
   );
   const [clientList, setClientList] = useState<Client[]>();
   const [loading, setLoading] = useState(false);
+  const [isCreating, setIsCreating] = useState<boolean>(false);
   const [emailLink, setEmailLink] = useState<string>("");
-
   const [{ procedimentosList }] = useProcedimentos();
 
   useEffect(() => {
@@ -109,7 +110,8 @@ export default function Calendar() {
       segundoProcedimento,
       tel,
       start,
-      end
+      end,
+      setIsCreating
     );
   }
 
@@ -127,12 +129,12 @@ export default function Calendar() {
     <S.CalendarContainer>
       <S.CalendarForm>
         <GS.Title>Novo Agendamento</GS.Title>
-        <Stack spacing={2}>
+        <Stack spacing={2} style={{ width: "80%" }}>
           <Autocomplete
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Nome"
+                label="Nome da cliente"
                 onChange={(e: any) => setCliente(e.target.value)}
                 required
               />
@@ -150,7 +152,7 @@ export default function Calendar() {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Telefone"
+                label="Telefone da cliente"
                 onChange={(e: any) => setTel(e.target.value)}
                 required
               />
@@ -164,64 +166,69 @@ export default function Calendar() {
             }
             freeSolo
           />
-          <Autocomplete
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Procedimento"
-                onBlur={(e: any) => setProcedimento(e.target.value)}
-                required
-              />
-            )}
-            options={
-              procedimentosList?.map((procedimento) => procedimento.name) || [
-                "Carregando procedimentos...",
-              ]
-            }
-            value={procedimento}
-            onChange={(_event, newValue) => setProcedimento(newValue)}
-            id="procedimento-input"
-            freeSolo
-          />
-          <Autocomplete
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Procedimento adicional"
-                onBlur={(e: any) => setSegundoProcedimento(e.target.value)}
-              />
-            )}
-            options={
-              procedimentosList?.map((procedimento) => procedimento.name) || [
-                "Carregando procedimentos...",
-              ]
-            }
-            value={segundoProcedimento}
-            onChange={(_event, newValue) => setSegundoProcedimento(newValue)}
-            id="procedimento2-input"
-            freeSolo
-          />
-
-          <p>Início do atedimento:</p>
-          <div>
-            <DateTimePicker
-              value={start}
-              onChange={(newValue) => setStart(newValue)}
+          <S.SelectServiceDiv>
+            <Autocomplete
+              style={{ width: "100%" }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Primeiro Procedimento"
+                  onBlur={(e: any) => setProcedimento(e.target.value)}
+                  required
+                />
+              )}
+              options={
+                procedimentosList?.map((procedimento) => procedimento.name) || [
+                  "Carregando procedimentos...",
+                ]
+              }
+              value={procedimento}
+              onChange={(_event, newValue) => setProcedimento(newValue)}
+              id="procedimento-input"
+              freeSolo
             />
-          </div>
+            <Autocomplete
+              style={{ width: "100%" }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Segundo Procedimento"
+                  onBlur={(e: any) => setSegundoProcedimento(e.target.value)}
+                />
+              )}
+              options={
+                procedimentosList?.map((procedimento) => procedimento.name) || [
+                  "Carregando procedimentos...",
+                ]
+              }
+              value={segundoProcedimento}
+              onChange={(_event, newValue) => setSegundoProcedimento(newValue)}
+              id="procedimento2-input"
+              freeSolo
+            />
+          </S.SelectServiceDiv>
+          <p>Início do atedimento:</p>
+          <DateTimePicker
+            value={start}
+            onChange={(newValue) => setStart(newValue)}
+          />
           <p>Fim do atendimento:</p>
           <DateTimePicker
             value={end}
             onChange={(newValue) => setEnd(newValue)}
           />
-
           <S.StyledButton
             className="botao"
             variant="contained"
+            color="primary"
             onClick={(e) => handleClick(e)}
             disabled={!procedimento || !cliente || !tel || !start || !end}
           >
-            Salvar no Calendário
+            {isCreating ? (
+              <PuffLoader size={25} color="#c3ccbf" />
+            ) : (
+              "Salvar no Calendário"
+            )}
           </S.StyledButton>
         </Stack>
       </S.CalendarForm>

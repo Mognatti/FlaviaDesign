@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const EmbedCalendarBig = styled.div`
-  margin-top: 1.2%;
   border: none;
   display: inherit;
   @media (max-width: 840px) {

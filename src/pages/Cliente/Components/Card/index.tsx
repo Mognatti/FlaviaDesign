@@ -32,9 +32,8 @@ export default function Card({ client }: any) {
     <CardContainer>
       <CardInfoList>
         <CardTitleDiv>
-          <Title>Dados da(o) cliente</Title>
+          <Title>{client.name}</Title>
         </CardTitleDiv>
-        <Info>Nome: {client.name}</Info>
         <Info>Telefone: {client.cel_number}</Info>
         <Info>
           Atendimento mais recente:{" "}

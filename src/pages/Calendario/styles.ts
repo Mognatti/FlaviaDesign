@@ -1,16 +1,15 @@
 import styled from "styled-components";
 import { styled as styledMui } from "@mui/material/styles";
 import { Button } from "@mui/material";
+import { pallete } from "../../styles/GlobalStyles";
 
 export const CalendarContainer = styled.div`
   width: 100%;
   padding: 28px 0px;
   padding-bottom: 63px;
   display: flex;
-  flex-direction: row-reverse;
   justify-content: space-around;
-  background-color: rgb(195, 204, 191);
-
+  background-color: ${pallete.lighterGreen};
   @media (max-width: 1300px) {
     flex-direction: column;
     align-items: center;
@@ -28,12 +27,12 @@ export const CalendarForm = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgba(69, 80, 61, 0.4);
+  background-color: transparent;
   width: 35%;
-  margin-top: 2%;
+  margin-top: 1%;
   border-radius: 15px;
   padding: 16px;
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
 
   @media (max-width: 1300px) {
     margin-top: 1%;
@@ -41,6 +40,12 @@ export const CalendarForm = styled.form`
       width: 320px;
     }
   }
+`;
+
+export const SelectServiceDiv = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 18px;
 `;
 
 export const EmbedCalendarBig = styled.div`
@@ -60,5 +65,10 @@ export const EmbedCalendarSmall = styled.div`
 `;
 
 export const StyledButton = styledMui(Button)`
-background-color: gray;
+display: flex;
+justify-content: center;
+padding: 16px;
+align-items: center;
+flex-direction: column;
+color:#c3ccbf;
 `;

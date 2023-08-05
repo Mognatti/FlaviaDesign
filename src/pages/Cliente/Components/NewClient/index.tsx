@@ -52,11 +52,10 @@ export default function NewClient() {
         <br />
         <Submit
           variant="outlined"
-          color="success"
+          color="primary"
           onClick={() => createClient()}
         >
-          {" "}
-          Cadastrar{" "}
+          Cadastrar
         </Submit>
         <br />
         {loading && <h3>criando cliente...</h3>}

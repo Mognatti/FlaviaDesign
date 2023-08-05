@@ -10,8 +10,10 @@ export async function createCalendarEvent(
   segundoProcedimento: string | null,
   tel: string | null,
   start: any,
-  end: any
+  end: any,
+  setIsCreating: React.Dispatch<React.SetStateAction<boolean>>
 ) {
+  setIsCreating(true);
   const event = {
     summary: `${cliente} - ${tel}`,
     description: `
@@ -60,6 +62,7 @@ Posso confirmar seu horário de amanhã às ${start.$H}:${
       });
       if (error) throw error;
     } catch (error: any) {
+      setIsCreating(false);
       alert("Falha na atualização do banco de dados:" + " " + error.message);
     }
   } else {
@@ -99,15 +102,18 @@ Posso confirmar seu horário de amanhã às ${start.$H}:${
     })
     .then((data) => {
       if (data.status !== "confirmed") {
+        setIsCreating(false);
         alert(
           "Ocorreu algum erro ao criar o evento." + "\n" + data.error.message
         );
       } else {
+        setIsCreating(false);
         alert("Evento criado com Sucesso!");
         window.location.reload();
       }
     })
-    .catch((error) =>
-      alert(`Falha na criação do evento!\n Motivo: ${error.message}`)
-    );
+    .catch((error) => {
+      setIsCreating(false);
+      alert(`Falha na criação do evento!\n Motivo: ${error.message}`);
+    });
 }
