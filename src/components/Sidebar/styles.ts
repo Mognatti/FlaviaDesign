@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { pallete } from "../../styles/GlobalStyles";
 import { RiLogoutCircleLine, RiMenuFoldLine } from "react-icons/ri";
@@ -32,15 +32,17 @@ export const SidebarContainer = styled.div<{ isLowOpacity?: boolean }>`
 `;
 export const Controllers = styled.div`
   position: absolute;
-  top: 5vh;
-  left: 10vw;
+  top: 26vh;
+  left: 12vw;
   gap: 2vh;
   display: flex;
   flex-direction: column;
+  -webkit-box-pack: start;
   justify-content: flex-start;
+  -webkit-box-align: center;
   align-items: center;
   margin-bottom: 5vh;
-  transition: 300ms;
+  transition: all 300ms ease 0s;
   &.close {
     left: 1.5vw;
   }
@@ -65,23 +67,6 @@ export const SidebarList = styled.ul`
   flex-direction: column;
   gap: 18px;
 `;
-export const SidebarItem = styled.li`
-  margin: 0;
-  box-sizing: border-box;
-  list-style: none;
-  height: 48px;
-  background: transparent;
-  margin-left: 6px;
-  border-radius: 48px 0 0 48px;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  opacity: 0.8;
-  &.active {
-    background-color: ${pallete.white};
-    position: relative;
-  }
-`;
 
 export const Icon = styled.i`
   min-width: calc(60px - ((4px + 6px) * 2));
@@ -89,7 +74,10 @@ export const Icon = styled.i`
   justify-content: center;
 `;
 
-export const SidebarLink = styled(Link)<{ active?: boolean; close?: boolean }>`
+export const SidebarLink = styled(NavLink)<{
+  active?: boolean;
+  close?: boolean;
+}>`
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -103,7 +91,22 @@ export const SidebarLink = styled(Link)<{ active?: boolean; close?: boolean }>`
   white-space: nowrap;
   overflow-x: hidden;
   transition: all 300ms ease;
-  color: ${(props) => (props.active ? `${pallete.white}` : "black")};
+  color: black;
+`;
+
+export const SidebarItem = styled.li<{ active?: boolean }>`
+  margin: 0;
+  box-sizing: border-box;
+  list-style: none;
+  height: 48px;
+  background: ${(props) => (props.active ? pallete.white : "transparent")};
+  margin-left: 6px;
+  border-radius: 48px 0 0 48px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  opacity: 0.8;
+  transition: all 300ms ease;
 `;
 
 export const Button = styled.button`

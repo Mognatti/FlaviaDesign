@@ -5,8 +5,8 @@ import { pallete } from "../../styles/GlobalStyles";
 export const navOpt = [
   {
     id: 1,
-    nome: "Calendário",
-    to: "/calendario",
+    nome: "Agenda",
+    to: "/agenda",
     icon: <RiCalendarCheckFill color={pallete.dark} size="25" />,
   },
   {

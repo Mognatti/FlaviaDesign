@@ -23,7 +23,6 @@ export default function Home() {
   const datesInCurrentWeek = dateList.filter((date) =>
     DatesInCurrentWeek(date!)
   );
-  console.log(datesInCurrentWeek);
   if (isClientsLoading || isProcedimentosLoading)
     return (
       <div

@@ -18,7 +18,7 @@ export default function AppRouter() {
           <Sidebar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/calendario" element={<Calendar />} />
+            <Route path="/agenda" element={<Calendar />} />
             <Route path="/clientes" element={<Clients />} />
             <Route path="/financeiro" element={<Financeiro />} />
             <Route path="/procedimentos" element={<Procedimentos />} />

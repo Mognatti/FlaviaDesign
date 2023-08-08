@@ -22,9 +22,8 @@ export default function ProcedimentosCard({
     <GS.CardContainer>
       <GS.CardInfoList>
         <GS.CardTitleDiv>
-          <GS.Title>Dados do Procedimento</GS.Title>
+          <GS.Title>{procedimento.name}</GS.Title>
         </GS.CardTitleDiv>
-        <GS.Info>Nome: {procedimento.name}</GS.Info>
         <GS.Info>
           Duração:{" "}
           {(() => {
@@ -48,7 +47,7 @@ export default function ProcedimentosCard({
             }
           })()}
         </GS.Info>
-        <GS.Info>Preço: R$ {procedimento.price},00</GS.Info>{" "}
+        <GS.Info>Preço: R$ {procedimento.price},00</GS.Info>
       </GS.CardInfoList>
       <GS.ButtonContainer>
         <IconButton onClick={() => setEditing(true)}>
