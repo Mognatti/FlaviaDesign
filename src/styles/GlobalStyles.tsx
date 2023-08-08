@@ -37,6 +37,7 @@ export const List = styled.ul`
 `;
 export const Item = styled.li`
   width: 30%;
+  list-style: none;
   @media (max-width: ${breakPoints.mobile}) {
     padding-left: 15vw;
     width: 100%;

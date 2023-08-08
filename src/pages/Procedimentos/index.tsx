@@ -1,4 +1,5 @@
 import * as GS from "../../styles/GlobalStyles";
+import * as S from "./styles";
 import ProcedimentosCard from "./components/ProcedimentosCard";
 import { useState, useContext } from "react";
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -18,25 +19,25 @@ export default function Procedimentos() {
     <GS.Section sidebar={isOpen}>
       <GS.ListContainer>
         <GS.SessionTitle>Procedimentos</GS.SessionTitle>
+        {creating ? (
+          <S.CreatingDiv>
+            <GS.Item>
+              <CreatingProcedimentoCard setCreating={setCreating} />
+            </GS.Item>
+          </S.CreatingDiv>
+        ) : (
+          <GS.CreateButtonContainer>
+            <IconButton size="large" onClick={() => setCreating(true)}>
+              <AddBoxIcon />
+            </IconButton>
+          </GS.CreateButtonContainer>
+        )}
         <GS.List>
           {procedimentosList?.map((procedimento: Procedimento) => (
             <GS.Item key={procedimento.name}>
               <ProcedimentosCard procedimento={procedimento} />
             </GS.Item>
           ))}
-          {creating ? (
-            <GS.Item>
-              <CreatingProcedimentoCard setCreating={setCreating} />
-            </GS.Item>
-          ) : (
-            <>
-              <GS.CreateButtonContainer>
-                <IconButton size="large" onClick={() => setCreating(true)}>
-                  <AddBoxIcon />
-                </IconButton>
-              </GS.CreateButtonContainer>
-            </>
-          )}
         </GS.List>
       </GS.ListContainer>
     </GS.Section>
