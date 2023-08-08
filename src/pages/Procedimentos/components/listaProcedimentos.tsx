@@ -65,6 +65,7 @@ export async function createProcedimento(
       hours: horas,
       minutes: minutos,
     });
+    window.location.reload();
     if (error) throw error;
     setLoading(false);
     throw error;
