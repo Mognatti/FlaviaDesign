@@ -61,6 +61,7 @@ export const Form = styled.form`
   border-radius: 15px;
   padding: 8px;
   margin-top: 2%;
+  margin-bottom: 5vh;
   @media (max-width: 900px) {
     margin-top: 5%;
     width: 280px;
@@ -118,6 +119,8 @@ export const ButtonContainer = styled.div`
 `;
 export const CreateButtonContainer = styled.div`
   display: flex;
+  justify-content: center;
+  padding-bottom: 5vh;
 `;
 
 //Login and Home Components
