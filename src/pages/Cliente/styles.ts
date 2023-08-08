@@ -1,14 +1,15 @@
 import styled from "styled-components";
 import { RiUserSearchLine } from "react-icons/ri";
+import { pallete } from "../../styles/GlobalStyles";
 
 export const SearchDiv = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 16px;
-  width: 45%;
+  width: 96%;
   @media (max-width: 910px) {
-    width: 70%;
+    width: 90%;
   }
 `;
 export const Input = styled.input`
@@ -22,10 +23,10 @@ export const Input = styled.input`
   font-size: 20px;
   transition: 350ms;
   :hover {
-    border: 1px solid rgb(195, 204, 191);
+    border: 1px solid ${pallete.lime};
   }
   :focus {
-    border: 1px solid rgb(195, 204, 191);
+    border: 1px solid ${pallete.dark};
     outline: none;
   }
   @media (max-width: 910px) {
@@ -41,7 +42,6 @@ export const Input = styled.input`
 export const SearchIcon = styled(RiUserSearchLine)`
   padding: 10px;
   position: absolute;
-  transform: scale(1.5);
 `;
 
 export const Loading = styled.p`
@@ -53,26 +53,18 @@ export const Loading = styled.p`
 export const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-top: 16px;
-  @media (max-width: 900px) {
-    height: 100vh;
-  }
 `;
 export const List = styled.ul`
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-content: center;
   flex-wrap: wrap;
   padding-top: 8px;
   padding-left: 0;
 `;
 export const Item = styled.li`
-  padding: 24px;
+  padding: 16px;
   padding-left: 0;
-  margin-left: 24px;
-  margin-right: 24px;
 `;
 export const NotLoggedin = styled.p`
   text-align: center;

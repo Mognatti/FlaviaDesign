@@ -32,7 +32,7 @@ export default function NewClient() {
     <ClientConetainer>
       <Form>
         <br />
-        <SessionTitle>Cadastrar novo cliente</SessionTitle>
+        <SessionTitle>Novo Cadastro</SessionTitle>
         <br />
         <TextField
           label="Nome"

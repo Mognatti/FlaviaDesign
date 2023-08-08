@@ -1,35 +1,119 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { pallete } from "../../styles/GlobalStyles";
+import { RiLogoutCircleLine, RiMenuFoldLine } from "react-icons/ri";
+import Switch from "@mui/material/Switch";
 
-export const StyledHeader = styled.header`
-  background-color: rgb(195, 204, 191);
-  border-bottom: 1px solid rgba(69, 80, 61, 255);
-  color: white;
-  width: 100%;
-  height: 8vh;
-  padding: none;
-  margin: none;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: row;
-`;
-export const HeaderList = styled.ul`
-  width: 100%;
-  display: flex;
+export const SidebarContainer = styled.div<{ isLowOpacity?: boolean }>`
+  position: fixed;
+  margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  background-color: ${pallete.lightGreen};
+  width: 200px;
+  height: 100%;
+  z-index: 1000;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  transition: all 300ms ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5vh;
+  opacity: ${(props) => (props.isLowOpacity ? "0.5" : "1")};
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &.close {
+    width: 60px;
+  }
 `;
-export const HeaderItem = styled.li`
-  padding: 16px;
-  color: black;
+export const Controllers = styled.div`
+  position: absolute;
+  top: 5vh;
+  left: 10vw;
+  gap: 2vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 5vh;
+  transition: 300ms;
+  &.close {
+    left: 1.5vw;
+  }
+`;
+export const MaterialUISwitch = styled(Switch)``;
+
+export const MenuIconDiv = styled.div<{ open: boolean }>`
+  transition: 300ms;
+  transform: ${(props) => (props.open ? "none" : "rotateY(180deg)")};
+`;
+
+export const MenuIcon = styled(RiMenuFoldLine)`
+  cursor: pointer;
+`;
+
+export const SidebarList = styled.ul`
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+`;
+export const SidebarItem = styled.li`
+  margin: 0;
+  box-sizing: border-box;
+  list-style: none;
+  height: 48px;
+  background: transparent;
+  margin-left: 6px;
+  border-radius: 48px 0 0 48px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  opacity: 0.8;
+  &.active {
+    background-color: ${pallete.white};
+    position: relative;
+  }
+`;
+
+export const Icon = styled.i`
+  min-width: calc(60px - ((4px + 6px) * 2));
   display: flex;
   justify-content: center;
 `;
-export const HeaderStyledLink = styled(Link)`
-  color: black;
+
+export const SidebarLink = styled(Link)<{ active?: boolean; close?: boolean }>`
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   text-decoration: none;
-  :hover {
-    transition: 350ms;
-    opacity: 0.5;
-  }
+  width: ${(props) => (props.close ? "calc(48px - (4px*2))" : "100%")};
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 48px;
+  font-size: 16px;
+  white-space: nowrap;
+  overflow-x: hidden;
+  transition: all 300ms ease;
+  color: ${(props) => (props.active ? `${pallete.white}` : "black")};
+`;
+
+export const Button = styled.button`
+  color: #d32f2f;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-size: 16px;
+`;
+
+export const LogoutIcon = styled(RiLogoutCircleLine)`
+  color: #d32f2f;
 `;

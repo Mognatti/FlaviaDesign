@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { styled as styledMui } from "@mui/material/styles";
 import { Button } from "@mui/material";
-import { pallete } from "../../styles/GlobalStyles";
+import { breakPoints, pallete } from "../../styles/GlobalStyles";
 
 export const CalendarContainer = styled.div`
   width: 100%;
@@ -10,6 +10,7 @@ export const CalendarContainer = styled.div`
   display: flex;
   justify-content: space-around;
   background-color: ${pallete.lighterGreen};
+  gap: 2%;
   @media (max-width: 1300px) {
     flex-direction: column;
     align-items: center;
@@ -38,6 +39,9 @@ export const CalendarForm = styled.form`
     margin-top: 1%;
     @media (max-width: 818px) {
       width: 320px;
+      @media (max-width: ${breakPoints.mobile}) {
+        width: 300px;
+      }
     }
   }
 `;

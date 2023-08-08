@@ -8,19 +8,23 @@ import Financeiro from "./pages/Financeiro";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./styles/theme";
 import Procedimentos from "./pages/Procedimentos";
+import { SidebarStatusProvider } from "./context/SidebarStatus";
+
 export default function AppRouter() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Sidebar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/calendario" element={<Calendar />} />
-          <Route path="/clientes" element={<Clients />} />
-          <Route path="/financeiro" element={<Financeiro />} />
-          <Route path="/procedimentos" element={<Procedimentos />} />
-          <Route path="*" element={<NotFount />}></Route>
-        </Routes>
+        <SidebarStatusProvider>
+          <Sidebar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/calendario" element={<Calendar />} />
+            <Route path="/clientes" element={<Clients />} />
+            <Route path="/financeiro" element={<Financeiro />} />
+            <Route path="/procedimentos" element={<Procedimentos />} />
+            <Route path="*" element={<NotFount />}></Route>
+          </Routes>
+        </SidebarStatusProvider>
       </Router>
     </ThemeProvider>
   );

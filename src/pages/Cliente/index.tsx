@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Card from "./Components/Card";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSession } from "@supabase/auth-helpers-react";
 import { Link } from "react-router-dom";
 import NewClient from "./Components/NewClient";
@@ -8,11 +8,13 @@ import * as S from "./styles";
 import * as GS from "../../styles/GlobalStyles";
 import { getClientsFullData } from "../../components/FetchClients";
 import { Client } from "../../types";
+import { SidebarStatusContext } from "../../context/SidebarStatus";
 
 export default function Clients() {
   const [clients, setClients] = useState<Client[]>();
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const { isOpen } = useContext(SidebarStatusContext);
   const session = useSession();
 
   useEffect(() => {
@@ -35,13 +37,14 @@ export default function Clients() {
   if (loading && session) return <S.Loading>Carregando clientes...</S.Loading>;
 
   return (
-    <section>
-      <NewClient />
+    <GS.Section sidebar={isOpen}>
       <br />
       <S.ListContainer>
-        <GS.SessionTitle>Clientes Cadastados</GS.SessionTitle>
+        <GS.SessionTitle>Clientes</GS.SessionTitle>
+        <NewClient />
+        <br />
         <S.SearchDiv>
-          <S.SearchIcon />
+          <S.SearchIcon size="30" />
           <S.Input
             type="text"
             placeholder="Buscar por nome..."
@@ -49,14 +52,14 @@ export default function Clients() {
             onChange={(e) => setSearch(e.target.value)}
           ></S.Input>
         </S.SearchDiv>
-        <S.List>
+        <GS.List>
           {filtredClients?.map((client) => (
-            <S.Item key={client.id}>
+            <GS.Item key={client.id}>
               <Card client={client} />
-            </S.Item>
+            </GS.Item>
           ))}
-        </S.List>
+        </GS.List>
       </S.ListContainer>
-    </section>
+    </GS.Section>
   );
 }

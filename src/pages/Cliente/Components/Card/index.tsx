@@ -16,6 +16,7 @@ import {
 } from "../../../../styles/GlobalStyles";
 import dayjs from "dayjs";
 import { getProcedimentos } from "../../../Procedimentos/components/listaProcedimentos";
+import useWindowSize from "../../../../hooks/useWindowSize";
 
 export default function Card({ client }: any) {
   const [editing, setEditing] = useState(false);
@@ -23,6 +24,7 @@ export default function Card({ client }: any) {
   const [tel, setTel] = useState(client.cel_number);
   const [lastService, setLastService] = useState<string>(client.last_service);
   const [procedimentos, setProcedimentos] = useState<any>();
+  const [{ isTablet }] = useWindowSize();
 
   useEffect(() => {
     getProcedimentos(setProcedimentos);
@@ -81,11 +83,12 @@ export default function Card({ client }: any) {
             "Carregando Procedimentos",
           ]
         }
+        style={isTablet ? { width: "80%" } : { width: "71%" }}
         onChange={(_event, newValue: any) => setLastService(newValue)}
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Último Serviço Realizado"
+            label="Último Serviço"
             type="text"
             value={lastService}
             placeholder={client.last_service}

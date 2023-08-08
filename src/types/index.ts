@@ -10,7 +10,7 @@ export interface Client {
   id?: number;
   name: string;
   cel_number: string;
-  last_visit?: Date;
+  last_visit?: string;
   last_service?: string;
   services?: string[];
 }

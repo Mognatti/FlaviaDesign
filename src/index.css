@@ -1,6 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;400&display=swap");
 html {
   background-color: #c3ccbf;
+  overflow-x: hidden;
+}
+body {
+  overflow-x: hidden;
 }
 
 ul,

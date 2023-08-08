@@ -21,7 +21,7 @@ export default function CalendarPreview({ emailLink }: CalendarPreviewProps) {
           src={emailLink}
           style={{
             border: "solid 1px #777",
-            width: "350px",
+            width: "330px",
             height: "600px",
             marginTop: "10%",
             borderRadius: "5px",
