@@ -23,7 +23,7 @@ export const CalendarContainer = styled.div`
   }
 `;
 
-export const CalendarForm = styled.form`
+export const CalendarForm = styled.form<{ mobile?: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,6 +31,7 @@ export const CalendarForm = styled.form`
   background-color: transparent;
   width: 35%;
   margin-top: 1%;
+  margin-left: ${(props) => (props.mobile ? "0" : "-30px")};
   border-radius: 15px;
   padding: 16px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);

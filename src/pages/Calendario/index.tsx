@@ -15,6 +15,7 @@ import CalendarPreview from "./CalendarPreview";
 import { Client, DateLib } from "../../types";
 import { PuffLoader } from "react-spinners";
 import { SidebarStatusContext } from "../../context/SidebarStatus";
+import useWindowSize from "../../hooks/useWindowSize";
 
 export default function Calendar() {
   const session = useSession();
@@ -32,7 +33,7 @@ export default function Calendar() {
   const [emailLink, setEmailLink] = useState<string>("");
   const [{ procedimentosList }] = useProcedimentos();
   const { isOpen } = useContext(SidebarStatusContext);
-
+  const [{ isTablet }] = useWindowSize();
   useEffect(() => {
     getClientsNameAndCell(setLoading, setClientList);
   }, []);
@@ -130,7 +131,7 @@ export default function Calendar() {
   return (
     <GS.Section sidebar={isOpen}>
       <S.CalendarContainer>
-        <S.CalendarForm>
+        <S.CalendarForm mobile={isTablet}>
           <GS.Title>Novo Agendamento</GS.Title>
           <Stack spacing={2} style={{ width: "80%" }}>
             <Autocomplete
