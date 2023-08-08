@@ -1,9 +1,10 @@
 import { Form, Submit, Title } from "../../../styles/GlobalStyles";
+import * as S from "../styles";
 import { createProcedimento } from "./listaProcedimentos";
 import { useState } from "react";
 import { TextField } from "@mui/material";
-import { TimePicker } from "@mui/x-date-pickers";
 import { CreatingProcedimentoCardProps, DateLib } from "../../../types";
+import { PuffLoader } from "react-spinners";
 
 export default function CreatingProcedimentoCard({
   setCreating,
@@ -13,6 +14,7 @@ export default function CreatingProcedimentoCard({
   const [horas, setHoras] = useState<number>(0);
   const [minutos, setMinutos] = useState<number>(0);
   const [tempo, setTempo] = useState<DateLib | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleTempo = () => {
     if (tempo) {
@@ -44,21 +46,30 @@ export default function CreatingProcedimentoCard({
         onChange={(e) => setPreco(parseInt(e.target.value))}
       ></TextField>
       <br />
-      <TimePicker
+      <S.TimeInput
         value={tempo}
         label="Tempo para Realização"
-        onChange={(newValue) => setTempo(newValue)}
+        onChange={(newValue: any) => setTempo(newValue)}
         onClose={handleTempo}
         closeOnSelect={false}
-      ></TimePicker>
+      ></S.TimeInput>
       <br />
-      <Submit
-        color="error"
-        variant="outlined"
-        onClick={(e) => createProcedimento(e, name, preco, horas, minutos)}
-      >
-        Salvar Alterações
-      </Submit>
+      {loading ? (
+        <>
+          <PuffLoader size={20} />
+          <br />
+        </>
+      ) : (
+        <Submit
+          color="primary"
+          variant="outlined"
+          onClick={(e) =>
+            createProcedimento(e, name, preco, horas, minutos, setLoading)
+          }
+        >
+          Salvar Alterações
+        </Submit>
+      )}
     </Form>
   );
 }

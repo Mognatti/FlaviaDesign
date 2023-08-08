@@ -52,9 +52,11 @@ export async function createProcedimento(
   name: string,
   preco: number,
   horas: number,
-  minutos: number
+  minutos: number,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   e.preventDefault();
+  setLoading(true);
 
   try {
     const { error } = await client.from("Procedimentos").insert({
@@ -64,9 +66,11 @@ export async function createProcedimento(
       minutes: minutos,
     });
     if (error) throw error;
-    window.location.reload();
+    setLoading(false);
+    throw error;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.log(error.message);
+    setLoading(false);
   }
 }
