@@ -40,12 +40,13 @@ export const CalendarForm = styled.form<{ mobile?: boolean }>`
     margin-top: 1%;
     @media (max-width: 818px) {
       width: 320px;
-      @media (max-width: ${breakPoints.mobile}) {
-        width: 300px;
-      }
-      @media (max-width: 410px) {
-        width: 280px;
-      }
+    }
+    @media (max-width: ${breakPoints.mobile}) {
+      width: 300px;
+    }
+    @media (max-width: ${breakPoints.smallMobile}) {
+      width: 265px;
+      padding: 8px 10px;
     }
   }
 `;
@@ -54,6 +55,9 @@ export const SelectServiceDiv = styled.div`
   display: flex;
   width: 100%;
   gap: 18px;
+  @media (max-width: ${breakPoints.smallMobile}) {
+    flex-direction: column;
+  }
 `;
 
 export const EmbedCalendarBig = styled.div`

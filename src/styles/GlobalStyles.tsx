@@ -15,6 +15,7 @@ export const pallete = {
 export const breakPoints = {
   tablet: "800px",
   mobile: "470px",
+  smallMobile: "380px",
 };
 
 //Cliente and Procedimentos Components
@@ -69,6 +70,9 @@ export const Form = styled.form`
   }
   @media (max-width: ${breakPoints.mobile}) {
     margin-left: -2.8vw;
+  }
+  @media (max-width: ${breakPoints.smallMobile}) {
+    margin-left: -4vw;
   }
 `;
 export const CardContainer = styled.div`

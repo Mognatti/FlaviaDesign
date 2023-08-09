@@ -35,7 +35,7 @@ export const CreatingForm = styled.form`
   @media (max-width: ${breakPoints.mobile}) {
     margin-left: -30px;
   }
-  @media (max-width: 390px) {
-    margin-left: -38px;
+  @media (max-width: ${breakPoints.smallMobile}) {
+    margin-left: -42px;
   }
 `;
