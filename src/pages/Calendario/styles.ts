@@ -42,11 +42,8 @@ export const CalendarForm = styled.form<{ mobile?: boolean }>`
       width: 320px;
     }
     @media (max-width: ${breakPoints.mobile}) {
-      width: 300px;
-    }
-    @media (max-width: ${breakPoints.smallMobile}) {
       width: 265px;
-      padding: 8px 10px;
+      padding: 16px 10px;
     }
   }
 `;
