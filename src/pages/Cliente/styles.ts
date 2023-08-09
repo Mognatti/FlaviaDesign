@@ -7,9 +7,11 @@ export const SearchDiv = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 16px;
-  width: 96%;
+  width: 70%;
+  margin-left: 10%;
   @media (max-width: 910px) {
     width: 90%;
+    margin-left: 0;
   }
   @media (max-width: ${breakPoints.mobile}) {
     width: 83%;
@@ -22,7 +24,7 @@ export const Input = styled.input`
   border-radius: 8px;
   border: 1px solid rgba(69, 80, 61, 255);
   padding: 16px;
-  padding-left: 10%;
+  padding-left: 5%;
   width: 100%;
   font-size: 20px;
   transition: 350ms;
@@ -34,7 +36,7 @@ export const Input = styled.input`
     outline: none;
   }
   @media (max-width: 910px) {
-    padding-left: 6%;
+    padding-left: 10%;
     @media (max-width: 740px) {
       padding-left: 10%;
     }
