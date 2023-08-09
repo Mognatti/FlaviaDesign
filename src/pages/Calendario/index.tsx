@@ -19,21 +19,23 @@ import Loader from "../../components/Loader";
 
 export default function Calendar() {
   const session = useSession();
-  const [start, setStart] = useState<DateLib | null>();
-  const [end, setEnd] = useState<Dayjs | null>();
   const [cliente, setCliente] = useState<string | null>(null);
   const [tel, setTel] = useState<string | null>("");
   const [procedimento, setProcedimento] = useState<string | null>(null);
   const [segundoProcedimento, setSegundoProcedimento] = useState<string | null>(
     null
   );
+  const [start, setStart] = useState<DateLib | null>();
+  const [end, setEnd] = useState<Dayjs | null>();
   const [clientList, setClientList] = useState<Client[]>();
   const [loading, setLoading] = useState(false);
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [emailLink, setEmailLink] = useState<string>("");
-  const [{ procedimentosList }] = useProcedimentos();
+
+  const [{ procedimentosList, isLoading }] = useProcedimentos();
   const { isOpen } = useContext(SidebarStatusContext);
   const [{ isTablet }] = useWindowSize();
+
   useEffect(() => {
     getClientsNameAndCell(setLoading, setClientList);
   }, []);
@@ -118,7 +120,7 @@ export default function Calendar() {
     );
   }
 
-  if (loading) return <Loader />;
+  if (loading || isLoading) return <Loader />;
   return (
     <GS.Section sidebar={isOpen}>
       <S.CalendarContainer>
