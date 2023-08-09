@@ -43,6 +43,9 @@ export const CalendarForm = styled.form<{ mobile?: boolean }>`
       @media (max-width: ${breakPoints.mobile}) {
         width: 300px;
       }
+      @media (max-width: 410px) {
+        width: 280px;
+      }
     }
   }
 `;
