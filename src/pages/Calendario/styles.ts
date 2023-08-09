@@ -5,7 +5,6 @@ import { breakPoints, pallete } from "../../styles/GlobalStyles";
 
 export const CalendarContainer = styled.div`
   width: 100%;
-  padding: 28px 0px;
   padding-bottom: 63px;
   display: flex;
   justify-content: space-around;
@@ -76,7 +75,7 @@ export const EmbedCalendarSmall = styled.div`
 export const StyledButton = styledMui(Button)`
 display: flex;
 justify-content: center;
-padding: 16px;
+padding: 8px;
 align-items: center;
 flex-direction: column;
 color:#c3ccbf;

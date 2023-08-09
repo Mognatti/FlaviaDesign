@@ -9,8 +9,23 @@ import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./styles/theme";
 import Procedimentos from "./pages/Procedimentos";
 import { SidebarStatusProvider } from "./context/SidebarStatus";
+import { useSession } from "@supabase/auth-helpers-react";
+import NotLogged from "./pages/NotLogged";
+import { useState, useEffect } from "react";
+import Loader from "./components/Loader";
 
 export default function AppRouter() {
+  const [loading, setLoading] = useState(true);
+  const session = useSession();
+
+  useEffect(() => {
+    if (session !== undefined) {
+      setLoading(false);
+    }
+  }, [session]);
+
+  if (loading) return <Loader />;
+  if (!session && !loading) return <NotLogged />;
   return (
     <ThemeProvider theme={theme}>
       <Router>

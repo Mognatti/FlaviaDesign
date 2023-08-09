@@ -4,7 +4,6 @@ import { useState, useEffect, useContext } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers/";
 import { Autocomplete, Stack } from "@mui/material";
 import TextField from "@mui/material/TextField/TextField";
-import { Link } from "react-router-dom";
 import dayjs, { Dayjs } from "dayjs";
 import * as GS from "../../styles/GlobalStyles";
 import * as S from "./styles";
@@ -16,6 +15,7 @@ import { Client, DateLib } from "../../types";
 import { PuffLoader } from "react-spinners";
 import { SidebarStatusContext } from "../../context/SidebarStatus";
 import useWindowSize from "../../hooks/useWindowSize";
+import Loader from "../../components/Loader";
 
 export default function Calendar() {
   const session = useSession();
@@ -118,16 +118,7 @@ export default function Calendar() {
     );
   }
 
-  if (!session) {
-    return (
-      <GS.Loading>
-        Para criar eventos no calendário, faça login na{" "}
-        <Link to="/">página inicial</Link>
-      </GS.Loading>
-    );
-  }
-
-  if (loading) return <GS.Loading>Carregando calendário...</GS.Loading>;
+  if (loading) return <Loader />;
   return (
     <GS.Section sidebar={isOpen}>
       <S.CalendarContainer>

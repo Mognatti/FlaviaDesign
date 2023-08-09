@@ -44,7 +44,6 @@ export const Item = styled.li`
     width: 100%;
   }
 `;
-
 export const NotLoggedin = styled.p`
   text-align: center;
   margin-top: 15px;
@@ -111,10 +110,6 @@ export const Info = styled.li`
 export const AutoComplete = styledMui(Autocomplete)`
 width:64%;
 `;
-export const Loading = styled.p`
-  text-align: center;
-  margin-top: 15px;
-`;
 export const Submit = styledMui(Button)`
   color: black;
   margin-bottom:12px;
@@ -129,17 +124,6 @@ export const CreateButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   padding-bottom: 5vh;
-`;
-
-//Login and Home Components
-export const LoginButton = styledMui(Button)`
-justify-self:center;
-margin-top:15px;
-background-color: rgb(69, 80, 61);
-:hover{
-  background-color: rgb(180, 190, 170);
-  transition: 350ms;
-}
 `;
 
 //General Components

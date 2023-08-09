@@ -2,13 +2,13 @@
 import Card from "./Components/Card";
 import { useContext, useEffect, useState } from "react";
 import { useSession } from "@supabase/auth-helpers-react";
-import { Link } from "react-router-dom";
 import NewClient from "./Components/NewClient";
 import * as S from "./styles";
 import * as GS from "../../styles/GlobalStyles";
 import { getClientsFullData } from "../../components/FetchClients";
 import { Client } from "../../types";
 import { SidebarStatusContext } from "../../context/SidebarStatus";
+import Loader from "../../components/Loader";
 
 export default function Clients() {
   const [clients, setClients] = useState<Client[]>();
@@ -25,16 +25,7 @@ export default function Clients() {
     cliente.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  if (!session) {
-    return (
-      <S.NotLoggedin>
-        Para criar acessar o conteúdo da página, faça login na{" "}
-        <Link to="/">home</Link>
-      </S.NotLoggedin>
-    );
-  }
-
-  if (loading && session) return <S.Loading>Carregando clientes...</S.Loading>;
+  if (loading && session) return <Loader />;
 
   return (
     <GS.Section sidebar={isOpen}>

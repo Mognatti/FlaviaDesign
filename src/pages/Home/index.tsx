@@ -1,5 +1,4 @@
-import Login, { logout } from "../../components/Login";
-import { useSession } from "@supabase/auth-helpers-react";
+import { logout } from "../../components/Login";
 import * as S from "./styles";
 import * as GS from "../../styles/GlobalStyles";
 import useFetchClients from "../../hooks/useFetchClients";
@@ -7,8 +6,8 @@ import useFetchProcedimentos from "../../hooks/useFetchProcedimentos";
 import { useContext } from "react";
 import dayjs from "dayjs";
 import { SidebarStatusContext } from "../../context/SidebarStatus";
+import Loader from "../../components/Loader";
 export default function Home() {
-  const session = useSession();
   const [{ clients, isClientsLoading }] = useFetchClients();
   const [{ procedimentos, isProcedimentosLoading }] = useFetchProcedimentos();
   const { isOpen } = useContext(SidebarStatusContext);
@@ -23,20 +22,8 @@ export default function Home() {
   const datesInCurrentWeek = dateList.filter((date) =>
     DatesInCurrentWeek(date!)
   );
-  if (isClientsLoading || isProcedimentosLoading)
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        Carregando dados...
-      </div>
-    );
-  return session ? (
+  if (isClientsLoading || isProcedimentosLoading) return <Loader />;
+  return (
     <GS.Section sidebar={isOpen}>
       <S.LeftDiv>
         <GS.SessionTitle>Home</GS.SessionTitle>
@@ -67,10 +54,6 @@ export default function Home() {
           Finalizar Sessão
         </S.LogoutButton>
       </S.LogoutDiv>
-    </GS.Section>
-  ) : (
-    <GS.Section>
-      <Login />
     </GS.Section>
   );
 }

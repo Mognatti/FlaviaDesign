@@ -50,12 +50,16 @@ export const Controllers = styled.div`
 export const MaterialUISwitch = styled(Switch)``;
 
 export const MenuIconDiv = styled.div<{ open: boolean }>`
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
   transition: 300ms;
   transform: ${(props) => (props.open ? "none" : "rotateY(180deg)")};
 `;
 
 export const MenuIcon = styled(RiMenuFoldLine)`
   cursor: pointer;
+  width: 100%;
 `;
 
 export const SidebarList = styled.ul`

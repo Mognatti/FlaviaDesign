@@ -1,8 +1,7 @@
 import { client } from "../../supabaseClient";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
-import { LoginButton } from "../../styles/GlobalStyles";
-
+import * as S from "./styles";
 export async function logout() {
   await client.auth.signOut();
 }
@@ -39,9 +38,9 @@ export default function Login() {
 
   if (!session) {
     return (
-      <LoginButton variant="contained" onClick={() => googleSignIn()}>
+      <S.LoginButton variant="contained" onClick={() => googleSignIn()}>
         Login com google
-      </LoginButton>
+      </S.LoginButton>
     );
   }
   return <></>;
