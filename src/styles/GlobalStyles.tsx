@@ -67,6 +67,9 @@ export const Form = styled.form`
     margin-top: 5%;
     width: 280px;
   }
+  @media (max-width: ${breakPoints.mobile}) {
+    margin-left: -2.8vw;
+  }
 `;
 export const CardContainer = styled.div`
   display: flex;

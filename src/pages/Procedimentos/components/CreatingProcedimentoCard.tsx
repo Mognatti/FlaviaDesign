@@ -1,4 +1,4 @@
-import { Form, Submit, Title } from "../../../styles/GlobalStyles";
+import { Submit, Title } from "../../../styles/GlobalStyles";
 import * as S from "../styles";
 import { createProcedimento } from "./listaProcedimentos";
 import { useState } from "react";
@@ -24,7 +24,7 @@ export default function CreatingProcedimentoCard({
   };
 
   return (
-    <Form>
+    <S.CreatingForm>
       <Title>Criando Procedimento...</Title>
       <Submit
         color="error"
@@ -70,6 +70,6 @@ export default function CreatingProcedimentoCard({
           Salvar Alterações
         </Submit>
       )}
-    </Form>
+    </S.CreatingForm>
   );
 }
