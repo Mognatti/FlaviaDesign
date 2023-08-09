@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { RiUserSearchLine } from "react-icons/ri";
-import { pallete } from "../../styles/GlobalStyles";
+import { breakPoints, pallete } from "../../styles/GlobalStyles";
 
 export const SearchDiv = styled.div`
   display: flex;
@@ -10,6 +10,10 @@ export const SearchDiv = styled.div`
   width: 96%;
   @media (max-width: 910px) {
     width: 90%;
+  }
+  @media (max-width: ${breakPoints.mobile}) {
+    width: 83%;
+    margin-left: 5%;
   }
 `;
 export const Input = styled.input`
@@ -69,4 +73,23 @@ export const Item = styled.li`
 export const NotLoggedin = styled.p`
   text-align: center;
   margin-top: 15px;
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 310px;
+  background-color: rgba(69, 80, 61, 0.4);
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+  padding: 8px;
+  margin-top: 2%;
+  margin-bottom: 5vh;
+  @media (max-width: 900px) {
+    margin-top: 5%;
+    width: 280px;
+  }
 `;

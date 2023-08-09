@@ -1,6 +1,7 @@
 import { client } from "../../../../supabaseClient";
 import { useState } from "react";
 import { TextField } from "@mui/material";
+import * as S from "../../styles";
 import {
   Form,
   SessionTitle,
@@ -30,7 +31,7 @@ export default function NewClient() {
 
   return (
     <ClientConetainer>
-      <Form>
+      <S.Form>
         <br />
         <SessionTitle>Novo Cadastro</SessionTitle>
         <br />
@@ -59,7 +60,7 @@ export default function NewClient() {
         </Submit>
         <br />
         {loading && <h3>criando cliente...</h3>}
-      </Form>
+      </S.Form>
     </ClientConetainer>
   );
 }

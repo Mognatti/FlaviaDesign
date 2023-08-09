@@ -3,11 +3,14 @@ import { getClientsFullData } from "../../components/FetchClients";
 import { Client } from "../../types";
 import dayjs from "dayjs";
 import useProcedimentos from "../../hooks/useProcedimentos";
+import { useSession } from "@supabase/auth-helpers-react";
 
 export default function Financeiro() {
   const [clients, setClients] = useState<Client[]>();
   const [loading, setLoading] = useState<boolean>(false);
   const [current] = useState<Client[]>([]);
+  const session = useSession();
+
   const [{ procedimentosList, isLoading }] = useProcedimentos();
   useEffect(() => {
     getClientsFullData(setClients, setLoading);
@@ -28,7 +31,7 @@ export default function Financeiro() {
     }
     return sum;
   }
-
+  if (!session) return <>Faça login para acessar a página!</>;
   if (loading || isLoading) return <p>Carregando dados...</p>;
   return (
     <div>

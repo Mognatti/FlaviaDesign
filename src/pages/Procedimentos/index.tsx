@@ -8,13 +8,16 @@ import CreatingProcedimentoCard from "./components/CreatingProcedimentoCard";
 import useProcedimentos from "../../hooks/useProcedimentos";
 import { Procedimento } from "../../types";
 import { SidebarStatusContext } from "../../context/SidebarStatus";
+import { useSession } from "@supabase/auth-helpers-react";
 
 export default function Procedimentos() {
   const [creating, setCreating] = useState(false);
   const [{ procedimentosList, isLoading }] = useProcedimentos();
   const { isOpen } = useContext(SidebarStatusContext);
-  if (isLoading) return <GS.Loading> Carregando Procedimentos...</GS.Loading>;
+  const session = useSession();
 
+  if (!session) return <>Faça login acessar a página!</>;
+  if (isLoading) return <GS.Loading> Carregando Procedimentos...</GS.Loading>;
   return (
     <GS.Section sidebar={isOpen}>
       <GS.ListContainer>
