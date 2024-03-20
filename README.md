@@ -1,4 +1,4 @@
-<h2>FlaviaDesign</h2> 
+<h2>Flavia Caparelli Design</h2> 
 <p align='justify'>
 Aplicação de uso restrito utilizada para realizar o gerenciamento de clientes e de procedimentos da empresa Flávia Caparelli Desing. Além disso, a aplicação ainda permite a integração com o Google Agenda para facilitar o agentamento de clientes através de um formulário inteligente.  
 </p>
