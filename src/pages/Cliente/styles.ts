@@ -22,17 +22,17 @@ export const Input = styled.input`
   display: flex;
   flex-direction: row;
   border-radius: 8px;
-  border: 1px solid rgba(69, 80, 61, 255);
+  border: 1px solid ${pallete.white};
   padding: 16px;
   padding-left: 5%;
   width: 100%;
   font-size: 20px;
-  transition: 350ms;
+  transition: 250ms ease-in-out;
   :hover {
-    border: 1px solid ${pallete.lime};
+    border: 1px solid ${pallete.green};
   }
   :focus {
-    border: 1px solid ${pallete.dark};
+    border: 1px solid ${pallete.green};
     outline: none;
   }
   @media (max-width: 910px) {

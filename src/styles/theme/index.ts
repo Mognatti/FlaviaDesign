@@ -1,13 +1,13 @@
 import { createTheme } from "@mui/material";
-import * as S from "../GlobalStyles";
+import * as Global from "../GlobalStyles";
 
 export const theme = createTheme({
   palette: {
     primary: {
-      main: S.pallete.dark,
+      main: Global.pallete.dark,
     },
     secondary: {
-      main: S.pallete.green,
+      main: Global.pallete.green,
     },
   },
 });

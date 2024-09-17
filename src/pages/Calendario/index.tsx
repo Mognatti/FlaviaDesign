@@ -22,9 +22,7 @@ export default function Calendar() {
   const [cliente, setCliente] = useState<string | null>(null);
   const [tel, setTel] = useState<string | null>("");
   const [procedimento, setProcedimento] = useState<string | null>(null);
-  const [segundoProcedimento, setSegundoProcedimento] = useState<string | null>(
-    null
-  );
+  const [segundoProcedimento, setSegundoProcedimento] = useState<string | null>(null);
   const [start, setStart] = useState<DateLib | null>();
   const [end, setEnd] = useState<Dayjs | null>();
   const [clientList, setClientList] = useState<Client[]>();
@@ -34,7 +32,7 @@ export default function Calendar() {
 
   const [{ procedimentosList, isLoading }] = useProcedimentos();
   const { isOpen } = useContext(SidebarStatusContext);
-  const [{ isTablet }] = useWindowSize();
+  const [{ isMobile }] = useWindowSize();
 
   useEffect(() => {
     getClientsNameAndCell(setLoading, setClientList);
@@ -55,28 +53,16 @@ export default function Calendar() {
   //use 'procedimento' and 'start' values to change 'end' value
   useEffect(() => {
     if (start && procedimento) {
-      const {
-        $D: startDay,
-        $M: startMonth,
-        $y: startYear,
-        $H: startHour,
-        $m: startMinutes,
-      } = start;
+      const { $D: startDay, $M: startMonth, $y: startYear, $H: startHour, $m: startMinutes } = start;
 
-      const procedimentoItem = procedimentosList.find(
-        (item) => item.name === procedimento
-      );
+      const procedimentoItem = procedimentosList.find((item) => item.name === procedimento);
 
-      const segundoProcedimentoItem = procedimentosList.find(
-        (item) => item.name === segundoProcedimento
-      );
+      const segundoProcedimentoItem = procedimentosList.find((item) => item.name === segundoProcedimento);
 
       const procedimentoHoras = procedimentoItem?.hours || 0;
       const procedimentoMinutos = procedimentoItem?.minutes || 0;
 
-      let endDateTime = dayjs(
-        `${startMonth + 1 > 11 ? 0 : startMonth + 1}/${startDay}/${startYear}`
-      );
+      let endDateTime = dayjs(`${startMonth + 1 > 11 ? 0 : startMonth + 1}/${startDay}/${startYear}`);
 
       if (segundoProcedimento && segundoProcedimentoItem) {
         const segundoProcedimentoHoras = segundoProcedimentoItem.hours || 0;
@@ -124,7 +110,7 @@ export default function Calendar() {
   return (
     <GS.Section sidebar={isOpen}>
       <S.CalendarContainer>
-        <S.CalendarForm mobile={isTablet}>
+        <S.CalendarForm mobile={isMobile}>
           <GS.Title>Novo Agendamento</GS.Title>
           <Stack spacing={2} style={{ width: "80%" }}>
             <Autocomplete
@@ -136,11 +122,7 @@ export default function Calendar() {
                   required
                 />
               )}
-              options={
-                clientList?.map((cliente) => cliente.name) || [
-                  "Carregando clientes...",
-                ]
-              }
+              options={clientList?.map((cliente) => cliente.name) || ["Carregando clientes..."]}
               value={cliente}
               onChange={(_event, newValue) => setCliente(newValue)}
               freeSolo
@@ -156,11 +138,7 @@ export default function Calendar() {
               )}
               value={tel}
               onChange={(_event, newValue) => setTel(newValue)}
-              options={
-                clientList?.map((cliente) => cliente.cel_number) || [
-                  "Carregando telefones",
-                ]
-              }
+              options={clientList?.map((cliente) => cliente.cel_number) || ["Carregando telefones"]}
               freeSolo
             />
             <S.SelectServiceDiv>
@@ -174,11 +152,7 @@ export default function Calendar() {
                     required
                   />
                 )}
-                options={
-                  procedimentosList?.map(
-                    (procedimento) => procedimento.name
-                  ) || ["Carregando procedimentos..."]
-                }
+                options={procedimentosList?.map((procedimento) => procedimento.name) || ["Carregando procedimentos..."]}
                 value={procedimento}
                 onChange={(_event, newValue) => setProcedimento(newValue)}
                 id="procedimento-input"
@@ -193,29 +167,18 @@ export default function Calendar() {
                     onBlur={(e: any) => setSegundoProcedimento(e.target.value)}
                   />
                 )}
-                options={
-                  procedimentosList?.map(
-                    (procedimento) => procedimento.name
-                  ) || ["Carregando procedimentos..."]
-                }
-                value={segundoProcedimento}
-                onChange={(_event, newValue) =>
-                  setSegundoProcedimento(newValue)
-                }
+                options={procedimentosList?.map((procedimento) => procedimento.name) || ["Carregando procedimentos..."]}
+                value={procedimento ? segundoProcedimento : ""}
+                onChange={(_event, newValue) => setSegundoProcedimento(newValue)}
                 id="procedimento2-input"
+                disabled={!procedimento}
                 freeSolo
               />
             </S.SelectServiceDiv>
             <p>Início do atedimento:</p>
-            <DateTimePicker
-              value={start}
-              onChange={(newValue) => setStart(newValue)}
-            />
+            <DateTimePicker value={start} onChange={(newValue) => setStart(newValue)} />
             <p>Fim do atendimento:</p>
-            <DateTimePicker
-              value={end}
-              onChange={(newValue) => setEnd(newValue)}
-            />
+            <DateTimePicker value={end} onChange={(newValue) => setEnd(newValue)} />
             <S.StyledButton
               className="botao"
               variant="contained"
@@ -223,11 +186,7 @@ export default function Calendar() {
               onClick={(e) => handleClick(e)}
               disabled={!procedimento || !cliente || !tel || !start || !end}
             >
-              {isCreating ? (
-                <PuffLoader size={25} color="#c3ccbf" />
-              ) : (
-                "Salvar no Calendário"
-              )}
+              {isCreating ? <PuffLoader size={25} color="#c3ccbf" /> : "Salvar no Calendário"}
             </S.StyledButton>
           </Stack>
         </S.CalendarForm>

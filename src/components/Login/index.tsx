@@ -1,13 +1,19 @@
 import { client } from "../../supabaseClient";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import {
+  Session,
+  useSession,
+  useSupabaseClient,
+} from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
 import * as S from "./styles";
+
 export async function logout() {
   await client.auth.signOut();
 }
 
 export default function Login() {
-  const [session, setSession] = useState<any>(null);
+  const logged = useSession();
+  const [session, setSession] = useState<Session | null>(logged);
   const supabase = useSupabaseClient(); //conect with supabase and create a session
 
   async function googleSignIn() {

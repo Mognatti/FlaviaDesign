@@ -21,9 +21,7 @@ export default function Clients() {
     getClientsFullData(setClients, setLoading);
   }, []);
 
-  const filtredClients = clients?.filter((cliente) =>
-    cliente.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtredClients = clients?.filter((cliente) => cliente.name.toLowerCase().includes(search.toLowerCase()));
 
   if (loading && session) return <Loader />;
 
@@ -41,7 +39,7 @@ export default function Clients() {
             placeholder="Buscar por nome..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-          ></S.Input>
+          />
         </S.SearchDiv>
         <GS.List>
           {filtredClients?.map((client) => (

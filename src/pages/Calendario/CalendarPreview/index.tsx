@@ -1,3 +1,4 @@
+import { pallete } from "../../../styles/GlobalStyles";
 import { CalendarPreviewProps } from "../../../types";
 import * as S from "./styles";
 
@@ -6,9 +7,10 @@ export default function CalendarPreview({ emailLink }: CalendarPreviewProps) {
     <>
       <S.EmbedCalendarBig>
         <iframe
+          title="calendario-desktop"
           src={emailLink}
           style={{
-            border: "solid 1px #777",
+            border: `solid 1px ${pallete.lightGreen}`,
             width: "800px",
             height: "600px",
             marginTop: "2%",
@@ -18,10 +20,11 @@ export default function CalendarPreview({ emailLink }: CalendarPreviewProps) {
       </S.EmbedCalendarBig>
       <S.EmbedCalendarSmall>
         <iframe
+          title="calendario-mobile"
           src={emailLink}
           style={{
-            border: "solid 1px #777",
-            width: "290px",
+            border: `solid 1px ${pallete.lightGreen}`,
+            width: "90vw",
             height: "600px",
             marginTop: "10%",
             borderRadius: "5px",

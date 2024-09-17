@@ -8,7 +8,6 @@ export const CalendarContainer = styled.div`
   padding-bottom: 63px;
   display: flex;
   justify-content: space-around;
-  background-color: ${pallete.lighterGreen};
   gap: 2%;
   @media (max-width: 1300px) {
     flex-direction: column;
@@ -17,7 +16,6 @@ export const CalendarContainer = styled.div`
     @media (max-width: 818px) {
       flex-direction: column;
       align-items: center;
-      padding: 16px 0px;
     }
   }
 `;
@@ -27,21 +25,20 @@ export const CalendarForm = styled.form<{ mobile?: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
   width: 35%;
   margin-top: 1%;
   margin-left: ${(props) => (props.mobile ? "0" : "-30px")};
   border-radius: 15px;
   padding: 16px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
-
+  background-color: ${pallete.lighterGreen};
   @media (max-width: 1300px) {
     margin-top: 1%;
     @media (max-width: 818px) {
       width: 320px;
     }
     @media (max-width: ${breakPoints.mobile}) {
-      width: 265px;
+      width: 100%px;
       padding: 16px 10px;
     }
   }
