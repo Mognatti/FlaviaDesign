@@ -19,13 +19,13 @@ export async function getClientsNameAndCell(
 }
 
 export async function getClientsFullData(
-  setClients: React.Dispatch<React.SetStateAction<any[] | undefined>>,
+  setClients: React.Dispatch<React.SetStateAction<Client[] | undefined>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   try {
     const { data, error } = await client.from("Clientes").select("*");
     if (error) throw error;
-    if (data != null) setClients(data);
+    if (data != null) setClients(data as Client[]);
     setLoading(false);
   } catch (error) {
     console.log(error);
