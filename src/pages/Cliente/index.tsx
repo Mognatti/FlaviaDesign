@@ -7,14 +7,12 @@ import * as S from "./styles";
 import * as GS from "../../styles/GlobalStyles";
 import { getClientsFullData } from "../../components/FetchClients";
 import { Client } from "../../types";
-import { SidebarStatusContext } from "../../context/SidebarStatus";
 import Loader from "../../components/Loader";
 
 export default function Clients() {
   const [clients, setClients] = useState<Client[]>();
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
-  const { isOpen } = useContext(SidebarStatusContext);
   const session = useSession();
 
   useEffect(() => {
@@ -26,7 +24,7 @@ export default function Clients() {
   if (loading && session) return <Loader />;
 
   return (
-    <GS.Section sidebar={isOpen}>
+    <GS.Section>
       <br />
       <S.ListContainer>
         <GS.SessionTitle>Clientes</GS.SessionTitle>

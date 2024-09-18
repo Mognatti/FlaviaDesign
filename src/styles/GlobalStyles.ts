@@ -12,10 +12,18 @@ export const pallete = {
   black: "#000",
 };
 
+export const breakPointsNumbers = {
+  desktop: 1300,
+  tablet: 800,
+  smallTablet: 650,
+  mobile: 470,
+  smallMobile: 380,
+};
+
 export const breakPoints = {
-  tablet: "800px",
-  mobile: "470px",
-  smallMobile: "380px",
+  tablet: `${breakPointsNumbers.tablet}px`,
+  mobile: `${breakPointsNumbers.mobile}px`,
+  smallMobile: `${breakPointsNumbers.smallMobile}px`,
 };
 
 //Cliente and Procedimentos Components
@@ -128,6 +136,7 @@ export const Section = styled.section<{ sidebar?: boolean }>`
     margin: 4vh 4vw 10vh 4vw;
   }
 `;
+
 export const SessionTitle = styled.h1`
   padding: 8px;
   margin-bottom: 16px;

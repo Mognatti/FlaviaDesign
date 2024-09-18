@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSession } from "@supabase/auth-helpers-react";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers/";
 import { Autocomplete, Stack } from "@mui/material";
 import TextField from "@mui/material/TextField/TextField";
@@ -13,7 +13,6 @@ import useProcedimentos from "../../hooks/useProcedimentos";
 import CalendarPreview from "./CalendarPreview";
 import { Client, DateLib } from "../../types";
 import { PuffLoader } from "react-spinners";
-import { SidebarStatusContext } from "../../context/SidebarStatus";
 import useWindowSize from "../../hooks/useWindowSize";
 import Loader from "../../components/Loader";
 
@@ -31,7 +30,6 @@ export default function Calendar() {
   const [emailLink, setEmailLink] = useState<string>("");
 
   const [{ procedimentosList, isLoading }] = useProcedimentos();
-  const { isOpen } = useContext(SidebarStatusContext);
   const [{ isMobile }] = useWindowSize();
 
   useEffect(() => {
@@ -108,11 +106,11 @@ export default function Calendar() {
 
   if (loading || isLoading) return <Loader />;
   return (
-    <GS.Section sidebar={isOpen}>
+    <GS.Section>
       <S.CalendarContainer>
         <S.CalendarForm mobile={isMobile}>
           <GS.Title>Novo Agendamento</GS.Title>
-          <Stack spacing={2} style={{ width: "80%" }}>
+          <Stack spacing={2} style={{ width: "100%" }}>
             <Autocomplete
               renderInput={(params) => (
                 <TextField
@@ -190,7 +188,7 @@ export default function Calendar() {
             </S.StyledButton>
           </Stack>
         </S.CalendarForm>
-        <CalendarPreview emailLink={emailLink} />
+        <CalendarPreview />
       </S.CalendarContainer>
     </GS.Section>
   );

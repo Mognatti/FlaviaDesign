@@ -1,16 +1,7 @@
 import styled from "styled-components";
 
-export const EmbedCalendarBig = styled.div`
-  border: none;
-  display: inherit;
-  @media (max-width: 840px) {
-    display: none;
-  }
-`;
-
-export const EmbedCalendarSmall = styled.div`
-  display: none;
-  @media (max-width: 840px) {
-    display: inherit;
-  }
+export const EmbedCalendar = styled.iframe`
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  margin-top: 16px;
 `;

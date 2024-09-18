@@ -5,14 +5,17 @@ import { breakPoints, pallete } from "../../styles/GlobalStyles";
 
 export const CalendarContainer = styled.div`
   width: 100%;
-  padding-bottom: 63px;
   display: flex;
-  justify-content: space-around;
-  gap: 2%;
+  gap: 24px;
+  margin-left: 40px;
+  align-items: center;
+  height: 100svh;
   @media (max-width: 1300px) {
     flex-direction: column;
     align-items: center;
-    padding: 16px 0px;
+    height: auto;
+    margin-bottom: 16px;
+    margin-left: 0px;
     @media (max-width: 818px) {
       flex-direction: column;
       align-items: center;
@@ -25,21 +28,22 @@ export const CalendarForm = styled.form<{ mobile?: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 35%;
+  width: 40%;
+  height: 570px;
   margin-top: 1%;
   margin-left: ${(props) => (props.mobile ? "0" : "-30px")};
   border-radius: 15px;
-  padding: 16px;
+  padding: 20px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
   background-color: ${pallete.lighterGreen};
   @media (max-width: 1300px) {
     margin-top: 1%;
-    @media (max-width: 818px) {
-      width: 320px;
-    }
-    @media (max-width: ${breakPoints.mobile}) {
-      width: 100%px;
-      padding: 16px 10px;
+    align-self: center;
+    width: 600px;
+    height: auto;
+    margin-left: 0px;
+    @media (max-width: 650px) {
+      width: 90%;
     }
   }
 `;
