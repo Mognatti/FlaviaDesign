@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Card from "./Components/Card";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "@supabase/auth-helpers-react";
 import NewClient from "./Components/NewClient";
 import * as S from "./styles";

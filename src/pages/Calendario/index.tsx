@@ -27,7 +27,6 @@ export default function Calendar() {
   const [clientList, setClientList] = useState<Client[]>();
   const [loading, setLoading] = useState(false);
   const [isCreating, setIsCreating] = useState<boolean>(false);
-  const [emailLink, setEmailLink] = useState<string>("");
 
   const [{ procedimentosList, isLoading }] = useProcedimentos();
   const [{ isMobile }] = useWindowSize();
@@ -80,14 +79,6 @@ export default function Calendar() {
       setEnd(endDateTime);
     }
   }, [start, procedimento, segundoProcedimento, procedimentosList]);
-
-  useEffect(() => {
-    if (session?.user.email === import.meta.env.VITE_ADMIN_EMAIL) {
-      setEmailLink(import.meta.env.VITE_ADMIN_CALENDAR);
-    } else if (session?.user.email === import.meta.env.VITE_DEV_EMAIL) {
-      setEmailLink(import.meta.env.VITE_DEV_CALENDAR);
-    }
-  }, [session]);
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
