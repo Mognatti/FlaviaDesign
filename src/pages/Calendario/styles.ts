@@ -9,7 +9,6 @@ export const CalendarContainer = styled.div`
   gap: 24px;
   margin-left: 40px;
   align-items: center;
-  height: 100svh;
   @media (max-width: 1300px) {
     flex-direction: column;
     align-items: center;

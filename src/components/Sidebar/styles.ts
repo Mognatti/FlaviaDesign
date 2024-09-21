@@ -64,6 +64,7 @@ export const SidebarList = styled.ul`
   justify-content: center;
   width: 100%;
   gap: 18px;
+  position: relative;
   @media (min-width: ${breakPoints.tablet}) {
     flex-direction: column;
     align-items: flex-start;
@@ -115,6 +116,7 @@ export const Icon = styled.i<{ active?: boolean }>`
   aspect-ratio: 1;
   border-radius: 50%;
   background: ${(props) => (props.active ? pallete.lighterGreen : "transparent")};
+  transition: all 350ms ease-in-out;
 `;
 
 export const Button = styled.button`

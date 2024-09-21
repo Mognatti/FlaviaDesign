@@ -3,19 +3,19 @@ import { RiUserSearchLine } from "react-icons/ri";
 import { breakPoints, pallete } from "../../styles/GlobalStyles";
 
 export const SearchDiv = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 16px;
-  width: 70%;
-  margin-left: 10%;
-  @media (max-width: 910px) {
-    width: 90%;
-    margin-left: 0;
-  }
-  @media (max-width: ${breakPoints.mobile}) {
+  width: 100%;
+  justify-content: center;
+  @media (max-width: ${breakPoints.tablet}) {
     width: 83%;
-    margin-left: 5%;
+  }
+  @media (max-width: ${breakPoints.smallTablet}) {
+    width: 316px;
+    align-self: center;
   }
 `;
 export const Input = styled.input`
@@ -24,7 +24,7 @@ export const Input = styled.input`
   border-radius: 8px;
   border: 1px solid ${pallete.white};
   padding: 16px;
-  padding-left: 5%;
+  padding-left: 50px;
   width: 100%;
   font-size: 20px;
   transition: 250ms ease-in-out;
@@ -35,19 +35,11 @@ export const Input = styled.input`
     border: 1px solid ${pallete.green};
     outline: none;
   }
-  @media (max-width: 910px) {
-    padding-left: 10%;
-    @media (max-width: 740px) {
-      padding-left: 10%;
-    }
-    @media (max-width: 450px) {
-      padding-left: 15%;
-    }
-  }
 `;
+
 export const SearchIcon = styled(RiUserSearchLine)`
-  padding: 10px;
   position: absolute;
+  left: 30px;
 `;
 
 export const Loading = styled.p`

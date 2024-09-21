@@ -22,6 +22,7 @@ export const breakPointsNumbers = {
 
 export const breakPoints = {
   tablet: `${breakPointsNumbers.tablet}px`,
+  smallTablet: `${breakPointsNumbers.smallTablet}px`,
   mobile: `${breakPointsNumbers.mobile}px`,
   smallMobile: `${breakPointsNumbers.smallMobile}px`,
 };
@@ -40,8 +41,10 @@ export const List = styled.ul`
   padding-top: 8px;
   padding-left: 0;
   gap: 3vh 3vw;
+  @media (max-width: ${breakPoints.smallTablet}) {
+    margin-left: -6%;
+  }
   @media (max-width: ${breakPoints.mobile}) {
-    margin-left: -4vw;
     flex-direction: column;
   }
 `;
