@@ -1,64 +1,75 @@
+import { Session } from "@supabase/supabase-js";
 import { client } from "../../../supabaseClient";
 import { Client } from "../../../types";
 
+type Event = {
+  summary: string;
+  description: string;
+  start: {
+    dateTime: any;
+    timeZone: string;
+  };
+  end: {
+    dateTime: any;
+    timeZone: string;
+  };
+};
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function createCalendarEvent(
-  session: any,
-  cliente: string | null,
+  session: Session | null,
+  clientName: string | null,
   clientList: Client[] | undefined,
-  procedimento: string | null,
-  segundoProcedimento: string | null,
-  tel: string | null,
-  start: any,
-  end: any,
+  procedure: string | null,
+  secondProcedure: string | null,
+  clientPhone: string | null,
+  startDate: any,
+  endDate: any,
   setIsCreating: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   setIsCreating(true);
-  const event = {
-    summary: `${cliente} - ${tel}`,
+
+  const event: Event = {
+    summary: `${clientName} - ${clientPhone}`,
     description: `
-Cliente: ${cliente} 
-Prodecimento: ${
-      segundoProcedimento
-        ? `${segundoProcedimento}e ${procedimento}`
-        : `${procedimento}`
-    } 
-Telefone: ${tel}
+Cliente: ${clientName} 
+Prodecimento: ${secondProcedure ? `${secondProcedure}e ${procedure}` : `${procedure}`} 
+Telefone: ${clientPhone}
 Mensagem de confirmação:
-Oii, boa tarde, ${cliente}! 
+
+Oii, boa tarde, ${clientName}! 
 Tudo bem? 💚
-Posso confirmar seu horário de amanhã às ${start.$H}:${
-      start.$m > 9 ? start.$m : "00"
-    }? ☺️
+Posso confirmar seu horário de amanhã às ${startDate.$H}:${startDate.$m > 9 ? startDate.$m : "00"}? ☺️
   
-    Regas do atendimento: ✨
-    1- O limite estabelecido de atraso é de 10 minutos, com obrigação de aviso. 
-    2- os dias de atendimento são de terça a sexta dás 09h às 18h e no sábado dás 09h às 16h
-    3- Não trabalho com fiado, aceito cartão de crédito/débito, pix e dinheiro. 
-    4- Em caso de falta sem  aviso com antecedência, será necessário um sinal de 50% do valor do procedimento para o próximo agendamento.
+Regas do atendimento: ✨
+1- O limite estabelecido de atraso é de 10 minutos, com obrigação de aviso. 
+2- os dias de atendimento são de terça a sexta dás 09h às 18h e no sábado dás 09h às 16h
+3- Não trabalho com fiado, aceito cartão de crédito/débito, pix e dinheiro. 
+4- Em caso de falta sem  aviso com antecedência, será necessário um sinal de 50% do valor do procedimento para o próximo agendamento.
     
-    Agradeço a compreensão 😘
-    `,
+Agradeço a compreensão 😘
+`,
+
     start: {
-      dateTime: start?.toISOString(),
+      dateTime: startDate?.toISOString(),
       timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     },
     end: {
-      dateTime: end?.toISOString(),
+      dateTime: endDate?.toISOString(),
       timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     },
   };
 
-  if (clientList?.find((client) => client.name === cliente) == undefined) {
+  const currentClient = clientList?.find((client) => client.name === clientName);
+
+  if (currentClient == undefined) {
     try {
       const { error } = await client.from("Clientes").insert({
-        name: cliente,
-        cel_number: tel,
-        last_service: procedimento,
-        services: segundoProcedimento
-          ? [procedimento, segundoProcedimento]
-          : [procedimento],
-        last_visit: start.toISOString(),
+        name: clientName,
+        cel_number: clientPhone,
+        last_service: procedure,
+        services: secondProcedure ? [procedure, secondProcedure] : [procedure],
+        last_visit: startDate.toISOString(),
       });
       if (error) throw error;
     } catch (error: any) {
@@ -67,18 +78,13 @@ Posso confirmar seu horário de amanhã às ${start.$H}:${
     }
   } else {
     try {
-      const clienteAtual = clientList?.find(
-        (client) => client.name === cliente
-      );
-      const clienteId = clienteAtual?.id;
+      const clienteId = currentClient?.id;
       const { error } = await client
         .from("Clientes")
         .update({
-          last_service: procedimento,
-          services: segundoProcedimento
-            ? [procedimento, segundoProcedimento]
-            : [procedimento],
-          last_visit: start.toISOString(),
+          last_service: procedure,
+          services: secondProcedure ? [procedure, secondProcedure] : [procedure],
+          last_visit: startDate.toISOString(),
         })
         .eq("id", clienteId);
       if (error) throw error;
@@ -87,25 +93,29 @@ Posso confirmar seu horário de amanhã às ${start.$H}:${
     }
   }
 
-  await fetch(
-    `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + session?.provider_token,
-      },
-      body: JSON.stringify(event),
-    }
-  )
+  await updateGoogleCalendar({ session, setIsCreating, event });
+}
+
+type UpdateGoogleCalendar = {
+  session: Session | null;
+  setIsCreating: React.Dispatch<React.SetStateAction<boolean>>;
+  event: Event;
+};
+async function updateGoogleCalendar({ session, setIsCreating, event }: UpdateGoogleCalendar) {
+  await fetch(import.meta.env.VITE_GOOGLE_CALENDAR_API_URL, {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer " + session?.provider_token,
+    },
+    body: JSON.stringify(event),
+  })
     .then((res) => {
       return res.json();
     })
     .then((data) => {
       if (data.status !== "confirmed") {
         setIsCreating(false);
-        alert(
-          "Ocorreu algum erro ao criar o evento." + "\n" + data.error.message
-        );
+        alert(`Ocorreu algum erro ao criar o evento: \n${data.error.message}`);
       } else {
         setIsCreating(false);
         alert("Evento criado com Sucesso!");
@@ -114,6 +124,6 @@ Posso confirmar seu horário de amanhã às ${start.$H}:${
     })
     .catch((error) => {
       setIsCreating(false);
-      alert(`Falha na criação do evento!\n Motivo: ${error.message}`);
+      alert(`Falha na criação do evento! \nMotivo: ${error.message}`);
     });
 }
