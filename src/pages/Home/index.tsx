@@ -1,26 +1,28 @@
-import { logout } from "../../components/Login";
 import * as S from "./styles";
 import * as GS from "../../styles/GlobalStyles";
-import useFetchClients from "../../hooks/useFetchClients";
+import useFetchCostumers from "../../hooks/useFetchCostumers";
 import useFetchProcedimentos from "../../hooks/useFetchProcedimentos";
 import { useContext } from "react";
 import dayjs from "dayjs";
 import { SidebarStatusContext } from "../../context/SidebarStatus";
 import Loader from "../../components/Loader";
+import useAuth from "../../hooks/useAuth";
+
 export default function Home() {
-  const [{ clients, isClientsLoading }] = useFetchClients();
+  const [{ costumers, isCostumerDBLoading }] = useFetchCostumers();
   const [{ procedimentos, isProcedimentosLoading }] = useFetchProcedimentos();
   const { isOpen } = useContext(SidebarStatusContext);
+  const { logout } = useAuth();
 
   function DatesInCurrentWeek(date: string) {
     const currentDate = dayjs();
     const parsedDate = dayjs(date, "YYYY/MM/DD");
     return parsedDate.isSame(currentDate, "week");
   }
-  const dateList = clients.map((client) => client.last_visit);
+  const dateList = costumers.map((costumer) => costumer.last_visit);
 
   const datesInCurrentWeek = dateList.filter((date) => DatesInCurrentWeek(date!));
-  if (isClientsLoading || isProcedimentosLoading) return <Loader />;
+  if (isCostumerDBLoading || isProcedimentosLoading) return <Loader />;
   return (
     <GS.Section sidebar={isOpen}>
       <S.LeftDiv>
@@ -30,7 +32,7 @@ export default function Home() {
             <S.ItemTitle>Clientes</S.ItemTitle>
             <S.ItemContent>
               <p>
-                <S.ItemData>{clients.length}</S.ItemData> Clientes cadastradas
+                <S.ItemData>{costumers.length}</S.ItemData> Clientes cadastradas
               </p>
               <p>
                 <S.ItemData>{datesInCurrentWeek.length}</S.ItemData> Clientes nessa semana

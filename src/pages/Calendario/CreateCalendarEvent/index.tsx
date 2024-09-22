@@ -1,6 +1,7 @@
 import { Session } from "@supabase/supabase-js";
 import { client } from "../../../supabaseClient";
-import { Client } from "../../../types";
+import { Costumer, DateLib } from "../../../types";
+import dayjs from "dayjs";
 
 type Event = {
   summary: string;
@@ -19,12 +20,12 @@ type Event = {
 export async function createCalendarEvent(
   session: Session | null,
   clientName: string | null,
-  clientList: Client[] | undefined,
+  clientList: Costumer[] | undefined,
   procedure: string | null,
   secondProcedure: string | null,
   clientPhone: string | null,
-  startDate: any,
-  endDate: any,
+  startDate: DateLib | null | undefined,
+  endDate: dayjs.Dayjs | null | undefined,
   setIsCreating: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   setIsCreating(true);
@@ -36,17 +37,17 @@ Cliente: ${clientName}
 Prodecimento: ${secondProcedure ? `${secondProcedure}e ${procedure}` : `${procedure}`} 
 Telefone: ${clientPhone}
 Mensagem de confirmação:
-
+      
 Oii, boa tarde, ${clientName}! 
 Tudo bem? 💚
-Posso confirmar seu horário de amanhã às ${startDate.$H}:${startDate.$m > 9 ? startDate.$m : "00"}? ☺️
-  
+Posso confirmar seu horário de amanhã às ${startDate!.$H}:${startDate!.$m > 9 ? startDate!.$m : "00"}? ☺️
+
 Regas do atendimento: ✨
 1- O limite estabelecido de atraso é de 10 minutos, com obrigação de aviso. 
 2- os dias de atendimento são de terça a sexta dás 09h às 18h e no sábado dás 09h às 16h
 3- Não trabalho com fiado, aceito cartão de crédito/débito, pix e dinheiro. 
 4- Em caso de falta sem  aviso com antecedência, será necessário um sinal de 50% do valor do procedimento para o próximo agendamento.
-    
+
 Agradeço a compreensão 😘
 `,
 
@@ -62,7 +63,7 @@ Agradeço a compreensão 😘
 
   const currentClient = clientList?.find((client) => client.name === clientName);
 
-  if (currentClient == undefined) {
+  if (currentClient == undefined && startDate) {
     try {
       const { error } = await client.from("Clientes").insert({
         name: clientName,
@@ -76,7 +77,7 @@ Agradeço a compreensão 😘
       setIsCreating(false);
       alert("Falha na atualização do banco de dados:" + " " + error.message);
     }
-  } else {
+  } else if (startDate) {
     try {
       const clienteId = currentClient?.id;
       const { error } = await client

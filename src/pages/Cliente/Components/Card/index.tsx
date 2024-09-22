@@ -14,25 +14,25 @@ import dayjs from "dayjs";
 
 import CardEditForm from "./CardEditForm";
 
-export default function Card({ client }: any) {
+export default function Card({ costumer }: any) {
   const [editing, setEditing] = useState(false);
 
   if (editing) {
-    return <CardEditForm {...{ client, setEditing }} />;
+    return <CardEditForm {...{ costumer, setEditing }} />;
   }
 
   return (
     <CardContainer>
       <CardInfoList>
         <CardTitleDiv>
-          <Title>{client.name}</Title>
+          <Title>{costumer.name}</Title>
         </CardTitleDiv>
-        <Info>Telefone: {client.cel_number}</Info>
+        <Info>Telefone: {costumer.cel_number}</Info>
         <Info>
           Atendimento mais recente:{" "}
-          {client.last_visit !== null ? dayjs(client.last_visit).format("DD/MM/YY") : "Não registrado"}
+          {costumer.last_visit !== null ? dayjs(costumer.last_visit).format("DD/MM/YY") : "Não registrado"}
         </Info>
-        <Info>Último serviço: {client.last_service}</Info>
+        <Info>Último serviço: {costumer.last_service}</Info>
       </CardInfoList>
       <ButtonContainer>
         <IconButton onClick={() => setEditing(true)}>

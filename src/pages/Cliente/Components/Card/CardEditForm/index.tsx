@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 import { getProcedimentos } from "../../../../Procedimentos/components/listaProcedimentos";
 import useWindowSize from "../../../../../hooks/useWindowSize";
 
-export default function CardEditForm({ client, setEditing }: any) {
-  const [name, setName] = useState(client.name);
-  const [tel, setTel] = useState(client.cel_number);
-  const [lastService, setLastService] = useState<string>(client.last_service);
+export default function CardEditForm({ costumer, setEditing }: any) {
+  const [name, setName] = useState(costumer.name);
+  const [tel, setTel] = useState(costumer.cel_number);
+  const [lastService, setLastService] = useState<string>(costumer.last_service);
   const [procedimentos, setProcedimentos] = useState<any>();
   const [{ isMobile }] = useWindowSize();
 
@@ -25,7 +25,7 @@ export default function CardEditForm({ client, setEditing }: any) {
         label="Nome"
         type="text"
         value={name}
-        placeholder={client.name}
+        placeholder={costumer.name}
         onChange={(e) => setName(e.target.value)}
       />
       <br />
@@ -33,7 +33,7 @@ export default function CardEditForm({ client, setEditing }: any) {
         label="Telefone"
         type="text"
         value={tel}
-        placeholder={client.cel_number}
+        placeholder={costumer.cel_number}
         onChange={(e) => setTel(e.target.value)}
       />
       <br />
@@ -47,7 +47,7 @@ export default function CardEditForm({ client, setEditing }: any) {
             label="Último Serviço"
             type="text"
             value={lastService}
-            placeholder={client.last_service}
+            placeholder={costumer.last_service}
           />
         )}
       />
@@ -56,7 +56,7 @@ export default function CardEditForm({ client, setEditing }: any) {
           id="submit"
           variant="outlined"
           color="success"
-          onClick={(e) => updateClient(e, name, tel, lastService, client)}
+          onClick={(e) => updateClient(e, name, tel, lastService, costumer)}
         >
           Salvar Alterações
         </S.Submit>

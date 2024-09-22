@@ -8,63 +8,56 @@ import dayjs, { Dayjs } from "dayjs";
 import * as GS from "../../styles/GlobalStyles";
 import * as S from "./styles";
 import { createCalendarEvent } from "./CreateCalendarEvent";
-import { getClientsNameAndCell } from "../../components/FetchClients";
 import useProcedimentos from "../../hooks/useProcedimentos";
 import CalendarPreview from "./CalendarPreview";
-import { Client, DateLib } from "../../types";
+import { DateLib } from "../../types";
 import { PuffLoader } from "react-spinners";
 import useWindowSize from "../../hooks/useWindowSize";
 import Loader from "../../components/Loader";
+import useFetchCostumersNameAndPhone from "../../hooks/useFetchCostumersNameAndPhone";
 
 export default function Calendar() {
   const session = useSession();
-  const [clientName, setClientName] = useState<string | null>(null);
-  const [clientPhone, setClientPhone] = useState<string | null>("");
+  const [costumerName, setCostumerName] = useState<string | null>(null);
+  const [costumerPhone, setCostumerPhone] = useState<string | null>("");
   const [procedure, setProcedure] = useState<string | null>(null);
   const [additionalProcedure, setAdditionalProcedure] = useState<string | null>(null);
   const [startDate, setStartDate] = useState<DateLib | null>();
   const [endDate, setEndDate] = useState<Dayjs | null>();
-  const [clientList, setClientList] = useState<Client[]>();
-  const [loading, setLoading] = useState(false);
   const [isCreating, setIsCreating] = useState<boolean>(false);
-
+  const { costumersNameAndPhone, isLoadingNameAndPhone } = useFetchCostumersNameAndPhone();
   const [{ procedimentosList, isLoading }] = useProcedimentos();
   const [{ isMobile }] = useWindowSize();
 
-  useEffect(() => {
-    getClientsNameAndCell(setLoading, setClientList);
-  }, []);
-
   /**use client name to change client tel input*/
   useEffect(() => {
-    const clientNameExist = clientList?.find((item) => item.name === clientName);
-    if (clientNameExist) setClientPhone(clientNameExist.cel_number);
-  }, [clientName, clientList]);
+    const clientNameExist = costumersNameAndPhone?.find((item) => item.name === costumerName);
+    if (clientNameExist) setCostumerPhone(clientNameExist.cel_number);
+  }, [costumerName, costumersNameAndPhone]);
 
-  /**use client tel to change client name input */
+  /**use client phone to change client name input */
   useEffect(() => {
-    const clientTelExist = clientList?.find((item) => item.cel_number === clientPhone);
-    if (clientTelExist) setClientName(clientTelExist.name);
-  }, [clientPhone, clientList]);
+    const clientTelExist = costumersNameAndPhone?.find((item) => item.cel_number === costumerPhone);
+    if (clientTelExist) setCostumerName(clientTelExist.name);
+  }, [costumerPhone, costumersNameAndPhone]);
 
-  /**use 'procedimento' and 'start' values to change 'end' value */
+  /**use 'procedimento' and 'startDate' values to change 'endDate' value */
   useEffect(() => {
     if (startDate && procedure) {
       const { $D: startDay, $M: startMonth, $y: startYear, $H: startHour, $m: startMinutes } = startDate;
 
       const procedimentoItem = procedimentosList.find((item) => item.name === procedure);
 
-      const segundoProcedimentoItem = procedimentosList.find((item) => item.name === additionalProcedure);
+      const segundoProcedimentoValue = procedimentosList.find((item) => item.name === additionalProcedure);
 
       const procedimentoHoras = procedimentoItem?.hours ?? 0;
       const procedimentoMinutos = procedimentoItem?.minutes ?? 0;
 
       /**Normalize the index, making January be 1 and December be 12 */
       let endDateTime = dayjs(`${startMonth + 1 > 11 ? 0 : startMonth + 1}/${startDay}/${startYear}`);
-
-      if (additionalProcedure && segundoProcedimentoItem) {
-        const segundoProcedimentoHoras = segundoProcedimentoItem.hours ?? 0;
-        const segundoProcedimentoMinutos = segundoProcedimentoItem.minutes ?? 0;
+      if (additionalProcedure && segundoProcedimentoValue) {
+        const segundoProcedimentoHoras = segundoProcedimentoValue.hours ?? 0;
+        const segundoProcedimentoMinutos = segundoProcedimentoValue.minutes ?? 0;
 
         endDateTime = endDateTime
           .add(startHour + procedimentoHoras, "hour")
@@ -85,18 +78,18 @@ export default function Calendar() {
     e.preventDefault();
     createCalendarEvent(
       session,
-      clientName,
-      clientList,
+      costumerName,
+      costumersNameAndPhone,
       procedure,
       additionalProcedure,
-      clientPhone,
+      costumerPhone,
       startDate,
       endDate,
       setIsCreating
     );
   }
 
-  if (loading || isLoading) return <Loader />;
+  if (isLoadingNameAndPhone || isLoading) return <Loader />;
   return (
     <GS.Section>
       <S.CalendarContainer>
@@ -108,13 +101,13 @@ export default function Calendar() {
                 <TextField
                   {...params}
                   label="Nome da cliente"
-                  onChange={(e: any) => setClientName(e.target.value)}
+                  onChange={(e: any) => setCostumerName(e.target.value)}
                   required
                 />
               )}
-              options={clientList?.map((cliente) => cliente.name) || ["Carregando clientes..."]}
-              value={clientName}
-              onChange={(_event, newValue) => setClientName(newValue)}
+              options={costumersNameAndPhone.map((cliente) => cliente.name) || ["Carregando clientes..."]}
+              value={costumerName}
+              onChange={(_event, newValue) => setCostumerName(newValue)}
               freeSolo
             />
             <Autocomplete
@@ -122,13 +115,13 @@ export default function Calendar() {
                 <TextField
                   {...params}
                   label="Telefone da cliente"
-                  onChange={(e: any) => setClientPhone(e.target.value)}
+                  onChange={(e: any) => setCostumerPhone(e.target.value)}
                   required
                 />
               )}
-              value={clientPhone}
-              onChange={(_event, newValue) => setClientPhone(newValue)}
-              options={clientList?.map((cliente) => cliente.cel_number) || ["Carregando telefones"]}
+              value={costumerPhone}
+              onChange={(_event, newValue) => setCostumerPhone(newValue)}
+              options={costumersNameAndPhone.map((cliente) => cliente.cel_number) || ["Carregando telefones"]}
               freeSolo
             />
             <S.SelectServiceDiv>
@@ -174,7 +167,7 @@ export default function Calendar() {
               variant="contained"
               color="primary"
               onClick={(e) => handleClick(e)}
-              disabled={!procedure || !clientName || !clientPhone || !startDate || !endDate}
+              disabled={!procedure || !costumerName || !costumerPhone || !startDate || !endDate}
             >
               {isCreating ? <PuffLoader size={25} color="#c3ccbf" /> : "Salvar no Calendário"}
             </S.StyledButton>

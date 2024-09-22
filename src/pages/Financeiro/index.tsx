@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { getClientsFullData } from "../../components/FetchClients";
-import { Client } from "../../types";
+import { getCostumersFullData } from "../../components/FetchClients";
+import { Costumer } from "../../types";
 import dayjs from "dayjs";
 import useProcedimentos from "../../hooks/useProcedimentos";
 import Loader from "../../components/Loader";
@@ -15,16 +15,16 @@ const WIPTitle = styled.div`
   justify-content: center;
 `;
 export default function Financeiro() {
-  const [clients, setClients] = useState<Client[]>();
+  const [costumers, setCostumers] = useState<Costumer[]>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [current] = useState<Client[]>([]);
+  const [current] = useState<Costumer[]>([]);
 
   const [{ procedimentosList, isLoading }] = useProcedimentos();
   useEffect(() => {
-    getClientsFullData(setClients, setLoading);
+    getCostumersFullData(setCostumers, setLoading);
   }, []);
 
-  clients?.map((client) => {
+  costumers?.map((client) => {
     if (dayjs(new Date()).month() === dayjs(client.last_visit).month()) {
       if (!current.find((item) => item.id === client.id)) current.push(client);
     }
