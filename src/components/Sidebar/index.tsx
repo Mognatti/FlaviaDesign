@@ -11,7 +11,6 @@ export default function Sidebar() {
   const location = useLocation();
   const isActiveLink = (linkTo: string) =>
     linkTo === "/" ? location.pathname === "/" : location.pathname.includes(linkTo);
-
   return (
     <S.SidebarContainer close={!isOpen && !isMobile}>
       <S.Controllers show={!isMobile}>
