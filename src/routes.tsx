@@ -10,7 +10,7 @@ import { theme } from "./styles/theme";
 import Procedimentos from "./pages/Procedimentos";
 import { SidebarStatusProvider } from "./context/SidebarStatus";
 import { useSession } from "@supabase/auth-helpers-react";
-import NotLogged from "./pages/NotLogged";
+import LoginPage from "./pages/Login";
 import { useState, useEffect } from "react";
 import Loader from "./components/Loader";
 
@@ -25,7 +25,8 @@ export default function AppRouter() {
   }, [session]);
 
   if (loading) return <Loader />;
-  if (!session && !loading) return <NotLogged />;
+  if (!session && !loading) return <LoginPage />;
+
   return (
     <ThemeProvider theme={theme}>
       <Router>

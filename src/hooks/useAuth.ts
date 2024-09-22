@@ -1,20 +1,15 @@
-import { client } from "../../supabaseClient";
-import {
-  Session,
-  useSession,
-  useSupabaseClient,
-} from "@supabase/auth-helpers-react";
+import { Session, useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
-import * as S from "./styles";
+import { client } from "../supabaseClient";
 
-export async function logout() {
-  await client.auth.signOut();
-}
-
-export default function Login() {
+export default function useAuth() {
   const logged = useSession();
   const [session, setSession] = useState<Session | null>(logged);
   const supabase = useSupabaseClient(); //conect with supabase and create a session
+
+  async function logout() {
+    await client.auth.signOut();
+  }
 
   async function googleSignIn() {
     const { error } = await supabase.auth.signInWithOAuth({
@@ -42,12 +37,5 @@ export default function Login() {
     return () => subscription.unsubscribe();
   }, []);
 
-  if (!session) {
-    return (
-      <S.LoginButton variant="contained" onClick={() => googleSignIn()}>
-        Login com google
-      </S.LoginButton>
-    );
-  }
-  return <></>;
+  return { session, googleSignIn, logout };
 }
