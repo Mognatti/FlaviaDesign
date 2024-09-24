@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { RiUserSearchLine } from "react-icons/ri";
 import { breakPoints, pallete } from "../../styles/GlobalStyles";
+import { Close } from "@mui/icons-material";
+import { styled as styledMui } from "@mui/material";
 
 export const SearchDiv = styled.div`
   position: relative;
@@ -44,7 +46,7 @@ export const SearchIcon = styled(RiUserSearchLine)`
 
 export const Loading = styled.p`
   text-align: center;
-  margin-top: 15px;
+  margin-top: 16px;
 `;
 
 // Check latter
@@ -66,7 +68,7 @@ export const Item = styled.li`
 `;
 export const NotLoggedin = styled.p`
   text-align: center;
-  margin-top: 15px;
+  margin-top: 16px;
 `;
 
 export const Form = styled.form`
@@ -75,15 +77,36 @@ export const Form = styled.form`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  width: 310px;
-  background-color: rgba(69, 80, 61, 0.4);
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4);
-  border-radius: 15px;
-  padding: 8px;
-  margin-top: 2%;
-  margin-bottom: 5vh;
-  @media (max-width: 900px) {
-    margin-top: 5%;
-    width: 280px;
+  width: 330px;
+  background-color: ${pallete.lightGreen};
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  padding: 24px 16px 8px 16px;
+  height: fit-content;
+  position: relative;
+`;
+
+export const FormHeader = styled.div`
+  display: flex;
+  align-items: center;
+  width: 90%;
+  margin-bottom: 24px;
+  border-bottom: 2px solid ${pallete.dark};
+  padding-bottom: 4px;
+  p {
+    width: 100%;
+    font-size: 18px;
   }
+`;
+
+export const ModalContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
+export const CloseIcon = styledMui(Close)`
+align-self: flex-end;
 `;
