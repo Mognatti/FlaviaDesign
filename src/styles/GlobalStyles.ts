@@ -114,9 +114,16 @@ export const AutoComplete = styledMui(Autocomplete)`
 width:64%;
 `;
 export const Submit = styledMui(Button)`
-  color: black;
+  min-width: 300px;
+  min-height: 40px;
   margin-bottom:12px;
   margin-top:12px;
+  display:flex;
+  align-items:center;
+  *{
+  margin-top: -2px;
+  margin-left: -2px;
+  }
 `;
 export const ButtonContainer = styled.div`
   display: flex;
@@ -140,24 +147,14 @@ export const Section = styled.section<{ sidebar?: boolean }>`
   }
 `;
 
-export const SessionTitle = styled.h1`
+export const SessionTitle = styled.h2`
   padding: 8px;
   margin-bottom: 16px;
   border-bottom: 2px solid rgba(69, 80, 61, 0.4);
-  @media (max-width: ${breakPoints.mobile}) {
-    text-align: center;
-    margin-bottom: 32px;
-    margin-top: -15px;
-  }
 `;
 export const Title = styled.h3`
   text-align: center;
   padding: 8px;
   padding-bottom: 16px;
   font-weight: 400;
-`;
-export const ClientConetainer = styled.section`
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
