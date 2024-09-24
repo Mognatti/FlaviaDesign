@@ -1,3 +1,3 @@
-export default function NotFount() {
-  return <div>Not Found</div>;
+export default function NotFound() {
+  return <div></div>;
 }
