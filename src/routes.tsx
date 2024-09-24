@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import Sidebar from "./components/Sidebar";
 import Calendar from "./pages/Calendario";
 import Clients from "./pages/Cliente";
-import NotFount from "./pages/NotFound";
+import NotFound from "./pages/NotFound";
 import Financeiro from "./pages/Financeiro";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./styles/theme";
@@ -38,7 +38,7 @@ export default function AppRouter() {
             <Route path="/clientes" element={<Clients />} />
             <Route path="/financeiro" element={<Financeiro />} />
             <Route path="/procedimentos" element={<Procedimentos />} />
-            <Route path="*" element={<NotFount />}></Route>
+            <Route path="*" element={<NotFound />}></Route>
           </Routes>
         </SidebarStatusProvider>
       </Router>
