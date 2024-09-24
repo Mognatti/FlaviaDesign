@@ -9,8 +9,8 @@ import Loader from "../../components/Loader";
 import useAuth from "../../hooks/useAuth";
 
 export default function Home() {
-  const [{ costumers, isCostumerDBLoading }] = useFetchCostumers();
-  const [{ procedimentos, isProcedimentosLoading }] = useFetchProcedimentos();
+  const { costumers, isCostumerDBLoading } = useFetchCostumers();
+  const [{ procedures, isProceduresLoading }] = useFetchProcedimentos();
   const { isOpen } = useContext(SidebarStatusContext);
   const { logout } = useAuth();
 
@@ -22,7 +22,7 @@ export default function Home() {
   const dateList = costumers.map((costumer) => costumer.last_visit);
 
   const datesInCurrentWeek = dateList.filter((date) => DatesInCurrentWeek(date!));
-  if (isCostumerDBLoading || isProcedimentosLoading) return <Loader />;
+  if (isCostumerDBLoading || isProceduresLoading) return <Loader />;
   return (
     <GS.Section sidebar={isOpen}>
       <S.LeftDiv>
@@ -42,7 +42,7 @@ export default function Home() {
           <S.Item>
             <S.ItemTitle>Procedimentos</S.ItemTitle>
             <div>
-              <S.ItemData>{procedimentos.length}</S.ItemData> Procedimentos cadastrados
+              <S.ItemData>{procedures.length}</S.ItemData> Procedimentos cadastrados
             </div>
           </S.Item>
         </S.List>
