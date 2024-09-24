@@ -12,7 +12,7 @@ export default function useFetchCostumers() {
       try {
         const { data, error } = await client.from("Clientes").select("*");
         if (data) {
-          setCostumers(data as Costumer[]);
+          setCostumers(sortCostumersByName(data as Costumer[]));
           setIsCostumerDBLoading(false);
         }
         if (error) {
@@ -23,9 +23,22 @@ export default function useFetchCostumers() {
         console.log(error);
         setIsCostumerDBLoading(false);
       }
+
+      function sortCostumersByName(arr: Costumer[]) {
+        const sortedArray = arr.sort((a, b) => {
+          if (a.name > b.name) {
+            return 1;
+          }
+          if (a.name < b.name) {
+            return -1;
+          }
+          return 0;
+        });
+        return sortedArray;
+      }
     }
     fetchCostumers();
   }, []);
 
-  return [{ costumers, isCostumerDBLoading }];
+  return { costumers, isCostumerDBLoading };
 }
