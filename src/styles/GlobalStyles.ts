@@ -3,13 +3,63 @@ import Autocomplete from "@mui/material/Autocomplete/Autocomplete";
 import { styled as styledMui, Button } from "@mui/material";
 
 export const pallete = {
-  white: "#fefefe",
-  offWhite: "#e6ebdf",
-  lighterGreen: "#c3ccbf",
-  lightGreen: "#95a887",
-  green: "#739245",
-  dark: "#435b37",
-  black: "#000",
+  neutral: {
+    100: "#fefefe",
+    200: "#f5f7f2",
+    300: "#f0f3ec",
+    400: "#ebefe5",
+    500: "#e6ebdf",
+    600: "#b8bcb2",
+    700: "#8a8d86",
+    800: "#5c5e59",
+    900: "#242424",
+  },
+  /**primary */
+  green: {
+    100: "#ecf0e9",
+    200: "#d8e0d2",
+    300: "#c5d1bc",
+    400: "#b1c1a5",
+    500: "#9eb28f",
+    600: "#77866c",
+    700: "#596551",
+    800: "#3c4336",
+    900: "#1e221b",
+  },
+  /**secondary */
+  gray: {
+    100: "#f3f5f2",
+    200: "#e7ebe5",
+    300: "#dbe0d9",
+    400: "#cfd6cc",
+    500: "#c3ccbf",
+    600: "#9ca399",
+    700: "#757a73",
+    800: "#4e524c",
+    900: "#272926",
+  },
+  /**accent */
+  lime: {
+    100: "#ecf3e0",
+    200: "#d9e8c0",
+    300: "#c5dca1",
+    400: "#b2d181",
+    500: "#9fc562",
+    600: "#7f9e4e",
+    700: "#5f763b",
+    800: "#404f27",
+    900: "#202714",
+  },
+};
+
+export const typography = {
+  h1: "4.21rem",
+  h2: "3.158rem",
+  h3: "2.369rem",
+  h4: "1.777rem",
+  h5: "1.333rem",
+  regular: "100%",
+  small: "0.75rem",
 };
 
 export const breakPointsNumbers = {
@@ -141,7 +191,7 @@ export const Section = styled.section<{ sidebar?: boolean }>`
   display: flex;
   flex-direction: column;
   transition: all 300ms ease;
-  margin: 32px 80px;
+  margin: 32px 32px 32px 80px;
   @media (max-width: ${breakPoints.tablet}) {
     margin: 4vh 4vw 10vh 4vw;
   }
