@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { styled as styledMui } from "@mui/material/styles";
 import { Button } from "@mui/material";
-import { breakPoints, pallete } from "../../styles/GlobalStyles";
+import { breakPoints, pallete, Section } from "../../styles/GlobalStyles";
+
+export const CustomGlobalSection = styled(Section)`
+  margin: 32px 80px;
+`;
 
 export const CalendarContainer = styled.div`
   width: 100%;
@@ -34,7 +38,7 @@ export const CalendarForm = styled.form<{ mobile?: boolean }>`
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
-  background-color: ${pallete.lighterGreen};
+  background-color: ${pallete.green[500]};
   @media (max-width: 1300px) {
     margin-top: 1%;
     align-self: center;
