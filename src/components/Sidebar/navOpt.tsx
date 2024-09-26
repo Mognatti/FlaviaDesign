@@ -1,36 +1,35 @@
 import { RiGroupFill, RiCalendarCheckFill, RiHome2Fill } from "react-icons/ri";
 import { FaHandHoldingHeart, FaCoins } from "react-icons/fa";
-import { pallete } from "../../styles/GlobalStyles";
 
 export const navOpt = [
   {
     id: 1,
     nome: "Agenda",
     to: "/agenda",
-    icon: <RiCalendarCheckFill color={pallete.black} size="25" />,
+    icon: <RiCalendarCheckFill size="25" />,
   },
   {
     id: 2,
     nome: "Clientes",
     to: "/clientes",
-    icon: <RiGroupFill color={pallete.black} size="25" />,
+    icon: <RiGroupFill size="25" />,
   },
   {
     id: 3,
     nome: "Home",
     to: "/",
-    icon: <RiHome2Fill color={pallete.black} size="25" />,
+    icon: <RiHome2Fill size="25" />,
   },
   {
     id: 4,
     nome: "Procedimentos",
     to: "/procedimentos",
-    icon: <FaHandHoldingHeart color={pallete.black} size="25" />,
+    icon: <FaHandHoldingHeart size="25" />,
   },
   {
     id: 5,
     nome: "Financeiro",
     to: "/financeiro",
-    icon: <FaCoins color={pallete.black} size="25" />,
+    icon: <FaCoins size="25" />,
   },
 ];
