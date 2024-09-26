@@ -12,18 +12,20 @@ import {
   IconButton,
   Divider,
   Autocomplete,
+  InputAdornment,
 } from "@mui/material";
 import { Costumer, Procedimento } from "../../../../types";
 import React, { useEffect, useMemo, useState } from "react";
 import * as S from "./styles";
 import dayjs from "dayjs";
 import EditIcon from "@mui/icons-material/Edit";
-import { SaveRounded } from "@mui/icons-material";
+import { SaveRounded, Search } from "@mui/icons-material";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import useUpdateCostumer from "../../../../hooks/useUpdateClient";
 import NewClient from "../NewClient";
 import { PuffLoader } from "react-spinners";
 import { getProcedimentos } from "../../../Procedimentos/components/listaProcedimentos";
+import { pallete } from "../../../../styles/GlobalStyles";
 
 const tableHeader = [
   {
@@ -117,7 +119,7 @@ export default function ClientTable({ costumers }: ClientTable) {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
+      <Paper sx={{ width: "100%", mb: 2, backgroundColor: pallete.neutral[400] }}>
         <TableContainer>
           <S.TableHeader>
             <S.TableTitle>Lista de Clientes</S.TableTitle>
@@ -135,9 +137,17 @@ export default function ClientTable({ costumers }: ClientTable) {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Buscar por nome..."
+                    label="Buscar cliente"
                     onChange={(e) => setSearch(e.target.value)}
-                    variant="standard"
+                    variant="filled"
+                    InputProps={{
+                      ...params.InputProps,
+                      startAdornment: (
+                        <InputAdornment position="end">
+                          <Search />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 )}
               />
