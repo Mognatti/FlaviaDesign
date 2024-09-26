@@ -2,7 +2,7 @@ import { breakPoints } from "./../../styles/GlobalStyles";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { pallete } from "../../styles/GlobalStyles";
-import { RiLogoutCircleLine, RiMenuFoldLine } from "react-icons/ri";
+import { RiMenuFoldLine } from "react-icons/ri";
 
 export const SidebarContainer = styled.div<{ close?: boolean }>`
   position: fixed;
@@ -11,7 +11,7 @@ export const SidebarContainer = styled.div<{ close?: boolean }>`
   box-sizing: border-box;
   bottom: 0;
   left: 0;
-  background-color: ${pallete.lightGreen};
+  background-color: ${pallete.green[500]};
   width: 100vw;
   height: 10vh;
   z-index: 999;
@@ -115,18 +115,6 @@ export const Icon = styled.i<{ active?: boolean }>`
   justify-content: center;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: ${(props) => (props.active ? pallete.lighterGreen : "transparent")};
+  background: ${(props) => (props.active ? pallete.gray[500] : "transparent")};
   transition: all 350ms ease-in-out;
-`;
-
-export const Button = styled.button`
-  color: #d32f2f;
-  background-color: transparent;
-  outline: none;
-  border: none;
-  font-size: 16px;
-`;
-
-export const LogoutIcon = styled(RiLogoutCircleLine)`
-  color: #d32f2f;
 `;
