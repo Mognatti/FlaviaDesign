@@ -2,9 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 html {
   background-color: #e6ebdf;
-  overflow-x: hidden;
-}
-body {
+  font-size: 100% !important;
   overflow-x: hidden;
 }
 
@@ -13,8 +11,51 @@ ol {
   list-style: none;
 }
 
-* {
-  margin: 0;
-  font-family: "Edu AU VIC WA NT Hand", cursive;
-  font-family: "Nunito", sans-serif;
+body,
+table,
+td,
+tr,
+th,
+input,
+a,
+label,
+span,
+option,
+div {
+  font-family: "Edu AU VIC WA NT Hand" !important;
+  font-weight: 400 !important;
+}
+
+h1,
+h2 {
+  font-family: "Nunito Sans" !important;
+  font-weight: 700;
+}
+h3,
+h4,
+h5 {
+  font-family: "Nunito Sans" !important;
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 4.21rem;
+}
+h2 {
+  font-size: 3.158rem;
+}
+h3 {
+  font-size: 2.369rem;
+}
+
+h4 {
+  font-size: 1.777rem;
+}
+
+h5 {
+  font-size: 1.333rem;
+}
+
+small {
+  font-size: 0.75rem;
 }
