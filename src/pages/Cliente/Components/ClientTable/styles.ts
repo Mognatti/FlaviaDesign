@@ -1,5 +1,5 @@
 import { styled as styledMui, TableCell, TableRow, Toolbar } from "@mui/material";
-import { AutoComplete } from "../../../../styles/GlobalStyles";
+import { AutoComplete, typography } from "../../../../styles/GlobalStyles";
 import styled from "styled-components";
 
 export const CustomAutoComplete = styledMui(AutoComplete)`
@@ -17,11 +17,11 @@ export const TableHeader = styledMui(Toolbar)`
   margin: 0 8px;
   @media (max-width: 800px) {
   min-width: 700px;
-}
+ 
 `;
 
 export const TableTitle = styled.p`
-  font-size: 1.325em;
+  font-size: ${typography.h5};
   min-width: fit-content;
 `;
 
@@ -33,9 +33,9 @@ export const HeaderForm = styled.div`
 `;
 
 export const HeaderRow = styledMui(TableRow)`
-background-color:  ${(props) => props.theme.palette.primary.light};
+background-color:  ${(props) => props.theme.palette.primary[600]};
 th{
-color:white;
+  color:white;
 &:last-child {
     text-align: center;
   }

@@ -14,12 +14,7 @@ export default function Clients() {
 
   return (
     <GS.Section>
-      <br />
-      <S.ListContainer>
-        <GS.SessionTitle>Clientes</GS.SessionTitle>
-        <br />
-        <ClientTable costumers={costumers} />
-      </S.ListContainer>
+      <ClientTable costumers={costumers} />
     </GS.Section>
   );
 }

@@ -24,7 +24,7 @@ export const Input = styled.input`
   display: flex;
   flex-direction: row;
   border-radius: 8px;
-  border: 1px solid ${pallete.white};
+  border: 1px solid ${pallete.neutral[100]};
   padding: 16px;
   padding-left: 50px;
   width: 100%;
@@ -78,7 +78,7 @@ export const Form = styled.form`
   align-items: center;
   justify-content: center;
   width: 330px;
-  background-color: ${pallete.lightGreen};
+  background-color: ${pallete.green[500]};
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
   border-radius: 8px;
   padding: 24px 16px 8px 16px;
@@ -91,7 +91,7 @@ export const FormHeader = styled.div`
   align-items: center;
   width: 90%;
   margin-bottom: 24px;
-  border-bottom: 2px solid ${pallete.dark};
+  border-bottom: 2px solid ${pallete.neutral[900]};
   padding-bottom: 4px;
   p {
     width: 100%;
