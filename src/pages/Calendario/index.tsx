@@ -14,7 +14,7 @@ import { DateLib } from "../../types";
 import { PuffLoader } from "react-spinners";
 import useWindowSize from "../../hooks/useWindowSize";
 import Loader from "../../components/Loader";
-import useFetchCostumersNameAndPhone from "../../hooks/useFetchCostumersNameAndPhone";
+import useFetchCostumersNameAndPhone from "../../hooks/useFetchCostumersNameAndPhone.ts";
 
 export default function Calendar() {
   const session = useSession();
@@ -91,7 +91,7 @@ export default function Calendar() {
 
   if (isLoadingNameAndPhone || isLoading) return <Loader />;
   return (
-    <GS.Section>
+    <S.CustomGlobalSection>
       <S.CalendarContainer>
         <S.CalendarForm mobile={isMobile}>
           <GS.Title>Novo Agendamento</GS.Title>
@@ -175,6 +175,6 @@ export default function Calendar() {
         </S.CalendarForm>
         <CalendarPreview />
       </S.CalendarContainer>
-    </GS.Section>
+    </S.CustomGlobalSection>
   );
 }
