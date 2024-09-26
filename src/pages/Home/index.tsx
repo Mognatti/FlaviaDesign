@@ -23,6 +23,7 @@ export default function Home() {
 
   const datesInCurrentWeek = dateList.filter((date) => DatesInCurrentWeek(date!));
   if (isCostumerDBLoading || isProceduresLoading) return <Loader />;
+
   return (
     <GS.Section sidebar={isOpen}>
       <S.LeftDiv>
