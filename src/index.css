@@ -22,19 +22,19 @@ label,
 span,
 option,
 div {
-  font-family: "Edu AU VIC WA NT Hand" !important;
-  font-weight: 400 !important;
+  font-family: "Edu AU VIC WA NT Hand", sans-serif;
+  font-weight: 400;
 }
 
 h1,
 h2 {
-  font-family: "Nunito Sans" !important;
+  font-family: "Nunito Sans", sans-serif;
   font-weight: 700;
 }
 h3,
 h4,
 h5 {
-  font-family: "Nunito Sans" !important;
+  font-family: "Nunito Sans", sans-serif;
   font-weight: 500;
 }
 
@@ -58,4 +58,63 @@ h5 {
 
 small {
   font-size: 0.75rem;
+}
+
+:root {
+  --neutral-900: #242424;
+  --neutral-800: #5c5e59;
+  --neutral-700: #8a8d86;
+  --neutral-600: #b8bcb2;
+  --neutral-500: #e6ebdf;
+  --neutral-400: #ebefe5;
+  --neutral-300: #f0f3ec;
+  --neutral-200: #f5f7f2;
+  --neutral-100: #fefefe;
+
+  --primary-900: #1e221b;
+  --primary-800: #3c4336;
+  --primary-700: #596551;
+  --primary-600: #77866c;
+  --primary-500: #9eb28f;
+  --primary-400: #b1c1a5;
+  --primary-300: #c5d1bc;
+  --primary-200: #d8e0d2;
+  --primary-100: #ecf0e9;
+
+  --secondary-900: #272926;
+  --secondary-800: #4e524c;
+  --secondary-700: #757a73;
+  --secondary-600: #9ca399;
+  --secondary-500: #c3ccbf;
+  --secondary-400: #cfd6cc;
+  --secondary-300: #dbe0d9;
+  --secondary-200: #e7ebe5;
+  --secondary-100: #f3f5f2;
+
+  --accent-900: #202714;
+  --accent-800: #404f27;
+  --accent-700: #5f763b;
+  --accent-600: #7f9e4e;
+  --accent-500: #9fc562;
+  --accent-400: #b2d181;
+  --accent-300: #c5dca1;
+  --accent-200: #d9e8c0;
+  --accent-100: #e3e4e3;
+
+  --tipography-font-size-h1: 4.21rem;
+  --tipography-font-size-h2: 3.158rem;
+  --tipography-font-size-h3: 2.369rem;
+  --tipography-font-size-h4: 1.777rem;
+  --tipography-font-size-h5: 1.333rem;
+  --tipography-font-size-regular: 1rem;
+  --tipography-font-size-small: 0.75rem;
+
+  --typography-font-family-body: "Edu AU VIC WA NT Hand", sans-serif !important;
+  --typography-font-family-headings: "Nunito Sans", sans-serif !important;
+
+  --breakpoint-smallMobile: 380px;
+  --breakpoint-mobile: 470px;
+  --breakpoint-smallTablet: 650px;
+  --breakpoint-tablet: 800px;
+  --breakpoint-desktop: 1300px;
 }
