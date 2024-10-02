@@ -125,3 +125,6 @@ fc-button-primary:disabled {
 .fc-list-event-title {
   font-size: var(--tipography-font-size-small) !important;
 }
+.fc-scroller:not(.fc-scroller-liquid-absolute) {
+  overflow-y: hidden !important;
+}
