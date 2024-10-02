@@ -16,6 +16,10 @@ export default function useAuth() {
       provider: "google",
       options: {
         scopes: "https://www.googleapis.com/auth/calendar",
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+        },
       },
     });
     if (error) {
