@@ -1,7 +1,0 @@
-import styled from "styled-components";
-
-export const EmbedCalendar = styled.iframe`
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
-  margin-top: 16px;
-`;
