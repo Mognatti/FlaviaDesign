@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSession } from "@supabase/auth-helpers-react";
-import * as S from "./styles";
 import * as GS from "../../styles/GlobalStyles";
 import Loader from "../../components/Loader";
 import ClientTable from "./Components/ClientTable";
