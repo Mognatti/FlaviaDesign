@@ -4,17 +4,23 @@ import { Button } from "@mui/material";
 import { breakPoints, pallete, Section } from "../../styles/GlobalStyles";
 
 export const CustomGlobalSection = styled(Section)`
-  margin: 32px 80px;
+  margin: 32px 16px 0 80px;
+  @media (max-width: ${breakPoints.tablet}) {
+    margin: 4vh 4vw 10vh;
+  }
+`;
+
+export const ModalTitle = styled.h3`
+  font-family: var(--typography-font-family-headings);
+  font-size: var(--tipography-font-size-h5);
 `;
 
 export const CalendarContainer = styled.div`
   width: 100%;
   display: flex;
-  gap: 24px;
-  margin-left: 40px;
+  flex-direction: column;
   align-items: center;
   @media (max-width: 1300px) {
-    flex-direction: column;
     align-items: center;
     height: auto;
     margin-bottom: 16px;
@@ -28,20 +34,20 @@ export const CalendarContainer = styled.div`
 
 export const CalendarForm = styled.form<{ mobile?: boolean }>`
   display: flex;
+  align-self: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 40%;
+  width: 50%;
   height: 570px;
   margin-top: 1%;
   margin-left: ${(props) => (props.mobile ? "0" : "-30px")};
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
-  background-color: ${pallete.green[500]};
+  background-color: ${pallete.primary[500]};
   @media (max-width: 1300px) {
     margin-top: 1%;
-    align-self: center;
     width: 600px;
     height: auto;
     margin-left: 0px;

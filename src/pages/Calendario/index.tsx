@@ -2,19 +2,21 @@
 import { useSession } from "@supabase/auth-helpers-react";
 import { useState, useEffect } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers/";
-import { Autocomplete, Stack } from "@mui/material";
+import { Autocomplete, IconButton, Modal, Stack } from "@mui/material";
 import TextField from "@mui/material/TextField/TextField";
 import dayjs, { Dayjs } from "dayjs";
-import * as GS from "../../styles/GlobalStyles";
 import * as S from "./styles";
-import { createCalendarEvent } from "./CreateCalendarEvent";
 import useProcedimentos from "../../hooks/useProcedimentos";
-import CalendarPreview from "./CalendarPreview";
-import { DateLib } from "../../types";
 import { PuffLoader } from "react-spinners";
 import useWindowSize from "../../hooks/useWindowSize";
 import Loader from "../../components/Loader";
 import useFetchCostumersNameAndPhone from "../../hooks/useFetchCostumersNameAndPhone.ts";
+import { DateClickArg } from "@fullcalendar/interaction";
+import "./calendar.css";
+import { CloseIcon, ModalContent } from "../Cliente/styles.ts";
+import useCreateCalendarEvent from "../../hooks/useCreateCalendarEvent.ts";
+import DialogComponent from "../../components/Dialog/index.tsx";
+import InteractiveCalendar from "./InteractiveCalendar/index.tsx";
 
 export default function Calendar() {
   const session = useSession();
@@ -22,11 +24,13 @@ export default function Calendar() {
   const [costumerPhone, setCostumerPhone] = useState<string | null>("");
   const [procedure, setProcedure] = useState<string | null>(null);
   const [additionalProcedure, setAdditionalProcedure] = useState<string | null>(null);
-  const [startDate, setStartDate] = useState<DateLib | null>();
+  const [startDate, setStartDate] = useState<dayjs.Dayjs | null>();
   const [endDate, setEndDate] = useState<Dayjs | null>();
-  const [isCreating, setIsCreating] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showDialog, setShowDialog] = useState<boolean>(false);
   const { costumersNameAndPhone, isLoadingNameAndPhone } = useFetchCostumersNameAndPhone();
   const [{ procedimentosList, isLoading }] = useProcedimentos();
+  const { createCalendarEvent, message, isCreating } = useCreateCalendarEvent();
   const [{ isMobile }] = useWindowSize();
 
   /**use client name to change client tel input*/
@@ -44,7 +48,11 @@ export default function Calendar() {
   /**use 'procedimento' and 'startDate' values to change 'endDate' value */
   useEffect(() => {
     if (startDate && procedure) {
-      const { $D: startDay, $M: startMonth, $y: startYear, $H: startHour, $m: startMinutes } = startDate;
+      const startDay = startDate.get("D");
+      const startMonth = startDate.get("M");
+      const startYear = startDate.get("year");
+      const startHour = startDate.get("hour");
+      const startMinutes = startDate.get("m");
 
       const procedimentoItem = procedimentosList.find((item) => item.name === procedure);
 
@@ -74,9 +82,13 @@ export default function Calendar() {
     }
   }, [startDate, procedure, additionalProcedure, procedimentosList]);
 
-  function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  function handleOpenModal(info: DateClickArg) {
+    setStartDate(dayjs(info.dateStr));
+    setShowModal(true);
+  }
+  async function handleCreateEvent(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
-    createCalendarEvent(
+    await createCalendarEvent(
       session,
       costumerName,
       costumersNameAndPhone,
@@ -84,97 +96,120 @@ export default function Calendar() {
       additionalProcedure,
       costumerPhone,
       startDate,
-      endDate,
-      setIsCreating
+      endDate
     );
   }
 
-  if (isLoadingNameAndPhone || isLoading) return <Loader />;
+  useEffect(() => {
+    if (message) {
+      setShowDialog(true);
+    }
+  }, [message]);
+
+  if (isLoadingNameAndPhone || isLoading || !session) return <Loader />;
   return (
     <S.CustomGlobalSection>
-      <S.CalendarContainer>
-        <S.CalendarForm mobile={isMobile}>
-          <GS.Title>Novo Agendamento</GS.Title>
-          <Stack spacing={2} style={{ width: "100%" }}>
-            <Autocomplete
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Nome da cliente"
-                  onChange={(e: any) => setCostumerName(e.target.value)}
-                  required
+      <DialogComponent {...{ showDialog, setShowDialog, message }} />
+      <Modal open={showModal}>
+        <ModalContent>
+          <S.CalendarContainer>
+            <S.CalendarForm mobile={isMobile}>
+              <Stack sx={{ width: "100%", display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+                <S.ModalTitle>Novo Agendamento</S.ModalTitle>
+                <IconButton onClick={() => setShowModal(false)} sx={{ height: "fit-content", alignSelf: "center" }}>
+                  <CloseIcon />
+                </IconButton>
+              </Stack>
+              <Stack spacing={2} style={{ width: "100%" }}>
+                <Autocomplete
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Nome da cliente"
+                      color="grey"
+                      onChange={(e: any) => setCostumerName(e.target.value)}
+                      required
+                    />
+                  )}
+                  options={costumersNameAndPhone.map((cliente) => cliente.name) || ["Carregando clientes..."]}
+                  value={costumerName}
+                  onChange={(_event, newValue) => setCostumerName(newValue)}
+                  freeSolo
                 />
-              )}
-              options={costumersNameAndPhone.map((cliente) => cliente.name) || ["Carregando clientes..."]}
-              value={costumerName}
-              onChange={(_event, newValue) => setCostumerName(newValue)}
-              freeSolo
-            />
-            <Autocomplete
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Telefone da cliente"
-                  onChange={(e: any) => setCostumerPhone(e.target.value)}
-                  required
+                <Autocomplete
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Telefone da cliente"
+                      color="grey"
+                      onChange={(e: any) => setCostumerPhone(e.target.value)}
+                      required
+                    />
+                  )}
+                  value={costumerPhone}
+                  onChange={(_event, newValue) => setCostumerPhone(newValue)}
+                  options={costumersNameAndPhone.map((cliente) => cliente.cel_number) || ["Carregando telefones"]}
+                  freeSolo
                 />
-              )}
-              value={costumerPhone}
-              onChange={(_event, newValue) => setCostumerPhone(newValue)}
-              options={costumersNameAndPhone.map((cliente) => cliente.cel_number) || ["Carregando telefones"]}
-              freeSolo
-            />
-            <S.SelectServiceDiv>
-              <Autocomplete
-                style={{ width: "100%" }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Primeiro Procedimento"
-                    onBlur={(e: any) => setProcedure(e.target.value)}
-                    required
+                <S.SelectServiceDiv>
+                  <Autocomplete
+                    style={{ width: "100%" }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Primeiro Procedimento"
+                        color="grey"
+                        onBlur={(e: any) => setProcedure(e.target.value)}
+                        required
+                      />
+                    )}
+                    options={
+                      procedimentosList?.map((procedimento) => procedimento.name) || ["Carregando procedimentos..."]
+                    }
+                    value={procedure}
+                    onChange={(_event, newValue) => setProcedure(newValue)}
+                    id="procedimento-input"
+                    freeSolo
                   />
-                )}
-                options={procedimentosList?.map((procedimento) => procedimento.name) || ["Carregando procedimentos..."]}
-                value={procedure}
-                onChange={(_event, newValue) => setProcedure(newValue)}
-                id="procedimento-input"
-                freeSolo
-              />
-              <Autocomplete
-                style={{ width: "100%" }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Segundo Procedimento"
-                    onBlur={(e: any) => setAdditionalProcedure(e.target.value)}
+                  <Autocomplete
+                    style={{ width: "100%" }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        color="grey"
+                        label="Segundo Procedimento"
+                        onBlur={(e: any) => setAdditionalProcedure(e.target.value)}
+                      />
+                    )}
+                    options={
+                      procedimentosList?.map((procedimento) => procedimento.name) || ["Carregando procedimentos..."]
+                    }
+                    value={procedure ? additionalProcedure : ""}
+                    onChange={(_event, newValue) => setAdditionalProcedure(newValue)}
+                    id="procedimento2-input"
+                    disabled={!procedure}
+                    freeSolo
                   />
-                )}
-                options={procedimentosList?.map((procedimento) => procedimento.name) || ["Carregando procedimentos..."]}
-                value={procedure ? additionalProcedure : ""}
-                onChange={(_event, newValue) => setAdditionalProcedure(newValue)}
-                id="procedimento2-input"
-                disabled={!procedure}
-                freeSolo
-              />
-            </S.SelectServiceDiv>
-            <p>Início do atedimento:</p>
-            <DateTimePicker value={startDate} onChange={(newValue) => setStartDate(newValue)} />
-            <p>Fim do atendimento:</p>
-            <DateTimePicker value={endDate} onChange={(newValue) => setEndDate(newValue)} />
-            <S.StyledButton
-              className="botao"
-              variant="contained"
-              color="primary"
-              onClick={(e) => handleClick(e)}
-              disabled={!procedure || !costumerName || !costumerPhone || !startDate || !endDate}
-            >
-              {isCreating ? <PuffLoader size={25} color="#c3ccbf" /> : "Salvar no Calendário"}
-            </S.StyledButton>
-          </Stack>
-        </S.CalendarForm>
-        <CalendarPreview />
-      </S.CalendarContainer>
+                </S.SelectServiceDiv>
+                <p>Início do atedimento:</p>
+                <DateTimePicker value={startDate} onChange={(newValue) => setStartDate(newValue)} />
+                <p>Fim do atendimento:</p>
+                <DateTimePicker value={endDate} onChange={(newValue) => setEndDate(newValue)} />
+                <S.StyledButton
+                  className="botao"
+                  variant="contained"
+                  color="success"
+                  onClick={async (e) => await handleCreateEvent(e)}
+                  disabled={!procedure || !costumerName || !costumerPhone || !startDate || !endDate}
+                >
+                  {isCreating ? <PuffLoader size={25} color="#c3ccbf" /> : "Salvar no Calendário"}
+                </S.StyledButton>
+              </Stack>
+            </S.CalendarForm>
+          </S.CalendarContainer>
+        </ModalContent>
+      </Modal>
+      <InteractiveCalendar {...{ handleOpenModal }} />
     </S.CustomGlobalSection>
   );
 }
