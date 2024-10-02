@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Session } from "@supabase/supabase-js";
 import { client } from "../supabaseClient";
@@ -23,6 +24,19 @@ type UpdateGoogleCalendar = {
   session: Session | null;
   event: Event;
 };
+
+type CreateGoogleCalendar = {
+  session: Session | null;
+  clientName: string | null;
+  clientList: Costumer[] | undefined;
+  procedure: string | null;
+  secondProcedure: string | null;
+  clientPhone: string | null;
+  startDate: dayjs.Dayjs | null | undefined;
+  endDate: dayjs.Dayjs | null | undefined;
+};
+
+interface CreateEvent extends Omit<CreateGoogleCalendar, "session" | "clientList"> {}
 
 /**
  * Hook que gerencia a criação de eventos no Google Calendar.
@@ -65,6 +79,7 @@ export default function useCreateCalendarEvent() {
           alert(`Ocorreu algum erro ao criar o evento: \n${data.error.message}`);
         } else {
           setIsCreating(false);
+          setIsSuccess(true);
           setMessage("Evento criado com Sucesso!");
         }
       })
@@ -72,6 +87,50 @@ export default function useCreateCalendarEvent() {
         setIsCreating(false);
         setMessage(`Falha na criação do evento! \nMotivo: ${error.message}`);
       });
+  }
+
+  function createEvent({
+    clientName,
+    clientPhone,
+    procedure,
+    secondProcedure,
+    startDate,
+    endDate,
+  }: CreateEvent): Event | void {
+    if (!startDate || !endDate) {
+      return setMessage("Selecione a data e o horário do evento");
+    }
+    const event: Event = {
+      summary: `${clientName} - ${clientPhone}`,
+      description: `
+Cliente: ${clientName} 
+Prodecimento: ${secondProcedure ? `${secondProcedure}e ${procedure}` : `${procedure}`} 
+Telefone: ${clientPhone}
+Mensagem de confirmação:
+            
+Oii, boa tarde, ${clientName}! 
+Tudo bem? 💚
+Posso confirmar seu horário de amanhã às ${startDate.hour()}:${startDate.minute() > 9 ? startDate.minute() : "00"}? ☺️
+      
+Regas do atendimento: ✨
+1- O limite estabelecido de atraso é de 10 minutos, com obrigação de aviso. 
+2- os dias de atendimento são de terça a sexta dás 09h às 18h e no sábado dás 09h às 16h
+3- Não trabalho com fiado, aceito cartão de crédito/débito, pix e dinheiro. 
+4- Em caso de falta sem  aviso com antecedência, será necessário um sinal de 50% do valor do procedimento para o próximo agendamento.
+      
+Agradeço a compreensão 😘
+`,
+
+      start: {
+        dateTime: startDate.toISOString(),
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      },
+      end: {
+        dateTime: endDate.toISOString(),
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      },
+    };
+    return event;
   }
 
   /**
@@ -112,36 +171,7 @@ export default function useCreateCalendarEvent() {
       return message;
     }
 
-    const event: Event = {
-      summary: `${clientName} - ${clientPhone}`,
-      description: `
-Cliente: ${clientName} 
-Prodecimento: ${secondProcedure ? `${secondProcedure}e ${procedure}` : `${procedure}`} 
-Telefone: ${clientPhone}
-Mensagem de confirmação:
-          
-Oii, boa tarde, ${clientName}! 
-Tudo bem? 💚
-Posso confirmar seu horário de amanhã às ${startDate.hour()}:${startDate.minute() > 9 ? startDate.minute() : "00"}? ☺️
-    
-Regas do atendimento: ✨
-1- O limite estabelecido de atraso é de 10 minutos, com obrigação de aviso. 
-2- os dias de atendimento são de terça a sexta dás 09h às 18h e no sábado dás 09h às 16h
-3- Não trabalho com fiado, aceito cartão de crédito/débito, pix e dinheiro. 
-4- Em caso de falta sem  aviso com antecedência, será necessário um sinal de 50% do valor do procedimento para o próximo agendamento.
-    
-Agradeço a compreensão 😘
-    `,
-
-      start: {
-        dateTime: startDate.toISOString(),
-        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      },
-      end: {
-        dateTime: endDate.toISOString(),
-        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      },
-    };
+    const event = createEvent({ clientName, clientPhone, procedure, secondProcedure, startDate, endDate });
 
     const currentClient = clientList?.find((client) => client.name === clientName);
 
@@ -175,7 +205,7 @@ Agradeço a compreensão 😘
           setIsCreating(false);
           throw error;
         }
-        await updateGoogleCalendar({ session, event });
+        event && (await updateGoogleCalendar({ session, event }));
       } catch (error: any) {
         setMessage(`Falha na atualização do banco de dados: \n  ${error.message}`);
       }
