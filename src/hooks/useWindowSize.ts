@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 export default function useWindowSize() {
   const tablet = 800;
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= tablet);
   const [windowSize, setWindowSize] = useState<number>(0);
 
   function returnWindowSize() {
