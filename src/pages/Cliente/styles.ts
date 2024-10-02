@@ -31,10 +31,10 @@ export const Input = styled.input`
   font-size: 20px;
   transition: 250ms ease-in-out;
   :hover {
-    border: 1px solid ${pallete.green};
+    border: 1px solid ${pallete.primary};
   }
   :focus {
-    border: 1px solid ${pallete.green};
+    border: 1px solid ${pallete.primary};
     outline: none;
   }
 `;
@@ -78,7 +78,7 @@ export const Form = styled.form`
   align-items: center;
   justify-content: center;
   width: 330px;
-  background-color: ${pallete.green[500]};
+  background-color: ${pallete.primary[500]};
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
   border-radius: 8px;
   padding: 24px 16px 8px 16px;
@@ -103,8 +103,13 @@ export const ModalContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 90%;
   height: 100%;
+  margin: 0 5%;
+  align-self: center;
+  @media (max-width: ${breakPoints.smallMobile}) {
+    font-size: var(--typography-font-size-regular);
+  }
 `;
 
 export const CloseIcon = styledMui(Close)`
