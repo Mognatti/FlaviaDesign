@@ -14,8 +14,7 @@ export const pallete = {
     800: "#5c5e59",
     900: "#242424",
   },
-  /**primary */
-  green: {
+  primary: {
     100: "#ecf0e9",
     200: "#d8e0d2",
     300: "#c5d1bc",
@@ -26,8 +25,7 @@ export const pallete = {
     800: "#3c4336",
     900: "#1e221b",
   },
-  /**secondary */
-  gray: {
+  secondary: {
     100: "#f3f5f2",
     200: "#e7ebe5",
     300: "#dbe0d9",
@@ -38,8 +36,7 @@ export const pallete = {
     800: "#4e524c",
     900: "#272926",
   },
-  /**accent */
-  lime: {
+  accent: {
     100: "#ecf3e0",
     200: "#d9e8c0",
     300: "#c5dca1",
@@ -203,6 +200,7 @@ export const SessionTitle = styled.h2`
   border-bottom: 2px solid rgba(69, 80, 61, 0.4);
 `;
 export const Title = styled.h3`
+  margin: 0;
   text-align: center;
   padding: 8px;
   padding-bottom: 16px;

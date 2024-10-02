@@ -11,7 +11,7 @@ export const SidebarContainer = styled.div<{ close?: boolean }>`
   box-sizing: border-box;
   bottom: 0;
   left: 0;
-  background-color: ${pallete.green[500]};
+  background-color: ${pallete.primary[500]};
   width: 100vw;
   height: 10vh;
   z-index: 999;
@@ -115,6 +115,6 @@ export const Icon = styled.i<{ active?: boolean }>`
   justify-content: center;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: ${(props) => (props.active ? pallete.gray[500] : "transparent")};
+  background: ${(props) => (props.active ? pallete.secondary[500] : "transparent")};
   transition: all 350ms ease-in-out;
 `;
