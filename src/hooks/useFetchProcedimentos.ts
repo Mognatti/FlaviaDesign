@@ -3,9 +3,8 @@ import { Procedimento } from "../types";
 import { client } from "../supabaseClient";
 
 export default function useFetchProcedimentos() {
-  const [procedimentos, setClients] = useState<Procedimento[]>([]);
-  const [isProcedimentosLoading, setIsProcedimentosLoading] =
-    useState<boolean>(false);
+  const [procedures, setProcedures] = useState<Procedimento[]>([]);
+  const [isProceduresLoading, setIsProcedimentosLoading] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchClients() {
@@ -13,7 +12,7 @@ export default function useFetchProcedimentos() {
       try {
         const { data, error } = await client.from("Procedimentos").select("*");
         if (data) {
-          setClients(data as Procedimento[]);
+          setProcedures(data as Procedimento[]);
           setIsProcedimentosLoading(false);
         }
         if (error) {
@@ -28,5 +27,5 @@ export default function useFetchProcedimentos() {
     fetchClients();
   }, []);
 
-  return [{ procedimentos, isProcedimentosLoading }];
+  return [{ procedures, isProceduresLoading }];
 }

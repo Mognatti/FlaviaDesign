@@ -22,7 +22,7 @@ export const List = styled.ul`
 
 export const Item = styled.li`
   background-color: transparent;
-  box-shadow: 0px 0px 10px ${pallete.dark};
+  box-shadow: 0px 0px 10px ${pallete.neutral[900]};
   padding: 1.5vw;
   border-radius: 8px;
   display: flex;
@@ -55,7 +55,7 @@ export const ItemContent = styled.div`
 `;
 
 export const ItemData = styled.span`
-  color: ${pallete.dark};
+  color: ${pallete.neutral[900]};
 `;
 
 export const LogoutDiv = styled.div`

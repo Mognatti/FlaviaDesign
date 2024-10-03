@@ -1,48 +1,58 @@
 import styled from "styled-components";
 import { styled as styledMui } from "@mui/material/styles";
 import { Button } from "@mui/material";
-import { breakPoints, pallete } from "../../styles/GlobalStyles";
+import { breakPoints, pallete, Section } from "../../styles/GlobalStyles";
+
+export const CustomGlobalSection = styled(Section)`
+  margin: 32px 16px 0 80px;
+  @media (max-width: ${breakPoints.tablet}) {
+    margin: 4vh 4vw 10vh;
+  }
+`;
+
+export const ModalTitle = styled.h3`
+  font-family: var(--typography-font-family-headings);
+  font-size: var(--tipography-font-size-h5);
+`;
 
 export const CalendarContainer = styled.div`
   width: 100%;
-  padding-bottom: 63px;
   display: flex;
-  justify-content: space-around;
-  background-color: ${pallete.lighterGreen};
-  gap: 2%;
+  flex-direction: column;
+  align-items: center;
   @media (max-width: 1300px) {
-    flex-direction: column;
     align-items: center;
-    padding: 16px 0px;
+    height: auto;
+    margin-bottom: 16px;
+    margin-left: 0px;
     @media (max-width: 818px) {
       flex-direction: column;
       align-items: center;
-      padding: 16px 0px;
     }
   }
 `;
 
 export const CalendarForm = styled.form<{ mobile?: boolean }>`
   display: flex;
+  align-self: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
-  width: 35%;
+  width: 50%;
+  height: 570px;
   margin-top: 1%;
   margin-left: ${(props) => (props.mobile ? "0" : "-30px")};
   border-radius: 15px;
-  padding: 16px;
+  padding: 20px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
-
+  background-color: ${pallete.primary[500]};
   @media (max-width: 1300px) {
     margin-top: 1%;
-    @media (max-width: 818px) {
-      width: 320px;
-    }
-    @media (max-width: ${breakPoints.mobile}) {
-      width: 265px;
-      padding: 16px 10px;
+    width: 600px;
+    height: auto;
+    margin-left: 0px;
+    @media (max-width: 650px) {
+      width: 90%;
     }
   }
 `;
@@ -78,5 +88,5 @@ justify-content: center;
 padding: 8px;
 align-items: center;
 flex-direction: column;
-color:#c3ccbf;
+background-color: var(--primary-600);
 `;

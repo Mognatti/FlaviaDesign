@@ -1,86 +1,71 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSession } from "@supabase/auth-helpers-react";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers/";
-import { Autocomplete, Stack } from "@mui/material";
+import { Autocomplete, IconButton, Modal, Stack } from "@mui/material";
 import TextField from "@mui/material/TextField/TextField";
 import dayjs, { Dayjs } from "dayjs";
-import * as GS from "../../styles/GlobalStyles";
 import * as S from "./styles";
-import { createCalendarEvent } from "./CreateCalendarEvent";
-import { getClientsNameAndCell } from "../../components/FetchClients";
 import useProcedimentos from "../../hooks/useProcedimentos";
-import CalendarPreview from "./CalendarPreview";
-import { Client, DateLib } from "../../types";
 import { PuffLoader } from "react-spinners";
-import { SidebarStatusContext } from "../../context/SidebarStatus";
 import useWindowSize from "../../hooks/useWindowSize";
 import Loader from "../../components/Loader";
+import useFetchCostumersNameAndPhone from "../../hooks/useFetchCostumersNameAndPhone.ts";
+import { DateClickArg } from "@fullcalendar/interaction";
+import "./calendar.css";
+import { CloseIcon, ModalContent } from "../Cliente/styles.ts";
+import useCreateCalendarEvent from "../../hooks/useCreateCalendarEvent.ts";
+import DialogComponent from "../../components/Dialog/index.tsx";
+import InteractiveCalendar from "./InteractiveCalendar/index.tsx";
 
 export default function Calendar() {
   const session = useSession();
-  const [cliente, setCliente] = useState<string | null>(null);
-  const [tel, setTel] = useState<string | null>("");
-  const [procedimento, setProcedimento] = useState<string | null>(null);
-  const [segundoProcedimento, setSegundoProcedimento] = useState<string | null>(
-    null
-  );
-  const [start, setStart] = useState<DateLib | null>();
-  const [end, setEnd] = useState<Dayjs | null>();
-  const [clientList, setClientList] = useState<Client[]>();
-  const [loading, setLoading] = useState(false);
-  const [isCreating, setIsCreating] = useState<boolean>(false);
-  const [emailLink, setEmailLink] = useState<string>("");
-
+  const [costumerName, setCostumerName] = useState<string | null>(null);
+  const [costumerPhone, setCostumerPhone] = useState<string | null>("");
+  const [procedure, setProcedure] = useState<string | null>(null);
+  const [additionalProcedure, setAdditionalProcedure] = useState<string | null>(null);
+  const [startDate, setStartDate] = useState<dayjs.Dayjs | null>();
+  const [endDate, setEndDate] = useState<Dayjs | null>();
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showDialog, setShowDialog] = useState<boolean>(false);
+  const { costumersNameAndPhone, isLoadingNameAndPhone } = useFetchCostumersNameAndPhone();
   const [{ procedimentosList, isLoading }] = useProcedimentos();
-  const { isOpen } = useContext(SidebarStatusContext);
-  const [{ isTablet }] = useWindowSize();
+  const { createCalendarEvent, message, isCreating } = useCreateCalendarEvent();
+  const [{ isMobile }] = useWindowSize();
 
+  /**use client name to change client tel input*/
   useEffect(() => {
-    getClientsNameAndCell(setLoading, setClientList);
-  }, []);
+    const clientNameExist = costumersNameAndPhone?.find((item) => item.name === costumerName);
+    if (clientNameExist) setCostumerPhone(clientNameExist.cel_number);
+  }, [costumerName, costumersNameAndPhone]);
 
-  //use client name to change client tel input
+  /**use client phone to change client name input */
   useEffect(() => {
-    const clientNameExist = clientList?.find((item) => item.name === cliente);
-    if (clientNameExist) setTel(clientNameExist.cel_number);
-  }, [cliente, clientList]);
+    const clientTelExist = costumersNameAndPhone?.find((item) => item.cel_number === costumerPhone);
+    if (clientTelExist) setCostumerName(clientTelExist.name);
+  }, [costumerPhone, costumersNameAndPhone]);
 
-  //use client tel to change client name input
+  /**use 'procedimento' and 'startDate' values to change 'endDate' value */
   useEffect(() => {
-    const clientTelExist = clientList?.find((item) => item.cel_number === tel);
-    if (clientTelExist) setCliente(clientTelExist.name);
-  }, [tel, clientList]);
+    if (startDate && procedure) {
+      const startDay = startDate.get("D");
+      const startMonth = startDate.get("M");
+      const startYear = startDate.get("year");
+      const startHour = startDate.get("hour");
+      const startMinutes = startDate.get("m");
 
-  //use 'procedimento' and 'start' values to change 'end' value
-  useEffect(() => {
-    if (start && procedimento) {
-      const {
-        $D: startDay,
-        $M: startMonth,
-        $y: startYear,
-        $H: startHour,
-        $m: startMinutes,
-      } = start;
+      const procedimentoItem = procedimentosList.find((item) => item.name === procedure);
 
-      const procedimentoItem = procedimentosList.find(
-        (item) => item.name === procedimento
-      );
+      const segundoProcedimentoValue = procedimentosList.find((item) => item.name === additionalProcedure);
 
-      const segundoProcedimentoItem = procedimentosList.find(
-        (item) => item.name === segundoProcedimento
-      );
+      const procedimentoHoras = procedimentoItem?.hours ?? 0;
+      const procedimentoMinutos = procedimentoItem?.minutes ?? 0;
 
-      const procedimentoHoras = procedimentoItem?.hours || 0;
-      const procedimentoMinutos = procedimentoItem?.minutes || 0;
-
-      let endDateTime = dayjs(
-        `${startMonth + 1 > 11 ? 0 : startMonth + 1}/${startDay}/${startYear}`
-      );
-
-      if (segundoProcedimento && segundoProcedimentoItem) {
-        const segundoProcedimentoHoras = segundoProcedimentoItem.hours || 0;
-        const segundoProcedimentoMinutos = segundoProcedimentoItem.minutes || 0;
+      /**Normalize the index, making January be 1 and December be 12 */
+      let endDateTime = dayjs(`${startMonth + 1 > 11 ? 0 : startMonth + 1}/${startDay}/${startYear}`);
+      if (additionalProcedure && segundoProcedimentoValue) {
+        const segundoProcedimentoHoras = segundoProcedimentoValue.hours ?? 0;
+        const segundoProcedimentoMinutos = segundoProcedimentoValue.minutes ?? 0;
 
         endDateTime = endDateTime
           .add(startHour + procedimentoHoras, "hour")
@@ -93,146 +78,137 @@ export default function Calendar() {
           .add(startMinutes + procedimentoMinutos, "minute");
       }
 
-      setEnd(endDateTime);
+      setEndDate(endDateTime);
     }
-  }, [start, procedimento, segundoProcedimento, procedimentosList]);
+  }, [startDate, procedure, additionalProcedure, procedimentosList]);
 
-  useEffect(() => {
-    if (session?.user.email === import.meta.env.VITE_ADMIN_EMAIL) {
-      setEmailLink(import.meta.env.VITE_ADMIN_CALENDAR);
-    } else if (session?.user.email === import.meta.env.VITE_DEV_EMAIL) {
-      setEmailLink(import.meta.env.VITE_DEV_CALENDAR);
-    }
-  }, [session]);
-
-  function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  function handleOpenModal(info: DateClickArg) {
+    setStartDate(dayjs(info.dateStr));
+    setShowModal(true);
+  }
+  async function handleCreateEvent(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
-    createCalendarEvent(
+    await createCalendarEvent(
       session,
-      cliente,
-      clientList,
-      procedimento,
-      segundoProcedimento,
-      tel,
-      start,
-      end,
-      setIsCreating
+      costumerName,
+      costumersNameAndPhone,
+      procedure,
+      additionalProcedure,
+      costumerPhone,
+      startDate,
+      endDate
     );
   }
 
-  if (loading || isLoading) return <Loader />;
+  useEffect(() => {
+    if (message) {
+      setShowDialog(true);
+    }
+  }, [message]);
+
+  if (isLoadingNameAndPhone || isLoading || !session) return <Loader />;
   return (
-    <GS.Section sidebar={isOpen}>
-      <S.CalendarContainer>
-        <S.CalendarForm mobile={isTablet}>
-          <GS.Title>Novo Agendamento</GS.Title>
-          <Stack spacing={2} style={{ width: "80%" }}>
-            <Autocomplete
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Nome da cliente"
-                  onChange={(e: any) => setCliente(e.target.value)}
-                  required
+    <S.CustomGlobalSection>
+      <DialogComponent {...{ showDialog, setShowDialog, message }} />
+      <Modal open={showModal}>
+        <ModalContent>
+          <S.CalendarContainer>
+            <S.CalendarForm mobile={isMobile}>
+              <Stack sx={{ width: "100%", display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+                <S.ModalTitle>Novo Agendamento</S.ModalTitle>
+                <IconButton onClick={() => setShowModal(false)} sx={{ height: "fit-content", alignSelf: "center" }}>
+                  <CloseIcon />
+                </IconButton>
+              </Stack>
+              <Stack spacing={2} style={{ width: "100%" }}>
+                <Autocomplete
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Nome da cliente"
+                      color="info"
+                      onChange={(e: any) => setCostumerName(e.target.value)}
+                      required
+                    />
+                  )}
+                  options={costumersNameAndPhone.map((cliente) => cliente.name) || ["Carregando clientes..."]}
+                  value={costumerName}
+                  onChange={(_event, newValue) => setCostumerName(newValue)}
+                  freeSolo
                 />
-              )}
-              options={
-                clientList?.map((cliente) => cliente.name) || [
-                  "Carregando clientes...",
-                ]
-              }
-              value={cliente}
-              onChange={(_event, newValue) => setCliente(newValue)}
-              freeSolo
-            />
-            <Autocomplete
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Telefone da cliente"
-                  onChange={(e: any) => setTel(e.target.value)}
-                  required
+                <Autocomplete
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Telefone da cliente"
+                      color="info"
+                      onChange={(e: any) => setCostumerPhone(e.target.value)}
+                      required
+                    />
+                  )}
+                  value={costumerPhone}
+                  onChange={(_event, newValue) => setCostumerPhone(newValue)}
+                  options={costumersNameAndPhone.map((cliente) => cliente.cel_number) || ["Carregando telefones"]}
+                  freeSolo
                 />
-              )}
-              value={tel}
-              onChange={(_event, newValue) => setTel(newValue)}
-              options={
-                clientList?.map((cliente) => cliente.cel_number) || [
-                  "Carregando telefones",
-                ]
-              }
-              freeSolo
-            />
-            <S.SelectServiceDiv>
-              <Autocomplete
-                style={{ width: "100%" }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Primeiro Procedimento"
-                    onBlur={(e: any) => setProcedimento(e.target.value)}
-                    required
+                <S.SelectServiceDiv>
+                  <Autocomplete
+                    style={{ width: "100%" }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Primeiro Procedimento"
+                        color="info"
+                        onBlur={(e: any) => setProcedure(e.target.value)}
+                        required
+                      />
+                    )}
+                    options={
+                      procedimentosList?.map((procedimento) => procedimento.name) || ["Carregando procedimentos..."]
+                    }
+                    value={procedure}
+                    onChange={(_event, newValue) => setProcedure(newValue)}
+                    id="procedimento-input"
+                    freeSolo
                   />
-                )}
-                options={
-                  procedimentosList?.map(
-                    (procedimento) => procedimento.name
-                  ) || ["Carregando procedimentos..."]
-                }
-                value={procedimento}
-                onChange={(_event, newValue) => setProcedimento(newValue)}
-                id="procedimento-input"
-                freeSolo
-              />
-              <Autocomplete
-                style={{ width: "100%" }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Segundo Procedimento"
-                    onBlur={(e: any) => setSegundoProcedimento(e.target.value)}
+                  <Autocomplete
+                    style={{ width: "100%" }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        color="info"
+                        label="Segundo Procedimento"
+                        onBlur={(e: any) => setAdditionalProcedure(e.target.value)}
+                      />
+                    )}
+                    options={
+                      procedimentosList?.map((procedimento) => procedimento.name) || ["Carregando procedimentos..."]
+                    }
+                    value={procedure ? additionalProcedure : ""}
+                    onChange={(_event, newValue) => setAdditionalProcedure(newValue)}
+                    id="procedimento2-input"
+                    disabled={!procedure}
+                    freeSolo
                   />
-                )}
-                options={
-                  procedimentosList?.map(
-                    (procedimento) => procedimento.name
-                  ) || ["Carregando procedimentos..."]
-                }
-                value={segundoProcedimento}
-                onChange={(_event, newValue) =>
-                  setSegundoProcedimento(newValue)
-                }
-                id="procedimento2-input"
-                freeSolo
-              />
-            </S.SelectServiceDiv>
-            <p>Início do atedimento:</p>
-            <DateTimePicker
-              value={start}
-              onChange={(newValue) => setStart(newValue)}
-            />
-            <p>Fim do atendimento:</p>
-            <DateTimePicker
-              value={end}
-              onChange={(newValue) => setEnd(newValue)}
-            />
-            <S.StyledButton
-              className="botao"
-              variant="contained"
-              color="primary"
-              onClick={(e) => handleClick(e)}
-              disabled={!procedimento || !cliente || !tel || !start || !end}
-            >
-              {isCreating ? (
-                <PuffLoader size={25} color="#c3ccbf" />
-              ) : (
-                "Salvar no Calendário"
-              )}
-            </S.StyledButton>
-          </Stack>
-        </S.CalendarForm>
-        <CalendarPreview emailLink={emailLink} />
-      </S.CalendarContainer>
-    </GS.Section>
+                </S.SelectServiceDiv>
+                <p>Início do atedimento:</p>
+                <DateTimePicker value={startDate} onChange={(newValue) => setStartDate(newValue)} />
+                <p>Fim do atendimento:</p>
+                <DateTimePicker value={endDate} onChange={(newValue) => setEndDate(newValue)} />
+                <S.StyledButton
+                  className="botao"
+                  variant="contained"
+                  onClick={async (e) => await handleCreateEvent(e)}
+                  disabled={!procedure || !costumerName || !costumerPhone || !startDate || !endDate}
+                >
+                  {isCreating ? <PuffLoader size={25} color="#c3ccbf" /> : "Salvar no Calendário"}
+                </S.StyledButton>
+              </Stack>
+            </S.CalendarForm>
+          </S.CalendarContainer>
+        </ModalContent>
+      </Modal>
+      <InteractiveCalendar {...{ handleOpenModal }} />
+    </S.CustomGlobalSection>
   );
 }

@@ -6,7 +6,7 @@ export interface CalendarPreviewProps {
   emailLink: string;
 }
 
-export interface Client {
+export interface Costumer {
   id?: number;
   name: string;
   cel_number: string;
@@ -28,6 +28,7 @@ export interface DateLib {
   $u?: number;
   $x: JSON;
   $y: number;
+  toISOString: () => string;
 }
 
 export interface Procedimento {

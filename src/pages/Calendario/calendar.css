@@ -1,0 +1,130 @@
+.fc {
+  *:not(span) {
+    font-family: Nunito, sans-serif !important;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--neutral-100);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary-700);
+  }
+}
+
+.fc-theme-standard {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.fc-toolbar-title {
+  font-size: var(--tipography-font-size-h4) !important;
+  @media (max-width: 800px) {
+    font-size: var(--tipography-font-size-regular) !important;
+  }
+}
+
+.fc-daygrid-event-dot {
+  border-color: var(--accent-500) !important;
+  margin-right: 4px !important;
+}
+
+.fc-event-main-frame,
+.fc-event-main,
+.fc-v-event {
+  border: none !important;
+}
+
+/* event header */
+.fc-v-event {
+  background-color: var(--primary-700) !important;
+}
+/* event body */
+.fc-event-title-container {
+  background: var(--primary-700) !important;
+  padding: 2px !important;
+}
+
+.fc-daygrid-event {
+  color: var(--neutral-900) !important;
+}
+
+.fc-daygrid-day-top {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.fc-event-time {
+  margin-right: 4px !important;
+}
+
+.fc-daygrid-day-events {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px 0 !important;
+  padding-bottom: 4px !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+
+  div {
+    font-size: 12px !important;
+  }
+}
+
+.fc-timegrid-event {
+  font-size: 12px !important;
+}
+
+.fc-event-title {
+  font-weight: bold !important;
+}
+
+.fc-daygrid-day.fc-day-today {
+  background-color: var(--primary-700) !important;
+  color: var(--neutral-100) !important;
+  div {
+    color: var(--neutral-100) !important;
+  }
+}
+
+.fc-timegrid-col.fc-day-today {
+  background-color: var(--primary-200) !important;
+}
+
+/* buttons */
+.fc-button-primary {
+  background-color: var(--primary-700) !important;
+  color: var(--neutral-100) !important;
+  border: none !important;
+  @media (max-width: 800px) {
+    font-size: var(--tipography-font-size-small) !important;
+  }
+}
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc-button-primary:not(:disabled):active {
+  background-color: var(--primary-800) !important;
+}
+
+.fc-button-primary:hover {
+  background-color: var(--primary-800) !important;
+}
+
+fc-button-primary:disabled {
+  color: var(--neutral-100) !important;
+}
+
+/* list view */
+.fc-list-event-dot {
+  border-color: var(--accent-500) !important;
+}
+.fc-list-event-title {
+  font-size: var(--tipography-font-size-small) !important;
+}
+.fc-scroller:not(.fc-scroller-liquid-absolute) {
+  overflow-y: hidden !important;
+}

@@ -1,63 +1,55 @@
+import { breakPoints } from "./../../styles/GlobalStyles";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { pallete } from "../../styles/GlobalStyles";
-import { RiLogoutCircleLine, RiMenuFoldLine } from "react-icons/ri";
-import Switch from "@mui/material/Switch";
+import { RiMenuFoldLine } from "react-icons/ri";
 
-export const SidebarContainer = styled.div<{ isLowOpacity?: boolean }>`
+export const SidebarContainer = styled.div<{ close?: boolean }>`
   position: fixed;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  top: 0;
+  bottom: 0;
   left: 0;
-  background-color: ${pallete.lightGreen};
-  width: 200px;
-  height: 100%;
-  z-index: 1000;
+  background-color: ${pallete.primary[500]};
+  width: 100vw;
+  height: 10vh;
+  z-index: 999;
   overflow-x: hidden;
   scrollbar-width: none;
   transition: all 300ms ease;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5vh;
-  opacity: ${(props) => (props.isLowOpacity ? "0.5" : "1")};
   &::-webkit-scrollbar {
     display: none;
   }
-  &.close {
-    width: 60px;
+  @media (min-width: ${breakPoints.tablet}) {
+    top: 0;
+    left: 0;
+    bottom: auto;
+    width: ${(props) => (props.close ? "65px" : "200px")};
+    height: 100svh;
+    flex-direction: column;
   }
 `;
-export const Controllers = styled.div`
-  position: absolute;
-  top: 26vh;
-  left: 12vw;
-  gap: 2vh;
-  display: flex;
-  flex-direction: column;
-  -webkit-box-pack: start;
-  justify-content: flex-start;
-  -webkit-box-align: center;
-  align-items: center;
+
+export const Controllers = styled.div<{ show?: boolean }>`
+  display: ${(props) => (props.show ? "flex" : "none")};
+  width: 100%;
+  justify-content: flex-end;
   margin-bottom: 5vh;
   transition: all 300ms ease 0s;
-  &.close {
-    left: 1.5vw;
-  }
+  margin: 32px -16px;
 `;
-export const MaterialUISwitch = styled(Switch)``;
 
-export const MenuIconDiv = styled.div<{ open: boolean }>`
+export const MenuIconDiv = styled.div<{ close: boolean }>`
   cursor: pointer;
   margin: 0;
   padding: 0;
   transition: 300ms;
-  transform: ${(props) => (props.open ? "none" : "rotateY(180deg)")};
+  transform: ${(props) => (props.close ? "none" : "rotateY(180deg)")};
 `;
 
-export const MenuIcon = styled(RiMenuFoldLine)`
+export const ControllSidebarIcon = styled(RiMenuFoldLine)`
   cursor: pointer;
   width: 100%;
 `;
@@ -65,17 +57,32 @@ export const MenuIcon = styled(RiMenuFoldLine)`
 export const SidebarList = styled.ul`
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  align-self: center;
   list-style: none;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   gap: 18px;
+  position: relative;
+  @media (min-width: ${breakPoints.tablet}) {
+    flex-direction: column;
+    align-items: flex-start;
+    height: 80%;
+  }
 `;
 
-export const Icon = styled.i`
-  min-width: calc(60px - ((4px + 6px) * 2));
+export const SidebarItem = styled.li`
+  margin: 0;
+  box-sizing: border-box;
+  list-style: none;
+  margin-left: 6px;
+  border-radius: 50%;
+  padding: 4px;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  opacity: 0.8;
+  transition: all 350ms ease-in-out;
 `;
 
 export const SidebarLink = styled(NavLink)<{
@@ -96,31 +103,18 @@ export const SidebarLink = styled(NavLink)<{
   overflow-x: hidden;
   transition: all 300ms ease;
   color: black;
-`;
-
-export const SidebarItem = styled.li<{ active?: boolean }>`
-  margin: 0;
-  box-sizing: border-box;
-  list-style: none;
-  height: 48px;
-  background: ${(props) => (props.active ? pallete.white : "transparent")};
-  margin-left: 6px;
-  border-radius: 48px 0 0 48px;
-  padding: 4px;
+  gap: 4px;
   display: flex;
   align-items: center;
-  opacity: 0.8;
-  transition: all 300ms ease;
 `;
 
-export const Button = styled.button`
-  color: #d32f2f;
-  background-color: transparent;
-  outline: none;
-  border: none;
-  font-size: 16px;
-`;
-
-export const LogoutIcon = styled(RiLogoutCircleLine)`
-  color: #d32f2f;
+export const Icon = styled.i<{ active?: boolean }>`
+  align-items: center;
+  min-width: 40px;
+  display: flex;
+  justify-content: center;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: ${(props) => (props.active ? pallete.secondary[500] : "transparent")};
+  transition: all 350ms ease-in-out;
 `;

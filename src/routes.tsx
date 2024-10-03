@@ -3,14 +3,14 @@ import Home from "./pages/Home";
 import Sidebar from "./components/Sidebar";
 import Calendar from "./pages/Calendario";
 import Clients from "./pages/Cliente";
-import NotFount from "./pages/NotFound";
+import NotFound from "./pages/NotFound";
 import Financeiro from "./pages/Financeiro";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./styles/theme";
 import Procedimentos from "./pages/Procedimentos";
 import { SidebarStatusProvider } from "./context/SidebarStatus";
 import { useSession } from "@supabase/auth-helpers-react";
-import NotLogged from "./pages/NotLogged";
+import LoginPage from "./pages/Login";
 import { useState, useEffect } from "react";
 import Loader from "./components/Loader";
 
@@ -25,7 +25,8 @@ export default function AppRouter() {
   }, [session]);
 
   if (loading) return <Loader />;
-  if (!session && !loading) return <NotLogged />;
+  if (!session && !loading) return <LoginPage />;
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -37,7 +38,7 @@ export default function AppRouter() {
             <Route path="/clientes" element={<Clients />} />
             <Route path="/financeiro" element={<Financeiro />} />
             <Route path="/procedimentos" element={<Procedimentos />} />
-            <Route path="*" element={<NotFount />}></Route>
+            <Route path="*" element={<NotFound />}></Route>
           </Routes>
         </SidebarStatusProvider>
       </Router>

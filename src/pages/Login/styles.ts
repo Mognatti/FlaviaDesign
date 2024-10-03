@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { breakPoints } from "../../styles/GlobalStyles";
+import { styled as styledMui, Button } from "@mui/material";
 
 export const Container = styled.div`
   display: flex;
@@ -24,6 +25,9 @@ export const Body = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  h3 {
+    margin-bottom: 16px;
+  }
   @media (max-width: ${breakPoints.tablet}) {
     padding: 16px;
     padding-top: 0;
@@ -32,4 +36,13 @@ export const Body = styled.div`
     display: flex;
     flex-direction: column;
   }
+`;
+
+export const LoginButton = styledMui(Button)`
+justify-self:center;
+background-color: rgb(69, 80, 61);
+:hover{
+  background-color: rgb(180, 190, 170);
+  transition: 350ms;
+}
 `;

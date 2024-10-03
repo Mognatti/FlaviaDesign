@@ -1,27 +1,46 @@
 import { client } from "../../../../supabaseClient";
 import { useState } from "react";
-import { TextField } from "@mui/material";
+import { Box, IconButton, Modal, TextField } from "@mui/material";
 import * as S from "../../styles";
-import {
-  SessionTitle,
-  Submit,
-  ClientConetainer,
-} from "../../../../styles/GlobalStyles";
+import { Submit } from "../../../../styles/GlobalStyles";
+import { Add } from "@mui/icons-material";
+import { PuffLoader } from "react-spinners";
+import { normalizePhoneNumber } from "../../../../libs/normalizePhone";
 
 export default function NewClient() {
-  const [name, setName] = useState("");
-  const [tel, setTel] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [costumerName, setCostumerName] = useState("");
+  const [costumerPhone, setCostumerPhone] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   async function createClient() {
-    setLoading(true);
+    setIsLoading(true);
+    let newValue = costumerPhone;
+
+    if (!costumerName || !costumerPhone) {
+      setIsLoading(false);
+      return alert("bota os dados ai, cara");
+    }
+
+    if (costumerName.length < 3) {
+      setIsLoading(false);
+      return alert("Insira um nome com pelo menos 3 caracteres!");
+    }
+
+    newValue = normalizePhoneNumber(costumerPhone);
+
+    if (!newValue.startsWith("+")) {
+      setIsLoading(false);
+      return alert(newValue);
+    }
+
     try {
       const { error } = await client.from("Clientes").insert({
-        name: name,
-        cel_number: tel,
+        name: costumerName,
+        cel_number: newValue,
       });
       if (error) throw error;
-      setLoading(false);
+      setIsLoading(false);
       window.location.reload();
     } catch (error: any) {
       alert(error.message);
@@ -29,37 +48,53 @@ export default function NewClient() {
   }
 
   return (
-    <ClientConetainer>
-      <S.Form>
-        <br />
-        <SessionTitle>Novo Cadastro</SessionTitle>
-        <br />
-        <TextField
-          label="Nome"
-          variant="filled"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        ></TextField>
-        <br />
-        <TextField
-          label="Telefone"
-          variant="filled"
-          type="tel"
-          inputProps={{ inputMode: "tel" }}
-          value={tel}
-          onChange={(e) => setTel(e.target.value)}
-        ></TextField>
-        <br />
-        <Submit
-          variant="outlined"
-          color="primary"
-          onClick={() => createClient()}
-        >
-          Cadastrar
-        </Submit>
-        <br />
-        {loading && <h3>criando cliente...</h3>}
-      </S.Form>
-    </ClientConetainer>
+    <>
+      <IconButton onClick={() => setShowModal(true)}>
+        <Add />
+      </IconButton>
+      {showModal && (
+        <Box sx={{ width: "100svw", height: "100svh", position: "absolute", top: 0, left: 0 }}>
+          <Modal open={showModal}>
+            <S.ModalContent>
+              <S.Form>
+                <S.FormHeader>
+                  <p>Novo Cadastro</p>
+                  <IconButton onClick={() => setShowModal(false)}>
+                    <S.CloseIcon />
+                  </IconButton>
+                </S.FormHeader>
+                <TextField
+                  label="Nome"
+                  variant="standard"
+                  value={costumerName}
+                  onChange={(e) => setCostumerName(e.target.value)}
+                  required
+                  sx={{ minWidth: 300 }}
+                />
+                <br />
+                <TextField
+                  label="Telefone"
+                  variant="standard"
+                  type="tel"
+                  inputProps={{ inputMode: "tel" }}
+                  value={costumerPhone}
+                  onChange={(e) => setCostumerPhone(e.target.value)}
+                  required
+                  sx={{ minWidth: 300 }}
+                />
+                <br />
+                <Submit variant="contained" color="primary" onClick={() => createClient()}>
+                  {isLoading ? <PuffLoader size={25} color="#c3ccbf" /> : "Cadastrar"}
+                </Submit>
+                <Submit variant="contained" color="error" onClick={() => setShowModal(!showModal)}>
+                  Cancelar
+                </Submit>
+                <br />
+              </S.Form>
+            </S.ModalContent>
+          </Modal>
+        </Box>
+      )}
+    </>
   );
 }

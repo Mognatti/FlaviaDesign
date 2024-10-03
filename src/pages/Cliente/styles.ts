@@ -1,58 +1,52 @@
 import styled from "styled-components";
 import { RiUserSearchLine } from "react-icons/ri";
 import { breakPoints, pallete } from "../../styles/GlobalStyles";
+import { Close } from "@mui/icons-material";
+import { styled as styledMui } from "@mui/material";
 
 export const SearchDiv = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 16px;
-  width: 70%;
-  margin-left: 10%;
-  @media (max-width: 910px) {
-    width: 90%;
-    margin-left: 0;
-  }
-  @media (max-width: ${breakPoints.mobile}) {
+  width: 100%;
+  justify-content: center;
+  @media (max-width: ${breakPoints.tablet}) {
     width: 83%;
-    margin-left: 5%;
+  }
+  @media (max-width: ${breakPoints.smallTablet}) {
+    width: 316px;
+    align-self: center;
   }
 `;
 export const Input = styled.input`
   display: flex;
   flex-direction: row;
   border-radius: 8px;
-  border: 1px solid rgba(69, 80, 61, 255);
+  border: 1px solid ${pallete.neutral[100]};
   padding: 16px;
-  padding-left: 5%;
+  padding-left: 50px;
   width: 100%;
   font-size: 20px;
-  transition: 350ms;
+  transition: 250ms ease-in-out;
   :hover {
-    border: 1px solid ${pallete.lime};
+    border: 1px solid ${pallete.primary};
   }
   :focus {
-    border: 1px solid ${pallete.dark};
+    border: 1px solid ${pallete.primary};
     outline: none;
   }
-  @media (max-width: 910px) {
-    padding-left: 10%;
-    @media (max-width: 740px) {
-      padding-left: 10%;
-    }
-    @media (max-width: 450px) {
-      padding-left: 15%;
-    }
-  }
 `;
+
 export const SearchIcon = styled(RiUserSearchLine)`
-  padding: 10px;
   position: absolute;
+  left: 30px;
 `;
 
 export const Loading = styled.p`
   text-align: center;
-  margin-top: 15px;
+  margin-top: 16px;
 `;
 
 // Check latter
@@ -74,7 +68,7 @@ export const Item = styled.li`
 `;
 export const NotLoggedin = styled.p`
   text-align: center;
-  margin-top: 15px;
+  margin-top: 16px;
 `;
 
 export const Form = styled.form`
@@ -83,15 +77,41 @@ export const Form = styled.form`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  width: 310px;
-  background-color: rgba(69, 80, 61, 0.4);
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4);
-  border-radius: 15px;
-  padding: 8px;
-  margin-top: 2%;
-  margin-bottom: 5vh;
-  @media (max-width: 900px) {
-    margin-top: 5%;
-    width: 280px;
+  width: 330px;
+  background-color: ${pallete.primary[500]};
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  padding: 24px 16px 8px 16px;
+  height: fit-content;
+  position: relative;
+`;
+
+export const FormHeader = styled.div`
+  display: flex;
+  align-items: center;
+  width: 90%;
+  margin-bottom: 24px;
+  border-bottom: 2px solid ${pallete.neutral[900]};
+  padding-bottom: 4px;
+  p {
+    width: 100%;
+    font-size: 18px;
   }
+`;
+
+export const ModalContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 100%;
+  margin: 0 5%;
+  align-self: center;
+  @media (max-width: ${breakPoints.smallMobile}) {
+    font-size: var(--typography-font-size-regular);
+  }
+`;
+
+export const CloseIcon = styledMui(Close)`
+align-self: flex-end;
 `;
