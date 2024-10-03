@@ -88,5 +88,5 @@ justify-content: center;
 padding: 8px;
 align-items: center;
 flex-direction: column;
-color:#c3ccbf;
+background-color: var(--primary-600);
 `;

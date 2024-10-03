@@ -126,7 +126,7 @@ export default function Calendar() {
                     <TextField
                       {...params}
                       label="Nome da cliente"
-                      color="grey"
+                      color="info"
                       onChange={(e: any) => setCostumerName(e.target.value)}
                       required
                     />
@@ -141,7 +141,7 @@ export default function Calendar() {
                     <TextField
                       {...params}
                       label="Telefone da cliente"
-                      color="grey"
+                      color="info"
                       onChange={(e: any) => setCostumerPhone(e.target.value)}
                       required
                     />
@@ -158,7 +158,7 @@ export default function Calendar() {
                       <TextField
                         {...params}
                         label="Primeiro Procedimento"
-                        color="grey"
+                        color="info"
                         onBlur={(e: any) => setProcedure(e.target.value)}
                         required
                       />
@@ -176,7 +176,7 @@ export default function Calendar() {
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        color="grey"
+                        color="info"
                         label="Segundo Procedimento"
                         onBlur={(e: any) => setAdditionalProcedure(e.target.value)}
                       />
@@ -198,7 +198,6 @@ export default function Calendar() {
                 <S.StyledButton
                   className="botao"
                   variant="contained"
-                  color="success"
                   onClick={async (e) => await handleCreateEvent(e)}
                   disabled={!procedure || !costumerName || !costumerPhone || !startDate || !endDate}
                 >

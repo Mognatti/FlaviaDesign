@@ -33,7 +33,7 @@ export const HeaderForm = styled.div`
 `;
 
 export const HeaderRow = styledMui(TableRow)`
-background-color:  ${(props) => props.theme.palette.primary[600]};
+background-color:  var(--primary-600) !important;
 th{
   color:white;
 &:last-child {

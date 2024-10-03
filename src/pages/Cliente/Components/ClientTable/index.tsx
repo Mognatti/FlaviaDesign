@@ -171,7 +171,7 @@ export default function ClientTable({ costumers }: ClientTable) {
                           id="name"
                           variant="standard"
                           label={costumer.name}
-                          color="secondary"
+                          color="success"
                           value={updateName}
                           onChange={(e) => setUpdateName(e.target.value)}
                           disabled={isUpdateCostumerLoading}
@@ -182,7 +182,7 @@ export default function ClientTable({ costumers }: ClientTable) {
                           id="phone"
                           variant="standard"
                           label={costumer.cel_number}
-                          color="secondary"
+                          color="success"
                           value={updatePhone}
                           onChange={(e) => setUpdatePhone(e.target.value)}
                           disabled={isUpdateCostumerLoading}
@@ -199,7 +199,7 @@ export default function ClientTable({ costumers }: ClientTable) {
                               {...params}
                               id="last-service"
                               variant="standard"
-                              color="secondary"
+                              color="success"
                               label={costumer.last_service ?? dayjs().format("DD/MM/YYYY")}
                               type="text"
                               value={updateService}
@@ -217,7 +217,7 @@ export default function ClientTable({ costumers }: ClientTable) {
                           ) : (
                             <>
                               <IconButton onClick={(e) => handleSubmitCostumerUpdate(e, costumer)}>
-                                <SaveRounded color="secondary" />
+                                <SaveRounded color="success" />
                               </IconButton>
                               <IconButton onClick={() => handleCancelCostumerUpdate()}>
                                 <CancelRoundedIcon color="warning" />
